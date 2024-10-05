@@ -559,4 +559,20 @@
         <tag>C/C++</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Click Here!</title>
+    <url>/2024/10/05/TEST/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="5b4d6948b1cd16c5827df6df502a5bf690a5f5d44081db1d7314f7aa324d526b">c17fd90da575e10a463004871515efa2dcdf1281755d4e115baa775048b6b2daaae792c295ac4fc3361953e2b844bb9c32750ee098ec676533fa081773b096f2f7cf71e15e1737b154bff83db539c05b</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+  </entry>
 </search>
