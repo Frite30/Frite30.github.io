@@ -712,8 +712,24 @@
       </tags>
   </entry>
   <entry>
-    <title>C++-基础笔记5</title>
-    <url>/2024/10/15/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B05/</url>
+    <title>算法基础数学知识1</title>
+    <url>/2024/10/19/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%86/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%861/</url>
+    <content><![CDATA[<h2 id="数论—反复取模"><a href="#数论—反复取模" class="headerlink" title="数论—反复取模"></a>数论—反复取模</h2><p>判断a的b次方末尾3位数</p>
+<p>在计算时可在每次乘a时对1000取模,根据<del>高深的</del>数论知识,结果不影响</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(b --)&#123;</span><br><span class="line">       res *= a;</span><br><span class="line">       res %= <span class="number">1000</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="R进制转换"><a href="#R进制转换" class="headerlink" title="R进制转换"></a>R进制转换</h2><p>对数字进行R进制转换,可用该数字对R取模得到个位,再除以R,再次取模,反复操作以获取各个位置的数,存储于vector中再进行输入</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(n)&#123;</span><br><span class="line">    digits.<span class="built_in">push_back</span>(n % r);</span><br><span class="line">    n /= r;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">reverse</span>(digits.<span class="built_in">begin</span>(), digits.<span class="built_in">end</span>());<span class="comment">//获取是从后往前,因此需要反转再输出</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>基础数学知识</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++基础笔记5</title>
+    <url>/2024/10/15/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B05/</url>
     <content><![CDATA[<h1 id="STL"><a href="#STL" class="headerlink" title="STL"></a>STL</h1><h2 id="初步介绍"><a href="#初步介绍" class="headerlink" title="初步介绍"></a>初步介绍</h2><p>STL(Standard Template Library)，C++标准库的一部分，可以帮助我们处理常见的数据结构和算法。容器是STL的重要组成部分，用于存储和组织数据的对象。</p>
 <h1 id="vertor"><a href="#vertor" class="headerlink" title="vertor"></a>vertor</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><strong>动态数据容器</strong>：相比于数组在一开始就申明了大小，vector无需再申明时确定大小，可以做到动态调整容量，所以称之为动态数组</p>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
@@ -734,12 +750,32 @@
 <li>或者用花括号像数组一样定义初始值<code>vector&lt;int&gt; v2&#123;1, 2, 3&#125;</code></li>
 <li>还可以用另一个vector进行初始化<code>vector&lt;int&gt; v3(v1);</code></li>
 </ul>
-<h3 id="二维数组初始化"><a href="#二维数组初始化" class="headerlink" title="二维数组初始化"></a>二维数组初始化</h3><ul>
-<li>二维vector初始化同理<code>vector&lt;vector&lt;int&gt;&gt; v4(2, vector&lt;int&gt;(8,3));</code>但由于元素是<code>vector&lt;int&gt;</code>,所以初始化参数也需要相应的改成<code>vector&lt;int&gt;</code>的初始值</li>
-<li>利用C++的auto自动类型推导,可以更方便的进行多维vector的初始化</li>
-</ul>
-<p>==如果初始化申明了vector的大小,就不用每次都用push_back挨个将数据丢入容器内,可以使用范围循环,和数组一样方便的进行数据输入==</p>
+<p>==如果初始化申明了vector的大小,就不用每次都用push_back挨个将数据丢入容器内,可以使用范围循环,和数组一<strong>样方便的进行数据输入==</strong></p>
+<p><strong>利用C++的auto自动类型推导,可以更方便的进行多维vector的初始化</strong></p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">v0</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span>&amp; x: v0)&#123;</span><br><span class="line">    cin &gt;&gt; x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="多维vector"><a href="#多维vector" class="headerlink" title="多维vector"></a>多维vector</h1><blockquote>
+<p>引用于<strong>sunny—ll</strong>的文章</p>
+<p><a href="https://xas-sunny.blog.csdn.net/">https://xas-sunny.blog.csdn.net/</a></p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>vector&lt;vector&lt;int&gt;&gt; table(size1, vector&lt;int&gt;(size2, 0));</code></p>
+<p> <strong>代码说明：声明一个名为 table 的容器，其元素为 vector的容器。简单来说类似一个int型的二维数组</strong></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/9f8090f5e8570d6ec09df71b46f71b87.png" alt="img"></p>
+<p><strong>具体可理解如下</strong></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/ac917a95e3714d5a2f02c3b83eccc994.png" alt="img"></p>
+<p>图中，我将外围容器table的初始化参数分成了两部分 <strong><em>\</em>A、B**</strong> </p>
+<ul>
+<li><strong>A:</strong> table外围容器的大小</li>
+<li><strong>B:</strong> table外围容器的内容，即 size1个vector型的元素。</li>
+<li><strong>B1</strong>：内部容器的大小</li>
+<li><strong>B2</strong>：内部容器的内容</li>
+</ul>
+<h2 id="vector-二维数组的-初始化"><a href="#vector-二维数组的-初始化" class="headerlink" title="vector 二维数组的 初始化"></a>vector 二维数组的 初始化</h2><h3 id="直接初始化"><a href="#直接初始化" class="headerlink" title="直接初始化"></a>直接初始化</h3><p>首先，要先知道：<strong>二维 vector</strong>如何获得行数和列数。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">a</span>(r, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(c))；</span><br><span class="line"><span class="type">int</span> row = a.<span class="built_in">size</span>();          <span class="comment">//获取行数</span></span><br><span class="line"><span class="type">int</span> column = a[<span class="number">0</span>].<span class="built_in">size</span>();    <span class="comment">//获取列数</span></span><br><span class="line"><span class="comment">// （1）下面定义的是行为r，列为c的二维数组</span></span><br><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">ans</span>(r, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(c));</span><br><span class="line"><span class="comment">// （2）下面定义的是行为r，列为c的二维数组，初始值为0</span></span><br><span class="line">vector&lt; vector&lt;<span class="type">int</span>&gt; &gt; <span class="built_in">a</span>(r, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(c, <span class="number">0</span>)); </span><br><span class="line"><span class="comment">//	对每行的列进行操作</span></span><br><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;<span class="built_in">mat</span>(r);<span class="comment">//每行的定义</span></span><br><span class="line">mat[i].<span class="built_in">push_back</span>(<span class="number">1</span>);<span class="comment">//这就是该第i-1行的插入一个元素，值为1</span></span><br></pre></td></tr></table></figure>
+<h3 id="用resize来提前构建"><a href="#用resize来提前构建" class="headerlink" title="用resize来提前构建"></a>用resize来提前构建</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">new_mat</span>(r);<span class="comment">//注意这个r是不可缺少的，规定其有多少行</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span> ;i&lt;r; i++) <span class="comment">//二维vector的初始化时有要求的</span></span><br><span class="line">&#123;</span><br><span class="line">   new_mat[i].<span class="built_in">resize</span>(c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="vector-二维数组的-添加与删除"><a href="#vector-二维数组的-添加与删除" class="headerlink" title="vector 二维数组的 添加与删除"></a><strong>vector 二维数组的 添加与删除</strong></h2><h3 id="添加一行"><a href="#添加一行" class="headerlink" title="添加一行"></a>添加一行</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//插入一行数组：将in_row数组插入到第2行！ </span></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">in_row</span><span class="params">(<span class="number">5</span>,<span class="number">6</span>)</span></span>;<span class="comment">//初始化一个数组，包含5个元素并且全为6</span></span><br><span class="line">a.<span class="built_in">insert</span>(a.<span class="built_in">begin</span>()<span class="number">+2</span>,in_row);</span><br></pre></td></tr></table></figure>
+<h3 id="添加一列"><a href="#添加一列" class="headerlink" title="添加一列"></a>添加一列</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;a.<span class="built_in">size</span>();i++)</span><br><span class="line">&#123;</span><br><span class="line">	a[i].<span class="built_in">insert</span>(a[i].<span class="built_in">begin</span>()<span class="number">+2</span>,<span class="number">9</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除一行"><a href="#删除一行" class="headerlink" title="删除一行"></a>删除一行</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">a.<span class="built_in">erase</span>(a.<span class="built_in">begin</span>() + <span class="number">2</span>, a.<span class="built_in">begin</span>() + <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="删除一列"><a href="#删除一列" class="headerlink" title="删除一列"></a>删除一列</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//删除a的第二列</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; a.<span class="built_in">size</span>(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		a[i].<span class="built_in">erase</span>(a[i].<span class="built_in">begin</span>() + <span class="number">2</span>, a[i].<span class="built_in">begin</span>() + <span class="number">3</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="vector高级能力"><a href="#vector高级能力" class="headerlink" title="vector高级能力"></a><strong>vector</strong>高级能力</h1><p><strong>赋值运算&amp;比较运算</strong></p>
 <p>可以将一个vector直接赋值给另一个vector</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; v0&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; v1;</span><br><span class="line">v1 = v0;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; v2&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>&#125;;</span><br><span class="line">v0 &lt; v2;</span><br></pre></td></tr></table></figure>
@@ -771,22 +807,6 @@
       </categories>
       <tags>
         <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法基础数学知识1</title>
-    <url>/2024/10/19/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%86/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%861/</url>
-    <content><![CDATA[<h2 id="数论—反复取模"><a href="#数论—反复取模" class="headerlink" title="数论—反复取模"></a>数论—反复取模</h2><p>判断a的b次方末尾3位数</p>
-<p>在计算时可在每次乘a时对1000取模,根据<del>高深的</del>数论知识,结果不影响</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(b --)&#123;</span><br><span class="line">       res *= a;</span><br><span class="line">       res %= <span class="number">1000</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="R进制转换"><a href="#R进制转换" class="headerlink" title="R进制转换"></a>R进制转换</h2><p>对数字进行R进制转换,可用该数字对R取模得到个位,再除以R,再次取模,反复操作以获取各个位置的数,存储于vector中再进行输入</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(n)&#123;</span><br><span class="line">    digits.<span class="built_in">push_back</span>(n % r);</span><br><span class="line">    n /= r;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">reverse</span>(digits.<span class="built_in">begin</span>(), digits.<span class="built_in">end</span>());<span class="comment">//获取是从后往前,因此需要反转再输出</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>基础数学知识</tag>
       </tags>
   </entry>
 </search>
