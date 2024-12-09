@@ -505,9 +505,9 @@
   </entry>
   <entry>
     <title>Click Here!</title>
-    <url>/2024/10/05/TEST/</url>
+    <url>/3000/01/01/TEST/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="5b4d6948b1cd16c5827df6df502a5bf690a5f5d44081db1d7314f7aa324d526b">c17fd90da575e10a463004871515efa2dcdf1281755d4e115baa775048b6b2daaae792c295ac4fc3361953e2b844bb9c32750ee098ec676533fa081773b096f2f7cf71e15e1737b154bff83db539c05b</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="e0cecbe5fa30fd7b007cc804006aafce27e803f2948ef3a1b5f99be9889f76d8">4630436162ade97ba2718b7d0c4b3b632668badcdd48df7162584188973ee5bd28d29a4b45390574b5943fc7432874ae7f62df632096a79b9b0ae521482e202fdb7048bfe3f19ccd4f1a9b0b7b3303cf69786d1a06d52742ac7fd0d3e08f6738ae81d260154c4a7263abc6b9a9ed636e</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
@@ -628,12 +628,16 @@
 </li>
 <li><p>定义<code>const int PLAYER_ANIM_NUM = 6;</code></p>
 </li>
-<li><p>使动画循环播放,可书写下列代码</p>
+<li>使动画循环播放,可书写下列代码</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (++counter % <span class="number">5</span> == <span class="number">0</span>)</span><br><span class="line">	index_current_anim++;</span><br><span class="line"></span><br><span class="line">index_current_anim = index_current_anim % PLAYER_ANIM_NUM;</span><br></pre></td></tr></table></figure>
+<h3 id="动画的渲染"><a href="#动画的渲染" class="headerlink" title="动画的渲染"></a>动画的渲染</h3><p>首先将每一张图片加载到程序中</p>
+<ul>
+<li><p>定义IMAGE对象数组</p>
+<p><code>IMAGE img_player_left[PLAYER_ANIM_NUM];</code><br><code>IMAGE img_player_right[PLAYER_ANIM_NUM];</code></p>
 </li>
-<li><p>```c++<br>if (++counter % 5 == 0)</p>
-<pre><code>index_current_anim++;
-</code></pre><p>index_current_anim = index_current_anim % PLAYER_ANIM_NUM;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">### 动画的渲染</span><br><span class="line"></span><br><span class="line">首先将每一张图片加载到程序中</span><br><span class="line"></span><br><span class="line">- 定义IMAGE对象数组</span><br><span class="line"></span><br><span class="line">  `IMAGE img_player_left[PLAYER_ANIM_NUM];`</span><br><span class="line">  `IMAGE img_player_right[PLAYER_ANIM_NUM];`</span><br><span class="line"></span><br><span class="line">- 图片命名十分有规律可使用循环来加载图片.在使用Unicode字符集的情况下,可以使用wstring来拼凑出文件的路径,再传递给loadimage函数,将图片传递到数组中</span><br><span class="line"></span><br><span class="line">  ```c++</span><br><span class="line">  void LoadAnimation()</span><br><span class="line">  &#123;</span><br><span class="line">  	for (size_t i = 0; i &lt; PLAYER_ANIM_NUM; i++)</span><br><span class="line">  	&#123;</span><br><span class="line">  		std::wstring path = L&quot;img/paimon_left_&quot; + std::to_wstring(i) + L&quot;.png&quot;;</span><br><span class="line">  		loadimage(&amp;img_paimon_left[i], path.c_str());</span><br><span class="line">  	&#125;</span><br><span class="line">  	for (size_t i = 0; i &lt; PLAYER_ANIM_NUM; i++)</span><br><span class="line">  	&#123;</span><br><span class="line">  		std::wstring path = L&quot;img/paimon_right_&quot; + std::to_wstring(i) + L&quot;.png&quot;;</span><br><span class="line">  		loadimage(&amp;img_paimon_right[i], path.c_str());</span><br><span class="line">  	&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<li><p>图片命名十分有规律可使用循环来加载图片.在使用Unicode字符集的情况下,可以使用wstring来拼凑出文件的路径,再传递给loadimage函数,将图片传递到数组中</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">LoadAnimation</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; PLAYER_ANIM_NUM; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		std::wstring path = <span class="string">L&quot;img/paimon_left_&quot;</span> + std::<span class="built_in">to_wstring</span>(i) + <span class="string">L&quot;.png&quot;</span>;</span><br><span class="line">		<span class="built_in">loadimage</span>(&amp;img_paimon_left[i], path.<span class="built_in">c_str</span>());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; PLAYER_ANIM_NUM; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		std::wstring path = <span class="string">L&quot;img/paimon_right_&quot;</span> + std::<span class="built_in">to_wstring</span>(i) + <span class="string">L&quot;.png&quot;</span>;</span><br><span class="line">		<span class="built_in">loadimage</span>(&amp;img_paimon_right[i], path.<span class="built_in">c_str</span>());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>之前定义的动画帧索引此时边可以直接当做IMAGE数组的索引来使用</p>
 <p><code>putimage(500, 500, &amp;img_paimon_left[index_current_anim]);</code></p>
 </li>
@@ -1267,8 +1271,59 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2024/11/18/%E7%AE%97%E6%B3%95/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/</url>
+    <title>贪心算法 （greedy algorithm）</title>
+    <url>/2024/10/02/%E7%AE%97%E6%B3%95/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h1><h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul>
+<li><strong>贪心选择性质</strong>：只有当局部最优选择始终可以导致全局最优解时，贪心算法才能保证得到最优解。</li>
+<li><strong>最优子结构</strong>：原问题的最优解包含子问题的最优解。</li>
+</ul>
+<h2 id="集体流程"><a href="#集体流程" class="headerlink" title="集体流程"></a>集体流程</h2><p>贪心问题的解决流程大体可分为以下三步。</p>
+<ol>
+<li><strong>问题分析</strong>：梳理与理解问题特性，包括状态定义、优化目标和约束条件等。这一步在回溯和动态规划中都有涉及。</li>
+<li><strong>确定贪心策略</strong>：确定如何在每一步中做出贪心选择。这个策略能够在每一步减小问题的规模，并最终解决整个问题。</li>
+<li><strong>正确性证明</strong>：通常需要证明问题具有贪心选择性质和最优子结构。这个步骤可能需要用到数学证明，例如归纳法或反证法等。</li>
+</ol>
+<p>确定贪心策略是求解问题的核心步骤，但实施起来可能并不容易，主要有以下原因。</p>
+<ul>
+<li><strong>不同问题的贪心策略的差异较大</strong>。对于许多问题来说，贪心策略比较浅显，我们通过一些大概的思考与尝试就能得出。而对于一些复杂问题，贪心策略可能非常隐蔽，这种情况就非常考验个人的解题经验与算法能力了。</li>
+<li><strong>某些贪心策略具有较强的迷惑性</strong>。当我们满怀信心设计好贪心策略，写出解题代码并提交运行，很可能发现部分测试样例无法通过。这是因为设计的贪心策略只是“部分正确”的，上文介绍的零钱兑换就是一个典型案例。</li>
+</ul>
+<p>为了保证正确性，我们应该对贪心策略进行严谨的数学证明，<strong>通常需要用到反证法或数学归纳法</strong>。</p>
+<p>然而，正确性证明也很可能不是一件易事。如若没有头绪，我们通常会选择面向测试用例进行代码调试，一步步修改与验证贪心策略。</p>
+<h2 id="贪心算法典型例题"><a href="#贪心算法典型例题" class="headerlink" title="贪心算法典型例题"></a>贪心算法典型例题</h2><p>贪心算法常常应用在满足贪心选择性质和最优子结构的优化问题中，以下列举了一些典型的贪心算法问题。</p>
+<ul>
+<li><strong>硬币找零问题</strong>：在某些硬币组合下，贪心算法总是可以得到最优解。</li>
+<li><strong>区间调度问题</strong>：假设你有一些任务，每个任务在一段时间内进行，你的目标是完成尽可能多的任务。如果每次都选择结束时间最早的任务，那么贪心算法就可以得到最优解。</li>
+<li><strong>分数背包问题</strong>：给定一组物品和一个载重量，你的目标是选择一组物品，使得总重量不超过载重量，且总价值最大。如果每次都选择性价比最高（价值 / 重量）的物品，那么贪心算法在一些情况下可以得到最优解。</li>
+<li><strong>股票买卖问题</strong>：给定一组股票的历史价格，你可以进行多次买卖，但如果你已经持有股票，那么在卖出之前不能再买，目标是获取最大利润。</li>
+<li><strong>霍夫曼编码</strong>：霍夫曼编码是一种用于无损数据压缩的贪心算法。通过构建霍夫曼树，每次选择出现频率最低的两个节点合并，最后得到的霍夫曼树的带权路径长度（编码长度）最小。</li>
+<li><strong>Dijkstra 算法</strong>：它是一种解决给定源顶点到其余各顶点的最短路径问题的贪心算法。</li>
+</ul>
+<h1 id="题型"><a href="#题型" class="headerlink" title="题型"></a>题型</h1>]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>C++基础笔记8</title>
+    <url>/2024/11/27/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B08/</url>
     <content><![CDATA[]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>模拟算法</title>
+    <url>/2024/10/02/%E7%AE%97%E6%B3%95/%E6%A8%A1%E6%8B%9F%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<p>由于c++各类型存储都有一定的范围限制，因此在处理大数子的计算上需要使用到模拟算法，采用小学学过的模拟竖式的思想进行计算</p>
+<h1 id="高精度加法"><a href="#高精度加法" class="headerlink" title="高精度加法"></a>高精度加法</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    string s1,s2;</span><br><span class="line">    <span class="type">int</span> a1[<span class="number">210</span>],a2[<span class="number">210</span>],a3[<span class="number">210</span>]=&#123;&#125;;</span><br><span class="line">    <span class="built_in">getline</span>(cin,s1);</span><br><span class="line">    <span class="built_in">getline</span>(cin,s2);</span><br><span class="line">    <span class="comment">//存储在数组中依次相加存储在a3中(过程省略)</span></span><br><span class="line">    <span class="comment">//下面是处理进位的代码</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; len; i ++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(a3[i] &gt; <span class="number">10</span>)&#123;</span><br><span class="line">            a3[i<span class="number">+1</span>] = a3[i<span class="number">+1</span>] + a3[i] / <span class="number">10</span>;</span><br><span class="line">            a3[i] = a3[i] % <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        a3[i] = a1[i] + a2[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//逆序输出a3得到结果</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="高精度减法"><a href="#高精度减法" class="headerlink" title="高精度减法"></a>高精度减法</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//初始化相同</span></span><br><span class="line">    <span class="comment">//下面处理借位相减的过程</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; len;i ++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(a1[i] &lt; a2[i])&#123;</span><br><span class="line">            a1[i] += <span class="number">10</span>;</span><br><span class="line">            a1[i<span class="number">+1</span>] -= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        a3[i] = a1[i] - a2[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//输出同理,定义flag判断结果的正负性</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
   </entry>
 </search>
