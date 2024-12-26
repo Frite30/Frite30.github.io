@@ -545,6 +545,21 @@
 <p><img src="E:\Blog\source\img\fixed pre format.png" alt="fixed pre format"></p>
 <h4 id="输出宽度-2"><a href="#输出宽度-2" class="headerlink" title="输出宽度"></a>输出宽度</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">cout &lt;&lt; format(<span class="string">&quot;&#123;:&gt;7&#125;|&quot;</span>, d) &lt;&lt; endl;</span><br><span class="line"><span class="comment">// &gt;右对齐 &lt;左对齐 ^居中对齐</span></span><br></pre></td></tr></table></figure>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="E:\Blog\source\img\sum up.png" alt="sum up"></p>
+<h2 id="补充sprintf"><a href="#补充sprintf" class="headerlink" title="补充sprintf"></a>补充<code>sprintf</code></h2><p><code>sprintf</code> 是一个在 C 和 C++ 语言中使用的函数，它属于标准库中的输入/输出部分。<code>sprintf</code> 函数的作用是将格式化的数据写入一个字符串中，类似于 <code>printf</code> 函数，但它将输出写入一个字符串变量而不是直接输出到控制台。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sprintf</span><span class="params">(<span class="type">char</span> *str, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>str</code>：指向目标字符串的指针，<code>sprintf</code> 会将格式化后的字符串存储在这里。</li>
+<li><code>format</code>：格式化字符串，它指定了后续参数如何被格式化和插入到最终的字符串中。</li>
+<li><code>...</code>：可变参数列表，这些参数将根据 <code>format</code> 字符串中的格式说明符被格式化并插入到字符串中。</li>
+</ul>
+<p><code>sprintf</code> 的使用示例：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> buffer[<span class="number">100</span>];</span><br><span class="line"><span class="type">int</span> num = <span class="number">42</span>;</span><br><span class="line"><span class="built_in">sprintf</span>(buffer, <span class="string">&quot;The answer is %d&quot;</span>, num);</span><br><span class="line"><span class="comment">// 此时 buffer 包含了字符串 &quot;The answer is 42&quot;</span></span><br></pre></td></tr></table></figure>
+<p>在上面的例子中，<code>%d</code> 是一个格式说明符，它告诉 <code>sprintf</code> 将一个整数转换成字符串并插入到 <code>buffer</code> 中。</p>
+<p>在下面这个例子，<code>sprintf</code>很好的处理的时间点小于0的问题，将3:30补充为03：30。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">string <span class="title">getstr</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">3</span>];</span><br><span class="line">    <span class="built_in">sprintf</span>(buf, <span class="string">&quot;%02d&quot;</span>, a);</span><br><span class="line">    <span class="function">string <span class="title">h</span><span class="params">(buf)</span></span>;</span><br><span class="line">    <span class="built_in">sprintf</span>(buf, <span class="string">&quot;%02d&quot;</span>, b);</span><br><span class="line">    <span class="function">string <span class="title">m</span><span class="params">(buf)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> h + <span class="string">&quot;:&quot;</span> + m;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，<code>sprintf</code> 存在安全风险，因为它可能导致缓冲区溢出，如果格式化后的字符串长度超过了 <code>buffer</code> 的大小。因此，在实际编程中，推荐使用 <code>snprintf</code> 函数，它允许你指定目标缓冲区的最大长度，从而避免溢出：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">snprintf</span><span class="params">(<span class="type">char</span> *str, <span class="type">size_t</span> size, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br></pre></td></tr></table></figure>
+<p><code>size</code> 参数指定了 <code>str</code> 缓冲区的最大长度，<code>snprintf</code> 会在达到这个长度之前停止写入，并且总是以空字符结尾。这样可以更安全地避免缓冲区溢出的问题。</p>
 ]]></content>
       <categories>
         <category>C++学习笔记</category>
@@ -1072,7 +1087,45 @@
 <p>同样如果传递数组不带引用符号的话,数组会发生隐式转换变成<strong>指针类型</strong></p>
 <p>(<code>typeid</code>函数可获取数据类型)</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">forward</span><span class="params">(<span class="keyword">auto</span> &amp;arr)</span></span>;<span class="comment">//使用auto是比较危险的行为但可做题小范围使用</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">forward</span><span class="params">(<span class="type">int</span> (&amp;arr)[<span class="number">3</span>])</span></span>; <span class="comment">//要声明具体长度</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="type">size_t</span> N&gt;<span class="comment">//模板,C++高级特性</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">forward</span><span class="params">(<span class="type">int</span> (&amp;arr)[N])</span></span>;</span><br></pre></td></tr></table></figure>
-<h1 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a><code>main</code>函数</h1>]]></content>
+<h1 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a><code>main</code>函数</h1><h1 id="Lambda-函数"><a href="#Lambda-函数" class="headerlink" title="Lambda 函数"></a>Lambda 函数</h1><p>Lambda 函数（也称为匿名函数或 lambda 表达式）是 C++11 及以后版本中引入的一种方便的语法结构，它允许你在不定义传统函数的情况下创建函数对象。Lambda 函数通常用于简短的、一次性的函数，或者作为参数传递给算法，如 <code>std::sort</code>、<code>std::for_each</code> 等。</p>
+<p>Lambda 函数的基本语法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">[capture](parameters) -&gt; return_type &#123; function_body &#125;</span><br></pre></td></tr></table></figure>
+<p>其中各个部分的含义如下：</p>
+<ol>
+<li><strong>捕获子句（capture clause）</strong> <code>[capture]</code>：<ul>
+<li>指定了 lambda 函数从封闭作用域（通常是包含它的函数）中捕获哪些变量。</li>
+<li>可以捕获变量的值 <code>[=]</code> 或引用 <code>[&amp;]</code>，也可以通过名称 <code>[a, &amp;b]</code> 指定特定的变量捕获。</li>
+<li>如果不需要捕获任何变量，可以省略捕获子句。</li>
+</ul>
+</li>
+<li><strong>参数列表（parameter list）</strong> <code>(parameters)</code>：<ul>
+<li>指定了 lambda 函数的参数，类似于传统函数的参数列表。</li>
+<li>如果没有参数，可以省略参数列表，或者使用空括号 <code>()</code>。</li>
+</ul>
+</li>
+<li><strong>返回类型（return type）</strong> <code>-&gt; return_type</code>：<ul>
+<li>指定了 lambda 函数的返回类型。</li>
+<li>如果 lambda 函数的返回类型可以由编译器推断，可以省略返回类型。</li>
+</ul>
+</li>
+<li><strong>函数体（function body）</strong> <code>&#123; function_body &#125;</code>：<ul>
+<li>包含了 lambda 函数的执行代码，类似于传统函数的函数体。</li>
+</ul>
+</li>
+</ol>
+<p>以下是一些 lambda 函数的例子：</p>
+<p><strong>例子 1：无参数，无返回值</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">[]() &#123; std::cout &lt;&lt; <span class="string">&quot;Hello, World!&quot;</span> &lt;&lt; std::endl; &#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>例子 2：有参数，无返回值</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">[](<span class="type">int</span> x, <span class="type">int</span> y) &#123; std::cout &lt;&lt; <span class="string">&quot;Sum: &quot;</span> &lt;&lt; x + y &lt;&lt; std::endl; &#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>例子 3：有参数，有返回值</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">[](<span class="type">int</span> x, <span class="type">int</span> y) -&gt; <span class="type">int</span> &#123; <span class="keyword">return</span> x + y; &#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>例子 4：捕获外部变量</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">auto</span> lambda = [a]() &#123; std::cout &lt;&lt; <span class="string">&quot;a: &quot;</span> &lt;&lt; a &lt;&lt; std::endl; &#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>例子 5：捕获外部变量并修改</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">auto</span> lambda = [&amp;a]() &#123; a = <span class="number">20</span>; &#125;;</span><br><span class="line"><span class="built_in">lambda</span>(); <span class="comment">// 修改外部变量 a 的值</span></span><br></pre></td></tr></table></figure>
+<p>Lambda 函数可以被存储在变量中，作为参数传递给函数，或者直接在需要的地方使用。它们是现代 C++ 编程中非常灵活和强大的工具。</p>
+]]></content>
       <categories>
         <category>C++学习笔记</category>
       </categories>
@@ -1129,6 +1182,14 @@
 <li><strong>第三个迭代器</strong>：指向序列中最后一个元素的迭代器</li>
 </ul>
 <h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>请注意，<code>std::rotate</code> 的时间复杂度是 O(n)，其中 n 是序列中元素的数量，因为它需要移动所有元素。对于大型数据集，这可能会有性能影响</p>
+<h2 id="max-element"><a href="#max-element" class="headerlink" title="max_element"></a><code>max_element</code></h2><p><strong>请注意，<code>max_element</code> 返回的是一个迭代器指向最大元素的位置，而不是最大元素的值。如果你需要最大元素的值，可以通过解引用迭代器（<code>*max_iter</code>）来获取。</strong></p>
+<p><code>max_element</code> 是 C++ 标准库中的一个函数模板，它用于在给定的范围内查找最大元素。这个函数定义在 <code>&lt;algorithm&gt;</code> 头文件中。<code>max_element</code> 接受三个参数：</p>
+<ol>
+<li><code>first</code>：指向范围开始的迭代器。</li>
+<li><code>last</code>：指向范围结束的迭代器（不包含在内）。</li>
+<li><code>comp</code>：（可选）一个比较函数或函数对象，用于比较两个元素，返回 <code>true</code> 如果第一个参数应该被认为大于第二个参数。</li>
+</ol>
+<p>如果不提供比较函数，<code>max_element</code> 将使用 <code>operator&lt;</code> 来比较元素，这意味着它将找到数值上最大的元素。</p>
 ]]></content>
       <categories>
         <category>算法</category>
@@ -1187,9 +1248,9 @@
 </ul>
 <h2 id="选择排序（Selection-Sort）"><a href="#选择排序（Selection-Sort）" class="headerlink" title="选择排序（Selection Sort）"></a>选择排序（Selection Sort）</h2><h3 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h3><p><strong>选择排序（Selection Sort)</strong>  开启一个循环，每轮从未排序区间选择最小的元素，将其放到已排序区间的末尾。</p>
 <h3 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h3><ul>
-<li>初始状态下，所有元素未排序，即未排序（索引）区间为 [0,n−1] </li>
-<li>选取区间 [0,n−1] 中的最小元素，将其与索引 0 处的元素交换。完成后，数组前 1 个元素已排序。</li>
-<li>选取区间 [1,n−1] 中的最小元素，将其与索引 1 处的元素交换。完成后，数组前 2 个元素已排序。</li>
+<li>初始状态下，所有元素未排序，即未排序（索引）区间为 [0, n−1] </li>
+<li>选取区间 [0, n−1] 中的最小元素，将其与索引 0 处的元素交换。完成后，数组前 1 个元素已排序。</li>
+<li>选取区间 [1, n−1] 中的最小元素，将其与索引 1 处的元素交换。完成后，数组前 2 个元素已排序。</li>
 <li>以此类推。经过 n−1 轮选择与交换后，数组前 n−1 个元素已排序。</li>
 <li>仅剩的一个元素必定是最大元素，无须排序，因此数组排序完成。</li>
 </ul>
@@ -1199,7 +1260,7 @@
 <li><strong>空间复杂度为 O(1)、原地排序</strong>：指针 i 和 j 使用常数大小的额外空间。</li>
 <li><strong>非稳定排序</strong>：如图 11-3 所示，元素 <code>nums[i]</code> 有可能被交换至与其相等的元素的右边，导致两者的相对顺序发生改变。</li>
 </ul>
-<h2 id="插入排序（Insertion-Sort）"><a href="#插入排序（Insertion-Sort）" class="headerlink" title="插入排序（Insertion Sort）"></a>插入排序（Insertion Sort）</h2><h3 id="介绍-3"><a href="#介绍-3" class="headerlink" title="介绍"></a>介绍</h3><h3 id="算法流程-2"><a href="#算法流程-2" class="headerlink" title="算法流程"></a>算法流程</h3><h3 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h3><h3 id="算法特性-2"><a href="#算法特性-2" class="headerlink" title="算法特性"></a>算法特性</h3><h2 id="快速排序（Quick-Sort）"><a href="#快速排序（Quick-Sort）" class="headerlink" title="快速排序（Quick Sort）"></a>快速排序（Quick Sort）</h2><h2 id="归并排序（Merge-Sort）"><a href="#归并排序（Merge-Sort）" class="headerlink" title="归并排序（Merge Sort）"></a>归并排序（Merge Sort）</h2><h2 id="希尔排序（Shell-Sort）"><a href="#希尔排序（Shell-Sort）" class="headerlink" title="希尔排序（Shell Sort）"></a>希尔排序（Shell Sort）</h2><h2 id="堆排序（Heap-Sort）"><a href="#堆排序（Heap-Sort）" class="headerlink" title="堆排序（Heap Sort）"></a>堆排序（Heap Sort）</h2><h1 id="非比较排序算法"><a href="#非比较排序算法" class="headerlink" title="非比较排序算法"></a>非比较排序算法</h1><h2 id="桶排序（bucket-sort）"><a href="#桶排序（bucket-sort）" class="headerlink" title="桶排序（bucket sort）"></a>桶排序（bucket sort）</h2><h3 id="介绍-4"><a href="#介绍-4" class="headerlink" title="介绍"></a>介绍</h3><p><strong>桶排序（bucket sort）</strong>是分治策略的一个典型应用。它通过设置一些具有大小顺序的桶，每个桶对应一个数据范围，将数据平均分配到各个桶中；然后，在每个桶内部分别执行排序；最终按照桶的顺序将所有数据合并。</p>
+<h2 id="插入排序（Insertion-Sort）"><a href="#插入排序（Insertion-Sort）" class="headerlink" title="插入排序（Insertion Sort）"></a>插入排序（Insertion Sort）</h2><h3 id="介绍-3"><a href="#介绍-3" class="headerlink" title="介绍"></a>介绍</h3><h3 id="算法流程-2"><a href="#算法流程-2" class="headerlink" title="算法流程"></a>算法流程</h3><h3 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h3><h3 id="算法特性-2"><a href="#算法特性-2" class="headerlink" title="算法特性"></a>算法特性</h3><h2 id="快速排序（Quick-Sort）"><a href="#快速排序（Quick-Sort）" class="headerlink" title="快速排序（Quick Sort）"></a>快速排序（Quick Sort）</h2><h2 id="归并排序（Merge-Sort）"><a href="#归并排序（Merge-Sort）" class="headerlink" title="归并排序（Merge Sort）"></a>归并排序（Merge Sort）</h2><h2 id="希尔排序（Shell-Sort）"><a href="#希尔排序（Shell-Sort）" class="headerlink" title="希尔排序（Shell Sort）"></a>希尔排序（Shell Sort）</h2><h2 id="堆排序（Heap-Sort）"><a href="#堆排序（Heap-Sort）" class="headerlink" title="堆排序（Heap Sort）"></a>堆排序（Heap Sort）</h2><h1 id="非比较排序算法"><a href="#非比较排序算法" class="headerlink" title="非比较排序算法"></a>非比较排序算法</h1><h2 id="桶排序（bucket-sort）"><a href="#桶排序（bucket-sort）" class="headerlink" title="桶排序（bucket sort）"></a>桶排序（bucket sort）</h2><h3 id="介绍-4"><a href="#介绍-4" class="headerlink" title="介绍"></a>介绍</h3><p><strong>桶排序（bucket sort）</strong> 是分治策略的一个典型应用。它通过设置一些具有大小顺序的桶，每个桶对应一个数据范围，将数据平均分配到各个桶中；然后，在每个桶内部分别执行排序；最终按照桶的顺序将所有数据合并。</p>
 <h3 id="算法流程-3"><a href="#算法流程-3" class="headerlink" title="算法流程"></a>算法流程</h3><p>考虑一个长度为 n 的数组，其元素是范围 [0,1) 内的浮点数</p>
 <ul>
 <li><p>初始化 k 个桶，将 n 个元素分配到 k 个桶中。</p>
@@ -1255,6 +1316,9 @@
 <li>f ( N , M ) 表示，N个人报数，每报到M时杀掉那个人，最终胜利者的编号</li>
 <li>f ( N − 1 , M )表示，N-1个人报数，每报到M时杀掉那个人，最终胜利者的编号</li>
 </ul>
+<p><strong>你提到的情况其实是约瑟夫问题的经典部分。我们需要确保即使有人被淘汰，计算出的淘汰顺序也不会出错，特别是那些被淘汰后索引位置的调整</strong>。</p>
+<h2 id="简单模拟"><a href="#简单模拟" class="headerlink" title="简单模拟"></a>简单模拟</h2><p>12个人围坐成一圈（编号顺时针方向依次为1-12），沿顺时针方向从1号开始数，当数到k时，则k号被淘汰，接着从k号下一位继续从1开始数，数到k时淘汰第二人，以此类推，直至剩下最后一人，输出最后一人的编号及每一轮的结果。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span> </span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> k;</span><br><span class="line">  cin &gt;&gt; k;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">survive</span><span class="params">(<span class="number">12</span>)</span></span>;</span><br><span class="line">  <span class="built_in">fill</span>(survive.<span class="built_in">begin</span>(),survive.<span class="built_in">end</span>(), <span class="number">1</span>);</span><br><span class="line">  <span class="type">int</span> current = <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; <span class="number">11</span>;i ++)&#123;</span><br><span class="line">    <span class="keyword">while</span>(k != cnt)&#123;</span><br><span class="line">      <span class="keyword">if</span>(survive[current] == <span class="number">1</span>)&#123;</span><br><span class="line">        cnt ++;</span><br><span class="line">      &#125; </span><br><span class="line">      <span class="keyword">if</span> (cnt != k) &#123;  </span><br><span class="line">        current = (current + <span class="number">1</span>) % <span class="number">12</span>; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    survive[current] = <span class="number">0</span>;</span><br><span class="line">    current = (current + <span class="number">1</span>) % <span class="number">12</span>;</span><br><span class="line">    cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>;j &lt; <span class="number">12</span>;j ++)&#123;</span><br><span class="line">      <span class="keyword">if</span>(survive[j] == <span class="number">1</span>) cout &lt;&lt; j + <span class="number">1</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">      <span class="keyword">else</span> cout &lt;&lt; <span class="number">0</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>;j &lt; <span class="number">12</span>;j ++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(survive[j] == <span class="number">1</span>) cout &lt;&lt; j + <span class="number">1</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>算法</category>
@@ -1325,5 +1389,48 @@
       <categories>
         <category>算法</category>
       </categories>
+  </entry>
+  <entry>
+    <title>C++基础笔记9</title>
+    <url>/2024/12/21/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B09/</url>
+    <content><![CDATA[<h1 id="纯数据结构体"><a href="#纯数据结构体" class="headerlink" title="纯数据结构体"></a>纯数据结构体</h1><h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p>作用：将多个类型聚合成一个整体成为一个新类型</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span>&#123;</span><br><span class="line">    <span class="type">int</span> score;</span><br><span class="line">    string name;<span class="comment">//成员变量</span></span><br><span class="line">&#125;;</span><br><span class="line">Student stu, stus[<span class="number">100</span>];</span><br><span class="line">Student* pstu = <span class="keyword">new</span> Student;</span><br><span class="line"><span class="comment">//可以像普通类型一样声明定义的变量,单个变量或者数组都可以</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span>&#123;</span><br><span class="line">    <span class="type">int</span> score;</span><br><span class="line">    string name;<span class="comment">//成员变量</span></span><br><span class="line">&#125; stu, stus[<span class="number">10</span>];<span class="comment">//定义也可以直接在结构后面跟上变量名(匿名结构体)</span></span><br><span class="line"><span class="comment">//由于没有起名不可以正常的定义其他变量，但可以通过C++11增加的decltype关键字获取</span></span><br><span class="line"><span class="comment">//例如 decltype(Stu) stu2;</span></span><br></pre></td></tr></table></figure>
+<p>访问成员变量只需要用<code>stu.score</code> <code>stu.name</code></p>
+<p>使用举例eg</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span>&#123;</span><br><span class="line">    <span class="type">int</span> score;</span><br><span class="line">    string name;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> n = <span class="number">8</span>;</span><br><span class="line">Student* stus = <span class="keyword">new</span> Student[<span class="number">8</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; <span class="number">8</span>; ++ i)&#123;</span><br><span class="line">    cin &gt;&gt; stus[i].score &gt;&gt; stus[i].name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">sort</span>(stus, stus + n, [](Student &amp;a, Student &amp;b)&#123;</span><br><span class="line">    <span class="keyword">return</span> a.score &lt; b.score;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="结构体特性"><a href="#结构体特性" class="headerlink" title="结构体特性"></a>结构体特性</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> &#123;&#125;; <span class="comment">//可以定义在全局</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">B</span> &#123;&#125;; <span class="comment">//可以定义在函数内(某个作用域内)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结构体的初始化"><a href="#结构体的初始化" class="headerlink" title="结构体的初始化"></a>结构体的初始化</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span> &#123;</span><br><span class="line">    <span class="type">int</span> score;</span><br><span class="line">    string name;</span><br><span class="line">&#125;;</span><br><span class="line">Student a = &#123;<span class="number">99</span>, <span class="string">&quot;小明&quot;</span>&#125;;</span><br><span class="line">Student a = &#123;<span class="number">99</span>&#125;;</span><br><span class="line">Student a&#123;<span class="number">99</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span> a = Student&#123;<span class="number">99</span>&#125;;</span><br><span class="line">Student a&#123;.name = <span class="string">&quot;小明&quot;</span>&#125;</span><br><span class="line"><span class="comment">//可以直接进行赋值</span></span><br><span class="line">student b = a;</span><br><span class="line">student c;</span><br><span class="line">c = a;</span><br></pre></td></tr></table></figure>
+<h3 id="结构体的大小"><a href="#结构体的大小" class="headerlink" title="结构体的大小"></a>结构体的大小</h3><p>会进行内存对齐而不是单纯相加</p>
+<ul>
+<li>以最大的类型作为宽度构建一个矩阵</li>
+<li>按定义顺序依次摆放</li>
+<li>每个数据只能拜访在其大小的倍数的位置</li>
+<li>一行摆不下就新起一行</li>
+<li>行×列就是实际大小</li>
+</ul>
+<p>可能会有一定的空间浪费,但会加速计算机的访问;如果相避免可以按内存大小定义</p>
+<p>符合结构以成员最大宽度,数组以类型为宽度</p>
+<h3 id="结构化绑定-C-17新增"><a href="#结构化绑定-C-17新增" class="headerlink" title="结构化绑定(C++17新增)"></a>结构化绑定(C++17新增)</h3><p>可以将结构体内的成员变量绑定到新的变量上</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> [score, name] = stu;</span><br><span class="line"><span class="comment">//必须绑定所有成员变量,不可以只绑定一部分,也可以使用&amp;,避免产生数据拷贝</span></span><br><span class="line"><span class="comment">//新的变量名和成员变量不需要同名,只需要顺序对应上就行</span></span><br><span class="line"><span class="keyword">auto</span>&amp; [s, n] = stu;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;[score, name] : arr)&#123;</span><br><span class="line">    cin &gt;&gt; score &gt;&gt; name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//如果只想使用某个变量则可以将不需要的变量这样写</span></span><br><span class="line"><span class="keyword">auto</span>&amp; [s, n] = stu;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;[score, _] : arr)&#123;</span><br><span class="line">    cin &gt;&gt; score;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="C-新增简便方式"><a href="#C-新增简便方式" class="headerlink" title="C++新增简便方式"></a>C++新增简便方式</h2><h3 id="pair"><a href="#pair" class="headerlink" title="pair"></a><code>pair</code></h3><p><code>pair</code> : 可以把两个数据类型进行聚合</p>
+<p><code>pair&lt;int, string&gt; a;</code>由于没有命名,可以使用<code>a.first</code> <code>a.second</code>来访问</p>
+<p>也支持<code>pair&lt;int,string&gt; a&#123;99, &quot;小明&quot;&#125;;</code>和结构化绑定 <code>auto &amp;[f, s] = a;</code></p>
+<p>如果用<code>auto</code>定义需要使用<code>make_pair</code>函数来设置初始值 —&gt;<code>auto b = make_pair(80, &quot;jack&quot;);</code></p>
+<p>只需要两个类型都支持大小比较<code>pair</code>也支持大小比较 <code>a &lt;=&gt; b;</code>(先比较第一个,如果相同再比较第二个)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> n = <span class="number">8</span>;</span><br><span class="line">vector&lt;pair&lt;<span class="type">int</span>, string&gt;&gt; <span class="built_in">stus</span>(n);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span>&amp; [s, f] : stus) &#123;</span><br><span class="line">    cin &gt;&gt; s &gt;&gt; f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">sort</span>(stus.<span class="built_in">begin</span>(), stus.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
+<h3 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a><code>tuple</code></h3><p>如果超过两个元素可以使用C++11提供的tuple</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">tuple&lt;<span class="type">int</span>, <span class="type">int</span>, string&gt; a&#123;<span class="number">99</span>, <span class="number">7</span>, <span class="string">&quot;jack&quot;</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span>&amp;[score, id, name] = a;</span><br><span class="line"><span class="keyword">auto</span> b = <span class="built_in">make_tuple</span>(<span class="number">80</span>, <span class="number">8</span>, <span class="string">&quot;mike&quot;</span>);</span><br><span class="line">a &lt;=&gt; b;</span><br><span class="line"><span class="comment">//访问成员变量时很麻烦,需写作 get&lt;0&gt;(a);之类的,因此通常先结构化绑定再操作</span></span><br></pre></td></tr></table></figure>
+<h3 id="tie函数"><a href="#tie函数" class="headerlink" title="tie函数"></a><code>tie</code>函数</h3><p>绑定成员变量到已经定义的变量上,可以根据实际使用场景决定写法</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> score, id;</span><br><span class="line">string name;</span><br><span class="line">pair&lt;<span class="type">int</span>, string&gt; pis&#123;<span class="number">99</span>, <span class="string">&quot;jack&quot;</span>&#125;;</span><br><span class="line">tuple&lt;<span class="type">int</span>, <span class="type">int</span>, string&gt; tiis&#123;<span class="number">80</span>, <span class="number">8</span> <span class="string">&quot;mike&quot;</span>&#125;;</span><br><span class="line"><span class="built_in">tie</span>(score, name) = pis;</span><br><span class="line"><span class="built_in">tie</span>(score, id, name) = tiis;</span><br></pre></td></tr></table></figure>
+<h2 id="vector补充"><a href="#vector补充" class="headerlink" title="vector补充"></a><code>vector</code>补充</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;pair&lt;<span class="type">int</span>, string&gt;&gt; vec;</span><br><span class="line">vec.<span class="built_in">push_back</span>(<span class="built_in">make_pair</span>(<span class="number">99</span>, <span class="string">&#x27;jack&#x27;</span>));</span><br><span class="line">vec.<span class="built_in">push_back</span>(&#123;<span class="number">95</span>, <span class="string">&quot;aly&quot;</span>&#125;);</span><br><span class="line">vec.<span class="built_in">emplace_back</span>(<span class="number">80</span>, <span class="string">&quot;mike&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>对于符合类型最好用<code>emplace_back</code>函数</p>
+<p>这个函数用于在容器的末尾就地构造一个新元素，而不是先复制或移动一个已存在的对象。<code>emplace_back</code> 通常用于性能优化，因为它避免了额外的复制或移动操作</p>
+]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
   </entry>
 </search>
