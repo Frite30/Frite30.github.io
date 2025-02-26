@@ -1,0 +1,362 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C++基础笔记6 | Frite的个人博客</title><meta name="author" content="Frite"><meta name="copyright" content="Frite"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="字符串学习笔记大全">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++基础笔记6">
+<meta property="og:url" content="http://frite30.github.io/2024/10/29/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B06/index.html">
+<meta property="og:site_name" content="Frite的个人博客">
+<meta property="og:description" content="字符串学习笔记大全">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://frite30.github.io/img/avatar/avatar.jpg">
+<meta property="article:published_time" content="2024-10-29T13:49:59.000Z">
+<meta property="article:modified_time" content="2024-11-17T06:42:20.426Z">
+<meta property="article:author" content="Frite">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://frite30.github.io/img/avatar/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://frite30.github.io/2024/10/29/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B06/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":50},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'C++基础笔记6',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-17 14:42:20'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/side profile.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我~</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/background/home_background.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Frite的个人博客"><span class="site-name">Frite的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我~</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">C++基础笔记6</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon fas fa-history"></i><span class="post-meta-label">更新于</span><time datetime="2024-11-17T06:42:20.426Z" title="更新于 2024-11-17 14:42:20">2024-11-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">C++学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="C++基础笔记6"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="字符数组-amp-字符串"><a href="#字符数组-amp-字符串" class="headerlink" title="字符数组&amp;字符串"></a>字符数组&amp;字符串</h1><h2 id="定义-amp-初始化"><a href="#定义-amp-初始化" class="headerlink" title="定义&amp;初始化"></a>定义&amp;初始化</h2><p><code>char str[] = &#123;&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;&#125;;</code></p>
+<p><code>char str[] = &quot;abcd&quot;;</code></p>
+<p>==注意：字符串包含最后<code>\0</code>终止符,所以其实有五个元素==</p>
+<p>因此字符串不完全等于字符数组, 终止字符可以直接用ASCII码值0来表示,字符形式需要用<code>\0</code>来表示</p>
+<p>如果再字符串中想定义双引号需要加\表示转义 <code>char str[] = &quot;abc\&quot;&quot;;</code>否则遇到引号会认为字符结束了</p>
+<p><strong>因此字符串其实就等价于有终止字符的字符数组</strong></p>
+<p><strong>字符串实际上是字符数组的首地址，因此字符串变量可以被看作是一个指向字符的指针。当我们对字符串变量进行加法或减法运算时，实际上是在进行指针运算</strong></p>
+<h2 id="输入-输出"><a href="#输入-输出" class="headerlink" title="输入/输出"></a>输入/输出</h2><p>可以用循环输入 <code>for(int i = 0;i &lt; n;i ++) cin &gt;&gt; str[i];</code></p>
+<p>但一般不会告诉你有几个字符,所以用<code>scanf(&quot;%s&quot;, str);</code> 和 <code>cin &gt;&gt; str;</code>直接输入整个字符串是更好的选择 </p>
+<p>==注意会带终止字符,占用地址更大==</p>
+<ul>
+<li><p>输出是会一直挨个遍历直到遇到了终止符,如果没有可能会输出乱码</p>
+</li>
+<li><p>普通输入会以空格分隔 例如 <code>abc def</code></p>
+<p>则读取到的字符串是<code>abc</code></p>
+<p>可以使用<code>cin.getline(str, 10);//第一个参数是字符数组,第二个参数是最大输入的字符个数</code></p>
+<p>或者<code>stdio.h</code>中的<code>fgets(str, 10, stdin);//第三个参数表示从哪输入,stdin表示终端</code></p>
+</li>
+</ul>
+<h2 id="lt-string-h-gt-中的常用函数"><a href="#lt-string-h-gt-中的常用函数" class="headerlink" title="&lt;string.h&gt;中的常用函数"></a><code>&lt;string.h&gt;</code>中的常用函数</h2><h3 id="strlen获取字符串长度"><a href="#strlen获取字符串长度" class="headerlink" title="strlen获取字符串长度"></a><code>strlen</code>获取字符串长度</h3><p><code>int len = strlen(str)</code>此长度并非数组长度而是以结束字符结尾的长度</p>
+<h3 id="strcpy-复制字符串"><a href="#strcpy-复制字符串" class="headerlink" title="strcpy 复制字符串"></a><code>strcpy</code> 复制字符串</h3><p> <code>strcpy(dst, src)</code>将第二个字符串复制到第一个字符数组</p>
+<p>要确保字符数组有足够的长度可以容纳归第二个字符串</p>
+<p>==只会复制终止符前面的内容==</p>
+<h3 id="strcat拼接"><a href="#strcat拼接" class="headerlink" title="strcat拼接"></a><code>strcat</code>拼接</h3><p><code>strcat(a,b)</code>将第二个字符串复制到第一个字符串的末尾,相当于两个字符串连接,同样需要确保内存大小</p>
+<h3 id="strcmp比较大小"><a href="#strcmp比较大小" class="headerlink" title="strcmp比较大小"></a><code>strcmp</code>比较大小</h3><p><code>int order = strcmp(a,b);</code>比较两个字符串的字典序大小,返回其比较顺序</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">order &lt; <span class="number">0</span> 		<span class="comment">// a &lt; b</span></span><br><span class="line">order == <span class="number">0</span>		<span class="comment">// a == b</span></span><br><span class="line">order &gt; <span class="number">0</span>		<span class="comment">// a &gt; b</span></span><br></pre></td></tr></table></figure>
+<h3 id="strstr"><a href="#strstr" class="headerlink" title="strstr"></a><code>strstr</code></h3><p><code>char *c = strstr(a,b);</code> 判断字符串a是否包含字符串b,返回的结果是a中首次出现b的地址,类型为<code>char *c</code> (指针类型)</p>
+<p>如果用结果减去a,即<code>int index = c - a;</code>则会返回下标;如果找不到b会返回<code>NULL</code>(NULL 等价于 0)</p>
+<p><strong>直接判断结果可以知道a是否包含b</strong></p>
+<h3 id="strtok-分隔字符串"><a href="#strtok-分隔字符串" class="headerlink" title="strtok 分隔字符串"></a><code>strtok</code> 分隔字符串</h3><p>将第一个字符串以第二个字符串中出现的字符进行分隔 </p>
+<p>找到第一个非分隔符的位置返回地址,如果没有则返回NULL,同时将这个地址之后的第一个分隔符转化为终止符</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> str[] = <span class="string">&quot;= one + two * (three / four)&quot;</span>;</span><br><span class="line"><span class="type">char</span> delimiter[] = <span class="string">&quot;=+*/() &quot;</span>; <span class="comment">//设定分隔值</span></span><br><span class="line"><span class="type">char</span>* token = <span class="built_in">strtok</span>(str, delimiter);</span><br></pre></td></tr></table></figure>
+<p>输出token,则可以得到字符串one</p>
+<p>并且<code>strtok</code>是比较特殊的函数,它在调用时会记录上一次分隔的位置,再次调用时,第一个参数只需要传入NULL,可通过下述代码,token会指向这些位置</p>
+<p><img src="E:\Blog\themes\butterfly\source\img\bits\strtok.png" alt=""></p>
+<p>通过while循环,提取原字符串的one two three four</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(token)&#123;</span><br><span class="line">    cout &lt;&lt; token &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">if</span>(token == NUll) <span class="keyword">break</span>;</span><br><span class="line">    token = <span class="built_in">strtok</span>(<span class="literal">NULL</span>, delimiter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="memset-amp-memcpy"><a href="#memset-amp-memcpy" class="headerlink" title="memset &amp; memcpy"></a><em><code>memset</code> &amp; <code>memcpy</code></em></h3><p>对内存进行操作,由于字符的内存恰好是1byte,故也可以看作是对字符进行操作</p>
+<p><code>memset(arr, ch, sizeof(arr));</code></p>
+<ul>
+<li>第一个参数是内存的起始地址</li>
+<li>第二个参数是设置的值,字符型(-128到127)</li>
+<li>第三个参数是内存的长度 </li>
+</ul>
+<p><strong>代表将内存中从这个字符数组开始,对应长度的内存都赋值为第二个参数</strong></p>
+<p>当然其他类型的数组也可以用<code>memset</code>啦</p>
+<p>但是,比如int占4个字节,如果赋值为1,对应的二进制是由四个值为1的字节组成的,即在内存中以4个<strong>00000001</strong>组成,其结果是一个大整数(但是0和-1没有问题,因为内存中0的二进制都是0来表示,-1都是1来表示)</p>
+<p><code>memcpy</code> 将一段内存从一个位置复制到另一个位置</p>
+<p><code>memcpy(dst, src, sizeof(src));</code></p>
+<ul>
+<li>第一个参数代表目标地址</li>
+<li>第二个参数代表被复制的地址</li>
+<li>第三个参数代表要复制的内存长度</li>
+</ul>
+<p><strong>用途</strong>:比如数组无法直接用等于号赋值,所以如果想对数组进行赋值,就可以直接用<code>memcpy</code></p>
+<h2 id="lt-stdlib-h-gt-中的常见函数"><a href="#lt-stdlib-h-gt-中的常见函数" class="headerlink" title="&lt;stdlib.h&gt;中的常见函数"></a><code>&lt;stdlib.h&gt;</code>中的常见函数</h2><p>==将字符串转化成数值==</p>
+<p><code>atoi</code> &amp; <code>atoll</code> &amp; <code>atof</code></p>
+<ul>
+<li><strong>a</strong>代表ASCII码表</li>
+<li><strong><code>i, f, ll</code></strong>分别对应<code>int</code>,<code>float类型</code>,<code>long long类型</code> (注意是代表float类型而不是转换成float,实际转化成double)</li>
+</ul>
+<p>通过这些函数可以将字符串转化成对应类型的数值</p>
+<p>例如<code>cout &lt;&lt; atoi(&quot;123&quot;) &lt;&lt; endl;</code></p>
+<p>字符串要是合法的数值,不然得到的结果是0.  例如<code>cout &lt;&lt; atof(&quot;abc&quot;) &lt;&lt; endl;</code></p>
+<h2 id="lt-ctype-h-gt-中的常见函数"><a href="#lt-ctype-h-gt-中的常见函数" class="headerlink" title="&lt;ctype.h&gt;中的常见函数"></a><code>&lt;ctype.h&gt;</code>中的常见函数</h2><p>==用于判断字符的类型==  (具体如下图)</p>
+<p><img src="E:\编程资料\c++\关键知识截图\ctype.png" alt="ctype"></p>
+<h3 id="isprint"><a href="#isprint" class="headerlink" title="isprint"></a><code>isprint</code></h3><p>判断是否是可打印字符</p>
+<h3 id="isspace"><a href="#isspace" class="headerlink" title="isspace"></a><code>isspace</code></h3><p>判断是否是空格</p>
+<h3 id="isgraph"><a href="#isgraph" class="headerlink" title="isgraph"></a><code>isgraph</code></h3><p>判断是否是可绘制字符</p>
+<h3 id="ispunct"><a href="#ispunct" class="headerlink" title="ispunct"></a><code>ispunct</code></h3><p>判断是否是标点符号</p>
+<h3 id="isalnum"><a href="#isalnum" class="headerlink" title="isalnum"></a><code>isalnum</code></h3><p>判断字符串中的字符是否都是字母或数字</p>
+<h3 id="isdigit"><a href="#isdigit" class="headerlink" title="isdigit"></a><code>isdigit</code></h3><p>判断是否是数字</p>
+<h3 id="isalpha"><a href="#isalpha" class="headerlink" title="isalpha"></a><code>isalpha</code></h3><p>判断是否是字母</p>
+<h3 id="isupper"><a href="#isupper" class="headerlink" title="isupper"></a><code>isupper</code></h3><p>判断是否是大写字母</p>
+<h3 id="islower"><a href="#islower" class="headerlink" title="islower"></a><code>islower</code></h3><p>判断是否是小写字母</p>
+<h3 id="toupper-amp-tolower"><a href="#toupper-amp-tolower" class="headerlink" title="toupper &amp; tolower"></a><code>toupper</code> &amp; <code>tolower</code></h3><p>返回字母的大写或者小写形式</p>
+<h1 id="string"><a href="#string" class="headerlink" title="string"></a>string</h1><h2 id="定义-amp-初始化-1"><a href="#定义-amp-初始化-1" class="headerlink" title="定义&amp;初始化"></a>定义&amp;初始化</h2><p>引入头文件 <code>include &lt;string&gt;</code></p>
+<ul>
+<li><p>初始可直接用字符串<code>string str1 = &quot;012345&quot;;</code> </p>
+</li>
+<li><p>或者使用另一个字符串 <code>string str2 = str1;</code></p>
+</li>
+<li><p>也可以像vector一样用长度加字符来初始化<code>string str3(6, &#39;#&#39;);</code></p>
+</li>
+<li><p>也可以用括号代替等于号 <code>string str4(str1);</code> 或者 <code>string str5(&quot;012345&quot;);</code></p>
+</li>
+<li><p><strong>利用<code>format</code>构造字符串形如：</strong></p>
+<p><strong><code>format(&quot;&#123;0&#125;.zip/&#123;0&#125;/&#123;1&#125;/&#123;1&#125;.cpp&quot;, id, problem)</code></strong></p>
+</li>
+</ul>
+<p><strong>这种用括号进行初始化的方式叫做构造函数</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用括号的好处在于可用添加更多的参数</span></span><br><span class="line"><span class="comment">//如果第一个参数是string类型,可以额外跟两个参数</span></span><br><span class="line"><span class="function">string <span class="title">str6</span><span class="params">(str1, <span class="number">2</span>)</span></span>; <span class="comment">//代表从第几个字符开始,使用多少个字符初始化</span></span><br><span class="line"><span class="function">string <span class="title">str7</span><span class="params">(str1, <span class="number">2</span>, <span class="number">2</span>)</span></span>;</span><br><span class="line"><span class="comment">//如果第一个参数是字符串类型,可以跟一个参数</span></span><br><span class="line"><span class="function">string <span class="title">str8</span><span class="params">(<span class="string">&quot;012345&quot;</span>, <span class="number">2</span>)</span></span>; <span class="comment">//代表使用多少个字符初始化</span></span><br><span class="line"><span class="function">string <span class="title">str8</span><span class="params">(&#123;<span class="number">48</span>, <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>&#125;)</span></span>; <span class="comment">//列表初始化</span></span><br><span class="line"><span class="function">string <span class="title">str10</span><span class="params">(str<span class="number">1.</span>begin() + <span class="number">1</span>, str<span class="number">1.</span>end() - <span class="number">1</span>)</span></span>; <span class="comment">//迭代器初始胡</span></span><br></pre></td></tr></table></figure>
+<h2 id="输入-输出-1"><a href="#输入-输出-1" class="headerlink" title="输入/输出"></a>输入/输出</h2><p>输入输出可以直接当一个普通变量来进行</p>
+<ul>
+<li><p>使用<code>cin &gt;&gt; str;</code>也是根据空格分格;</p>
+</li>
+<li><p>如果想要输入整行,需要使用<code>getline(cin, str);</code></p>
+</li>
+<li><p>同时也可以使用范围循环来遍历<code>string</code>的每个字符</p>
+<p><code>for (char&amp; c: str) &#123;&#125;;</code></p>
+</li>
+</ul>
+<p>比起C语言的字符串简单了很多,不需要考虑终止符,非常的直观清晰</p>
+<h2 id="string所支持的运算-amp-函数"><a href="#string所支持的运算-amp-函数" class="headerlink" title="string所支持的运算&amp;函数"></a><code>string</code>所支持的运算&amp;函数</h2><p>==<code>string</code>和<code>vector</code>很像,但<code>string</code>不属于容器==</p>
+<h3 id="支持的运算符"><a href="#支持的运算符" class="headerlink" title="支持的运算符"></a>支持的运算符</h3><ul>
+<li><strong>=</strong>  赋值运算</li>
+<li><strong>&lt;=&gt;</strong>  比较运算</li>
+<li><strong>[ ]</strong>  下标访问运算</li>
+<li><strong>+</strong>  加法运算,字符串的拼接</li>
+<li><strong>+=</strong> 直接将字符串加到末尾</li>
+</ul>
+<h3 id="支持的函数"><a href="#支持的函数" class="headerlink" title="支持的函数"></a>支持的函数</h3><h4 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h4><ul>
+<li><p><strong>at</strong> —&gt; 带范围检测的下标访问</p>
+</li>
+<li><p><strong>front</strong> —&gt; 获取第一个字符</p>
+</li>
+<li><p><strong>back</strong> —&gt; 获取最后一个字符</p>
+</li>
+<li><p><strong>c_str</strong> —&gt; 返回C语言字符</p>
+<p>比如<code>printf(&quot;%s&quot;, str.c_str());</code></p>
+</li>
+</ul>
+<h4 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h4><ul>
+<li><strong>begin</strong> —&gt; 起始迭代器</li>
+<li><strong>end</strong> —&gt; 末尾迭代器</li>
+</ul>
+<h4 id="容量"><a href="#容量" class="headerlink" title="容量"></a>容量</h4><ul>
+<li><strong>empty</strong> —&gt; 判断是否为空</li>
+<li><strong>size</strong> —&gt; 获取字符个数</li>
+<li><strong>length</strong> —&gt; 获取字符个数</li>
+</ul>
+<h4 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h4><ul>
+<li><p><strong>clear</strong> —&gt; 清空字符串</p>
+</li>
+<li><p><strong>resize</strong> —&gt; 改变大小</p>
+</li>
+<li><p><strong>push_back</strong> —&gt; 将字符插入末尾</p>
+</li>
+<li><p><strong>pop_back</strong> —&gt; 移除末尾字符</p>
+</li>
+<li><p><strong>insert</strong> —&gt; 插入字符(串)  </p>
+<p>==除了可以使用迭代器表示位置外,还可以直接用下标表示==</p>
+<p>例如<code>&quot;abc&quot;</code>插入后<code>str.insert(1, &quot;def&quot;);</code>得到字符串<code>&quot;abcdef&quot;</code></p>
+</li>
+<li><p><strong>erase</strong> —&gt; 删除子串 </p>
+<p><code>str.erase(one, two);</code>同样可以用下标来表示</p>
+<p>第一个参数表示开始删除的位置,第二个参数表示删除的个数;如果第二个参数不填则默认删除之后所有的元素</p>
+</li>
+<li><p><strong>append</strong> —&gt; 将字符串插入末尾</p>
+</li>
+<li><p><strong>replace</strong> —&gt; 替换一段字串</p>
+<p><code>str.replace(1,2,&quot;xyz&quot;);</code></p>
+<p>参数分别表示开始的位置,结束的位置,插入的元素(同样可以用下标表示位置)</p>
+</li>
+</ul>
+<h4 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h4><ul>
+<li><p><strong>find</strong> —&gt; 寻找字串首次出现的位置</p>
+<p>对于字符串<code>&quot;This is island&quot;;</code></p>
+<p><code>int pos = str.find(&quot;is&quot;);</code>返回第一次出现的下标</p>
+<p>还可以指定从哪个下标开始查找 <code>int pos = str.find(&quot;is&quot;, 3);</code></p>
+<p>如果找不到会返回<code>string::npos</code>(<code>string</code>的一个特殊值,代表没有找到,属于<code>unsigned long long</code>类型,具体值是无符号整数的最大值,因为内存中全是1,所以也等于有符号的-1;所以有些代码会直接判断find的值是否为-1,来表示是否找到,和使用<code>string::npos</code>来判断等价)</p>
+</li>
+<li><p><strong>substr</strong> —&gt; 返回指定子串</p>
+<p><code>string sub = str.substr(2,3);</code>根据<strong>开始下标</strong>(第一个参数)和<strong>返回长度</strong>(第二个参数)来返回一个子串,如果不填第二个参数,则返回开始下标到结尾子串</p>
+</li>
+<li><p><strong>starts_with</strong> —&gt; 前缀判断</p>
+<p><strong>ends_with</strong> —&gt; 后缀判断</p>
+<p><code>bool res = str.starts_with(&quot;hel&quot;);</code></p>
+</li>
+</ul>
+<h4 id="其他普通函数"><a href="#其他普通函数" class="headerlink" title="其他普通函数"></a>其他普通函数</h4><ul>
+<li><code>stoi</code> —&gt; 将<code>string</code>转成数值(同样有<code>stoll</code>和<code>stod</code>的版本)</li>
+<li><code>to_string</code> —&gt; 将数值转成<code>string</code></li>
+<li>用<code>format</code>构造函数 —&gt; <code>string str = format(&quot;d = &#123;:.0f&#125;&quot;, d);</code></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://Frite30.github.io">Frite</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://frite30.github.io/2024/10/29/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B06/">http://frite30.github.io/2024/10/29/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B06/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Frite30.github.io" target="_blank">Frite的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C-C/">C/C++</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/bits/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/bits/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/10/30/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B07/" title="C++基础笔记7"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">C++基础笔记7</div></div></a></div><div class="next-post pull-right"><a href="/2024/10/29/Algo/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" title="排序算法 (sorting algorithm)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">排序算法 (sorting algorithm)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/10/02/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%911/" title="C++游戏开发1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-02</div><div class="title">C++游戏开发1</div></div></a></div><div><a href="/2024/10/08/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%912/" title="C++游戏开发2"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-08</div><div class="title">C++游戏开发2</div></div></a></div><div><a href="/2024/07/22/C++/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/" title="C-基础笔记1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-22</div><div class="title">C-基础笔记1</div></div></a></div><div><a href="/2024/08/01/C++/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B02/" title="C-基础笔记2"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-01</div><div class="title">C-基础笔记2</div></div></a></div><div><a href="/2024/08/06/C++/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B03/" title="C-基础笔记3"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">C-基础笔记3</div></div></a></div><div><a href="/2024/09/16/C++/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B04/" title="C-基础笔记4"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-16</div><div class="title">C-基础笔记4</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Frite</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" href="https://frite30.github.io/"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://frite30.github.io/" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">努力成为一个很好的人~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84-amp-%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.</span> <span class="toc-text">字符数组&amp;字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-amp-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.1.</span> <span class="toc-text">定义&amp;初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA"><span class="toc-number">1.2.</span> <span class="toc-text">输入&#x2F;输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-string-h-gt-%E4%B8%AD%E7%9A%84%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text">&lt;string.h&gt;中的常用函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#strlen%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6"><span class="toc-number">1.3.1.</span> <span class="toc-text">strlen获取字符串长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strcpy-%E5%A4%8D%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.2.</span> <span class="toc-text">strcpy 复制字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strcat%E6%8B%BC%E6%8E%A5"><span class="toc-number">1.3.3.</span> <span class="toc-text">strcat拼接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strcmp%E6%AF%94%E8%BE%83%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.3.4.</span> <span class="toc-text">strcmp比较大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strstr"><span class="toc-number">1.3.5.</span> <span class="toc-text">strstr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strtok-%E5%88%86%E9%9A%94%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.6.</span> <span class="toc-text">strtok 分隔字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#memset-amp-memcpy"><span class="toc-number">1.3.7.</span> <span class="toc-text">memset &amp; memcpy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-stdlib-h-gt-%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">&lt;stdlib.h&gt;中的常见函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-ctype-h-gt-%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0"><span class="toc-number">1.5.</span> <span class="toc-text">&lt;ctype.h&gt;中的常见函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#isprint"><span class="toc-number">1.5.1.</span> <span class="toc-text">isprint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isspace"><span class="toc-number">1.5.2.</span> <span class="toc-text">isspace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isgraph"><span class="toc-number">1.5.3.</span> <span class="toc-text">isgraph</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ispunct"><span class="toc-number">1.5.4.</span> <span class="toc-text">ispunct</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isalnum"><span class="toc-number">1.5.5.</span> <span class="toc-text">isalnum</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isdigit"><span class="toc-number">1.5.6.</span> <span class="toc-text">isdigit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isalpha"><span class="toc-number">1.5.7.</span> <span class="toc-text">isalpha</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isupper"><span class="toc-number">1.5.8.</span> <span class="toc-text">isupper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#islower"><span class="toc-number">1.5.9.</span> <span class="toc-text">islower</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#toupper-amp-tolower"><span class="toc-number">1.5.10.</span> <span class="toc-text">toupper &amp; tolower</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#string"><span class="toc-number">2.</span> <span class="toc-text">string</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-amp-%E5%88%9D%E5%A7%8B%E5%8C%96-1"><span class="toc-number">2.1.</span> <span class="toc-text">定义&amp;初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA-1"><span class="toc-number">2.2.</span> <span class="toc-text">输入&#x2F;输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#string%E6%89%80%E6%94%AF%E6%8C%81%E7%9A%84%E8%BF%90%E7%AE%97-amp-%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.</span> <span class="toc-text">string所支持的运算&amp;函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E7%9A%84%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">2.3.1.</span> <span class="toc-text">支持的运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.2.</span> <span class="toc-text">支持的函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE"><span class="toc-number">2.3.2.1.</span> <span class="toc-text">访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-number">2.3.2.2.</span> <span class="toc-text">迭代器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%B9%E9%87%8F"><span class="toc-number">2.3.2.3.</span> <span class="toc-text">容量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9"><span class="toc-number">2.3.2.4.</span> <span class="toc-text">修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C"><span class="toc-number">2.3.2.5.</span> <span class="toc-text">操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.2.6.</span> <span class="toc-text">其他普通函数</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/3000/01/01/TEST/" title="Click Here!">Click Here!</a><time datetime="2999-12-31T16:00:00.000Z" title="发表于 3000-01-01 00:00:00">3000-01-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/28/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B013/" title="C++基础笔记13">C++基础笔记13</a><time datetime="2025-02-28T11:49:59.000Z" title="发表于 2025-02-28 19:49:59">2025-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/28/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B014/" title="C++基础笔记14">C++基础笔记14</a><time datetime="2025-02-28T11:49:59.000Z" title="发表于 2025-02-28 19:49:59">2025-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/20/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B010/" title="C++基础笔记10">C++基础笔记10</a><time datetime="2025-02-20T11:49:59.000Z" title="发表于 2025-02-20 19:49:59">2025-02-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/29/Algo/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/%E6%9E%9A%E4%B8%BE/%E6%9E%9A%E4%B8%BE%E7%AE%97%E6%B3%95/" title="模拟算法">模拟算法</a><time datetime="2025-01-29T05:10:13.000Z" title="发表于 2025-01-29 13:10:13">2025-01-29</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/background/home_background.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Frite</div><div class="footer_custom_text">一重山有一重山的错落，一笔峰有一笔峰的着墨</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v6.2.0" title=""><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.3.1" title=""><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="/js/runtime.js"></script><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --></body></html>

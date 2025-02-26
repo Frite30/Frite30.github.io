@@ -1,8 +1,357 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>C++游戏开发1</title>
+    <url>/2024/10/02/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%911/</url>
+    <content><![CDATA[<p>环境选择:Visual Studio 2022 与 EasyX</p>
+<h1 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h1><h2 id="渲染缓冲区"><a href="#渲染缓冲区" class="headerlink" title="渲染缓冲区"></a>渲染缓冲区</h2><p><strong>initgraph(x,y);</strong>初始化</p>
+<p><strong>cleardevice();</strong>清空当前画布</p>
+<h3 id="双缓冲优化"><a href="#双缓冲优化" class="headerlink" title="双缓冲优化"></a>双缓冲优化</h3><p><strong>BeginBatchDraw():</strong>新建画布作为新的渲染缓冲区(默认不可见),随后新的绘图操作将默认在新的画布上进行.</p>
+<p><strong>FlushBatchDraw()&amp;EndBatchDraw():</strong>将窗口当前所显示的缓冲区与新的缓冲区进行交换</p>
+<h2 id="游戏基本主框架"><a href="#游戏基本主框架" class="headerlink" title="游戏基本主框架"></a>游戏基本主框架</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">初始化（）</span><br><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">    读取操作();</span><br><span class="line">    处理数据();</span><br><span class="line">    绘制画面();</span><br><span class="line">&#125;</span><br><span class="line">释放资源();</span><br></pre></td></tr></table></figure>
+<h1 id="井字棋小游戏的实现"><a href="#井字棋小游戏的实现" class="headerlink" title="井字棋小游戏的实现"></a>井字棋小游戏的实现</h1><h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><p>通过二维数组实现</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> board_data[<span class="number">3</span>][<span class="number">3</span>] =</span><br><span class="line">&#123;</span><br><span class="line">	&#123;<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>&#125;,</span><br><span class="line">	&#123;<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>&#125;,</span><br><span class="line">	&#123;<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">char</span> current_piece = <span class="string">&#x27;O&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="读取操作"><a href="#读取操作" class="headerlink" title="读取操作"></a>读取操作</h2><p>只考虑鼠标按键按下的消息进行处理，点击时执行落子操作</p>
+<h2 id="处理数据"><a href="#处理数据" class="headerlink" title="处理数据"></a>处理数据</h2><p>胜负判断(通过函数 枚举进行判断)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">CheckWin</span><span class="params">(<span class="type">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">0</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">0</span>][<span class="number">2</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">1</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">2</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">2</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">2</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">0</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">1</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">2</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">2</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">2</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">2</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">2</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">0</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">CheckDraw</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i=<span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">size_t</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (board_data[i][j] == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>游戏结束时用弹窗告诉玩家结果并退出主循环</p>
+<h2 id="绘制画面"><a href="#绘制画面" class="headerlink" title="绘制画面"></a>绘制画面</h2><p>应用EasyX函数实现</p>
+<p>提示玩家当前落子类型</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">DrawTipText</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">static</span> TCHAR str[<span class="number">64</span>];</span><br><span class="line">	_stprintf_s(str, _T(<span class="string">&quot;当前棋子类型:%c&quot;</span>), current_piece);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">settextcolor</span>(<span class="built_in">RGB</span>(<span class="number">225</span>, <span class="number">175</span>, <span class="number">45</span>));</span><br><span class="line">	<span class="built_in">outtextxy</span>(<span class="number">0</span>, <span class="number">0</span>, str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>棋盘与棋子的绘制</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">DrawBoard</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">line</span>(<span class="number">0</span>, <span class="number">200</span>, <span class="number">600</span>, <span class="number">200</span>);</span><br><span class="line">	<span class="built_in">line</span>(<span class="number">0</span>, <span class="number">400</span>, <span class="number">600</span>, <span class="number">400</span>);</span><br><span class="line">	<span class="built_in">line</span>(<span class="number">200</span>, <span class="number">0</span>, <span class="number">200</span>, <span class="number">600</span>);</span><br><span class="line">	<span class="built_in">line</span>(<span class="number">400</span>, <span class="number">0</span>, <span class="number">400</span>, <span class="number">600</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">DrawPiece</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">size_t</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">switch</span> (board_data[i][j])</span><br><span class="line">			&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;O&#x27;</span>:</span><br><span class="line">				<span class="built_in">circle</span>(<span class="number">200</span> * j + <span class="number">100</span>, <span class="number">200</span> * i + <span class="number">100</span>, <span class="number">100</span>);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;X&#x27;</span>:</span><br><span class="line">				<span class="built_in">line</span>(<span class="number">200</span> * j, <span class="number">200</span> * i, <span class="number">200</span> * (j + <span class="number">1</span>), <span class="number">200</span> * (i + <span class="number">1</span>));</span><br><span class="line">				<span class="built_in">line</span>(<span class="number">200</span> * (j + <span class="number">1</span>), <span class="number">200</span> * i, <span class="number">200</span> * j, <span class="number">200</span> * (i + <span class="number">1</span>));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>:</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="游戏主循环"><a href="#游戏主循环" class="headerlink" title="游戏主循环"></a>游戏主循环</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">   <span class="built_in">initgraph</span>(<span class="number">600</span>, <span class="number">600</span>);</span><br><span class="line"><span class="type">bool</span> running = <span class="literal">true</span>;</span><br><span class="line">ExMessage msg;</span><br><span class="line"><span class="built_in">BeginBatchDraw</span>();</span><br></pre></td></tr></table></figure>
+<h3 id="主循环部分"><a href="#主循环部分" class="headerlink" title="主循环部分"></a>主循环部分</h3><p>实现轮流落子功能</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="built_in">peekmessage</span>(&amp;msg))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (msg.message == WM_LBUTTONDOWN)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> x = msg.x;</span><br><span class="line">		<span class="type">int</span> y = msg.y;</span><br><span class="line"></span><br><span class="line">		<span class="type">int</span> index_x = x / <span class="number">200</span>;</span><br><span class="line">		<span class="type">int</span> index_y = y / <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (board_data[index_y][index_x] == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			board_data[index_y][index_x] = current_piece;</span><br><span class="line">			<span class="keyword">if</span> (current_piece == <span class="string">&#x27;O&#x27;</span>)</span><br><span class="line">				current_piece = <span class="string">&#x27;X&#x27;</span>;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				current_piece = <span class="string">&#x27;O&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cleardevice</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">DrawBoard</span>();</span><br><span class="line"><span class="built_in">DrawPiece</span>();</span><br><span class="line"><span class="built_in">DrawTipText</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">FlushBatchDraw</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">EndBatchDraw</span>();</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="胜利检测"><a href="#胜利检测" class="headerlink" title="胜利检测"></a>胜利检测</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">CheckWin</span>(<span class="string">&#x27;X&#x27;</span>))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">MessageBox</span>(<span class="built_in">GetHWnd</span>(), _T(<span class="string">&quot;X 玩家获胜&quot;</span>), _T(<span class="string">&quot;游戏结束&quot;</span>), MB_OK);</span><br><span class="line">	running = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">CheckWin</span>(<span class="string">&#x27;O&#x27;</span>))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">MessageBox</span>(<span class="built_in">GetHWnd</span>(), _T(<span class="string">&quot;O 玩家获胜&quot;</span>), _T(<span class="string">&quot;游戏结束&quot;</span>), MB_OK);</span><br><span class="line">	running = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">CheckDraw</span>())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">MessageBox</span>(<span class="built_in">GetHWnd</span>(), _T(<span class="string">&quot;平局&quot;</span>), _T(<span class="string">&quot;游戏结束&quot;</span>), MB_OK);</span><br><span class="line">	running = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="对游戏的优化-帧时动态延时"><a href="#对游戏的优化-帧时动态延时" class="headerlink" title="对游戏的优化(帧时动态延时)"></a>对游戏的优化(帧时动态延时)</h2><p><strong>思路</strong>:对每秒60fps的实现,相比简单的sleep函数,可在主循环开头调用一次函数获取开始时间;主循环结束后再调用一次函数获取结束时间;从而获取一次主循环花费的时间,在此基础上进行优化</p>
+<ul>
+<li><p><code>DWORD start_time = GetTickCount();</code>//获取开始时间</p>
+</li>
+<li><p><code>DWORD end_time = GetTickCount();</code>//获取结束时间</p>
+</li>
+<li><p><code>DWORD delta_time = end_time - start_time;</code>//计算差值</p>
+</li>
+<li><pre><code>if (delta_time &lt; 1000 / 60)
+&#123;
+    Sleep(1000 / 60 - delta_time);
+&#125;
+</code></pre><p><strong>通过对delta_time的计算从而执行具体的sleep时间,实现完整的60fps每秒游戏,使得画面更完整</strong></p>
+</li>
+</ul>
+<p><strong>思想：主循环内应该尽量避免阻塞式的行为或者过于繁重且耗时过长的任务</strong></p>
+]]></content>
+      <categories>
+        <category>C++游戏开发</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Click Here!</title>
+    <url>/3000/01/01/TEST/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="23f9ee20fc803087867e27c7546a4f066bab31604ef1b3b63428f63c6904c9c4">4630436162ade97ba2718b7d0c4b3b632668badcdd48df7162584188973ee5bd28d29a4b45390574b5943fc7432874ae7f62df632096a79b9b0ae521482e202fdb7048bfe3f19ccd4f1a9b0b7b3303cf69786d1a06d52742ac7fd0d3e08f67381b1e3c8cceeda44884224001e8d3b1cf89d927609c3d99da2fe4551ffa4a2d9fae3f784fa4c987e9c2c30141e95c08d985b650bbe0be9b6959e5177fe3fd5e862eb281931c08c2764ecea7d7284624b4</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+  </entry>
+  <entry>
+    <title>C++游戏开发2</title>
+    <url>/2024/10/08/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%912/</url>
+    <content><![CDATA[<h1 id="图片渲染知识"><a href="#图片渲染知识" class="headerlink" title="图片渲染知识"></a>图片渲染知识</h1><h2 id="加载图片"><a href="#加载图片" class="headerlink" title="加载图片"></a>加载图片</h2><p>查看EasyX文档,以加载<em>test.jpg</em>为例</p>
+<p><code>IMAGE img;</code></p>
+<p><code>loadimage(&amp;img, _T(&quot;test.jpg&quot;));</code></p>
+<h2 id="渲染图片"><a href="#渲染图片" class="headerlink" title="渲染图片"></a>渲染图片</h2><p><code>putimage(100,200,&amp;img);</code>//图片左上角坐标</p>
+<h2 id="动画基础"><a href="#动画基础" class="headerlink" title="动画基础"></a>动画基础</h2><h3 id="动画的数据逻辑"><a href="#动画的数据逻辑" class="headerlink" title="动画的数据逻辑"></a>动画的数据逻辑</h3><p><strong>确保动画序列帧的能够间隔固定的时间进行切换,类比定时器的概念实现一个计数器</strong></p>
+<ul>
+<li><p>定义<code>idx_current_anim</code>来存储当前动画的帧索引</p>
+</li>
+<li><p>定义<code>static int counter</code>变量用来记录当前动画帧一共播放了几个游戏帧</p>
+</li>
+</ul>
+<p>==<strong>使用static确保计数器只在第一个游戏帧被初始化为0</strong>==</p>
+<ul>
+<li><p>通过if判断语句使得每五个游戏帧切换一个动画帧;随后考虑到动画帧序列播放结束后的行为,当动画的帧索引到达动画帧总数时,将索引重置为0,从而使得动画循环播放</p>
+</li>
+<li><p>定义<code>const int PLAYER_ANIM_NUM = 6;</code></p>
+</li>
+<li>使动画循环播放,可书写下列代码</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (++counter % <span class="number">5</span> == <span class="number">0</span>)</span><br><span class="line">	index_current_anim++;</span><br><span class="line"></span><br><span class="line">index_current_anim = index_current_anim % PLAYER_ANIM_NUM;</span><br></pre></td></tr></table></figure>
+<h3 id="动画的渲染"><a href="#动画的渲染" class="headerlink" title="动画的渲染"></a>动画的渲染</h3><p>首先将每一张图片加载到程序中</p>
+<ul>
+<li><p>定义IMAGE对象数组</p>
+<p><code>IMAGE img_player_left[PLAYER_ANIM_NUM];</code><br><code>IMAGE img_player_right[PLAYER_ANIM_NUM];</code></p>
+</li>
+<li><p>图片命名十分有规律可使用循环来加载图片.在使用Unicode字符集的情况下,可以使用wstring来拼凑出文件的路径,再传递给loadimage函数,将图片传递到数组中</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">LoadAnimation</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; PLAYER_ANIM_NUM; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		std::wstring path = <span class="string">L&quot;img/paimon_left_&quot;</span> + std::<span class="built_in">to_wstring</span>(i) + <span class="string">L&quot;.png&quot;</span>;</span><br><span class="line">		<span class="built_in">loadimage</span>(&amp;img_paimon_left[i], path.<span class="built_in">c_str</span>());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; PLAYER_ANIM_NUM; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		std::wstring path = <span class="string">L&quot;img/paimon_right_&quot;</span> + std::<span class="built_in">to_wstring</span>(i) + <span class="string">L&quot;.png&quot;</span>;</span><br><span class="line">		<span class="built_in">loadimage</span>(&amp;img_paimon_right[i], path.<span class="built_in">c_str</span>());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>之前定义的动画帧索引此时边可以直接当做IMAGE数组的索引来使用</p>
+<p><code>putimage(500, 500, &amp;img_paimon_left[index_current_anim]);</code></p>
+</li>
+</ul>
+<h3 id="处理带有透明度的图片素材"><a href="#处理带有透明度的图片素材" class="headerlink" title="处理带有透明度的图片素材"></a>处理带有透明度的图片素材</h3><p>解决思路:类比putimage函数封装一个putimage_alpha函数,借助系统绘图函数比较轻巧的实现</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> comment(lib, <span class="string">&quot;MSIMG32.LIB&quot;</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">putimage_alpha</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, IMAGE* img)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> w = img-&gt;<span class="built_in">getwidth</span>();</span><br><span class="line">	<span class="type">int</span> h = img-&gt;<span class="built_in">getheight</span>();</span><br><span class="line">	<span class="built_in">AlphaBlend</span>(<span class="built_in">GetImageHDC</span>(<span class="literal">NULL</span>), x, y, w, h,</span><br><span class="line">		<span class="built_in">GetImageHDC</span>(img), <span class="number">0</span>, <span class="number">0</span>, w, h, &#123; AC_SRC_OVER,<span class="number">0</span>,<span class="number">255</span>,AC_SRC_ALPHA &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将函数替换<code>putimage_alpha(500, 500, &amp;img_paimon_left[index_current_anim]);</code></p>
+<h1 id="键盘控制角色移动"><a href="#键盘控制角色移动" class="headerlink" title="键盘控制角色移动"></a>键盘控制角色移动</h1><h2 id="常规思路"><a href="#常规思路" class="headerlink" title="常规思路"></a>常规思路</h2><p>定义<code>POINT player_pos = &#123; 500, 500 &#125;;</code>用来存储玩家的位置,并将动画渲染的位置改为player_pos的坐标<code>putimage_alpha(player_pos.x, player_pos.y, &amp;img_paimon_left[index_current_anim]);</code></p>
+<p>定义速度 <code>int PLAYER_SPEED = 5;</code></p>
+<p>在游戏主循环中通过函数判断键盘按下状态从而实现角色移动效果</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (msg.message == WM_KEYDOWN)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">switch</span>(msg.vkcode)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;W&#x27;</span>:</span><br><span class="line">		player_pos.y -= PLAYER_SPEED;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;S&#x27;</span>:</span><br><span class="line">		player_pos.y += PLAYER_SPEED;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;A&#x27;</span>:</span><br><span class="line">		player_pos.x -= PLAYER_SPEED;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;D&#x27;</span>:</span><br><span class="line">		player_pos.x += PLAYER_SPEED;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ul>
+<li>断续:由于当我们按下方向键时,WM_KEYDOWN消息进入事件队列,当保持按键按下一定时间后才会有接连不断的消息被触发</li>
+<li>卡顿:keydown消息的产生与游戏主循环异步进行,且触发的频率与操作系统和硬件设备相关,导致有些游戏帧中时间处理部分对多个WM_KEYDOWN消息进行了处理,其余游戏帧中KEY_DOWN较少或几乎没有,导致角色在某些游戏帧中走得远有些走得近</li>
+</ul>
+<p><strong>实际需求:按键按下时,保证角色在某一个游戏帧中都能连续的移动;即玩家按键按下时,KEYD_DOWN消息触发,标志着角色开始移动,玩家按键抬起时,KEYUP消息触发,标志着角色结束移动</strong></p>
+<h2 id="解放方法"><a href="#解放方法" class="headerlink" title="解放方法"></a>解放方法</h2><p><strong>解决思路:定义布尔变量标识玩家运动状态,不直接对玩家的位置数据进行操作而是改变布尔变量的值</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//定义布尔变量用于表示玩家状态</span></span><br><span class="line"><span class="type">bool</span> is_move_up = <span class="literal">false</span>;</span><br><span class="line"><span class="type">bool</span> is_move_down = <span class="literal">false</span>;</span><br><span class="line"><span class="type">bool</span> is_move_left = <span class="literal">false</span>;</span><br><span class="line"><span class="type">bool</span> is_move_right = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//位于游戏主循环中,检测玩家状态</span></span><br><span class="line"><span class="keyword">if</span> (msg.message == WM_KEYDOWN)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">switch</span>(msg.vkcode)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;W&#x27;</span>:</span><br><span class="line">		is_move_up = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;S&#x27;</span>:</span><br><span class="line">		is_move_down = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;A&#x27;</span>:</span><br><span class="line">		is_move_left = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;D&#x27;</span>:</span><br><span class="line">		is_move_right = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (msg.message == WM_KEYUP)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">switch</span> (msg.vkcode)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;W&#x27;</span>:</span><br><span class="line">		is_move_up = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;S&#x27;</span>:</span><br><span class="line">		is_move_down = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;A&#x27;</span>:</span><br><span class="line">		is_move_left = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;D&#x27;</span>:</span><br><span class="line">		is_move_right = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//对玩家移动进行操作</span></span><br><span class="line"><span class="keyword">if</span> (is_move_up) player_pos.y -= PLAYER_SPEED;</span><br><span class="line"><span class="keyword">if</span> (is_move_down) player_pos.y += PLAYER_SPEED;</span><br><span class="line"><span class="keyword">if</span> (is_move_left) player_pos.x -= PLAYER_SPEED;</span><br><span class="line"><span class="keyword">if</span> (is_move_right) player_pos.x -= PLAYER_SPEED;</span><br></pre></td></tr></table></figure>
+<h1 id="优化动画数据逻辑"><a href="#优化动画数据逻辑" class="headerlink" title="优化动画数据逻辑"></a>优化动画数据逻辑</h1><p>思路:由于代码相似,可使用类的思想进行封装,定义类用于封装动画相关的数据和逻辑</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>C++游戏开发</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法基础数学知识1</title>
+    <url>/2024/10/19/Algo/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E5%9F%BA%E7%A1%80%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%861/</url>
+    <content><![CDATA[<h2 id="数论—反复取模"><a href="#数论—反复取模" class="headerlink" title="数论—反复取模"></a>数论—反复取模</h2><p>判断a的b次方末尾3位数</p>
+<p>在计算时可在每次乘a时对1000取模,根据<del>高深的</del>数论知识,结果不影响</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(b --)&#123;</span><br><span class="line">       res *= a;</span><br><span class="line">       res %= <span class="number">1000</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="R进制转换"><a href="#R进制转换" class="headerlink" title="R进制转换"></a>R进制转换</h2><p>对数字进行R进制转换,可用该数字对R取模得到个位,再除以R,再次取模,反复操作以获取各个位置的数,存储于vector中再进行输入</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取每一位方法</span></span><br><span class="line"><span class="keyword">while</span>(n)&#123;</span><br><span class="line">    digits.<span class="built_in">push_back</span>(n % r);</span><br><span class="line">    n /= r;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">reverse</span>(digits.<span class="built_in">begin</span>(), digits.<span class="built_in">end</span>());<span class="comment">//获取是从后往前,因此需要反转再输出</span></span><br><span class="line"><span class="comment">//分类讨论，字母可用ASCII码表处理</span></span><br></pre></td></tr></table></figure>
+<h2 id="循环相邻"><a href="#循环相邻" class="headerlink" title="循环相邻"></a>循环相邻</h2><p>这是<code>digits</code>字符串中的第<code>(i+1)</code>个字符，但由于使用了模运算<code>%</code>，当<code>i</code>等于<code>len - 1</code>（即字符串的最后一个字符）时，<code>(i+1) % len</code>将得到0，也就是字符串的第一个字符，这样实现了循环相邻的效果</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>;i &lt; len;i ++)&#123;</span><br><span class="line">    str[i] = digits[i] + digits[(i<span class="number">+1</span>) % len];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="密码加密"><a href="#密码加密" class="headerlink" title="密码加密"></a>密码加密</h2><p>需要保证ASCII码加密后仍是字母因此使用取模运算</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">isupper</span>(str[i])) &#123;</span><br><span class="line">      str[i] = (str[i] - <span class="string">&#x27;A&#x27;</span> + <span class="number">3</span>) % <span class="number">26</span> + <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      str[i] = (str[i] - <span class="string">&#x27;a&#x27;</span> + <span class="number">3</span>) % <span class="number">26</span> + <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>基础数学知识</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>递归</title>
+    <url>/2024/11/17/Algo/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E9%80%92%E5%BD%92/</url>
+    <content><![CDATA[<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p><strong>递归</strong>，即调用函数自身。本质上是将问题拆解成更小规模的相同问题。</p>
+<p>简单优化思路（==记忆化搜索==）：如果有重复计算，将结果保存下来</p>
+<p>递归方法：</p>
+<ul>
+<li>确定问题</li>
+<li>解决基准问题</li>
+<li>拆解问题</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="斐波那契数列（Fibonacci）"><a href="#斐波那契数列（Fibonacci）" class="headerlink" title="斐波那契数列（Fibonacci）"></a>斐波那契数列（Fibonacci）</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">fib</span>(n<span class="number">-1</span>) + <span class="built_in">fib</span>(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当出现重复问题时数据会成指数型增长,子问题会被重复计算多次.</p>
+<p>可以在计算时将计算过的保存下来,并在计算时再判断是否计算过,用来优化性能</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">saved</span><span class="params">(n,<span class="number">-1</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(saved[n] == <span class="number">-1</span>)&#123;</span><br><span class="line">        saved[n] = <span class="built_in">fib</span>(n<span class="number">-1</span>) + <span class="built_in">fib</span>(n<span class="number">-2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> saved[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="汉诺塔-honai"><a href="#汉诺塔-honai" class="headerlink" title="汉诺塔(honai)"></a>汉诺塔(honai)</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">hanoi</span><span class="params">(<span class="type">int</span> n, <span class="type">char</span> F, <span class="type">char</span> A, <span class="type">char</span> T)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;move %d from %c to %c\n&quot;</span>, n, F, T);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">hanoi</span>(n - <span class="number">1</span>, F, T, A);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;move %d from %c to %c\n&quot;</span>, n, F, T);</span><br><span class="line">    <span class="built_in">hanoi</span>(n - <span class="number">1</span>, A, F, T);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>基础数学知识</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>位运算</title>
+    <url>/2024/11/18/Algo/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="常见的位运算"><a href="#常见的位运算" class="headerlink" title="常见的位运算"></a>常见的位运算</h1><h2 id="（取反）"><a href="#（取反）" class="headerlink" title="~ （取反）"></a>~ （取反）</h2><p>取相反数，<code>e = ~ a + 1</code></p>
+<h2 id="（或）；-amp-（与）；-（异或）"><a href="#（或）；-amp-（与）；-（异或）" class="headerlink" title="| （或）；&amp; （与）；^ （异或）"></a>| （或）；&amp; （与）；^ （异或）</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> g = <span class="number">0b0001010</span>;</span><br><span class="line"><span class="type">int</span> h = <span class="number">0b0001100</span>;</span><br><span class="line">cout &lt;&lt; (g | h); <span class="comment">//或运算，每一位只要有一位有1，就能够保留</span></span><br><span class="line">cout &lt;&lt; (g &amp; h); <span class="comment">//与运算，只有两位都是1，才可以保留</span></span><br><span class="line">cout &lt;&lt; (g ^ h); <span class="comment">//异或，相同就是0，不同就是1</span></span><br></pre></td></tr></table></figure>
+<h2 id="lt-lt-（左移）"><a href="#lt-lt-（左移）" class="headerlink" title="&lt;&lt; （左移）"></a>&lt;&lt; （左移）</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//整体状态向左移动,用0补右边</span></span><br><span class="line"><span class="type">int</span> i = <span class="number">0b0011010</span>;</span><br><span class="line">cout &lt;&lt; (i &lt;&lt; <span class="number">1</span>);</span><br><span class="line"><span class="comment">//000000&#x27;1101&#x27;0</span></span><br><span class="line"><span class="comment">//00000&#x27;1101&#x27;00</span></span><br></pre></td></tr></table></figure>
+<h2 id="gt-gt-gt-gt-gt-（右移）"><a href="#gt-gt-gt-gt-gt-（右移）" class="headerlink" title="&gt;&gt;  , &gt;&gt;&gt;（右移）"></a>&gt;&gt;  , &gt;&gt;&gt;（右移）</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//对非负数效果一样,向右移,并且用0来补充左边</span></span><br><span class="line"><span class="comment">//而对负数效果不一样</span></span><br><span class="line"><span class="comment">//&#x27;&gt;&gt;&#x27;用符号位来补;&#x27;&gt;&gt;&gt;&#x27;一律用0来补位</span></span><br><span class="line"><span class="comment">//1111 0000 0000 (分别向右移动2位)</span></span><br><span class="line"><span class="comment">//1111 1100 0000 </span></span><br><span class="line"><span class="comment">//0011 1100 0000</span></span><br></pre></td></tr></table></figure>
+<h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2><p>对于<strong>非负数</strong>来说:</p>
+<ul>
+<li>非负数 &lt;&lt; i ，等同于乘以2的i次方</li>
+<li>非负数 &gt;&gt; i ，等同于除以2的i次方</li>
+</ul>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>algorithm头文件常用函数</title>
+    <url>/2024/11/05/Algo/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/algorithm/</url>
+    <content><![CDATA[<h2 id="reverse"><a href="#reverse" class="headerlink" title="reverse"></a><code>reverse</code></h2><p><strong>倒转数组</strong>  <code>reverse(v.begin(), v.end());</code></p>
+<h2 id="sort"><a href="#sort" class="headerlink" title="sort"></a><code>sort</code></h2><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>sort(first, last, comp);</code></p>
+<ul>
+<li><strong>first:</strong>  指向要排序的序列的起始位置的迭代器</li>
+<li><strong>last: </strong>指向要排序的序列的结束位置的迭代器（不包含该位置）</li>
+<li><strong>comp:</strong> 一个可选的比较函数或函数对象，用于定义排序的顺序。如果不提供，则默认使用<code>operator&lt;</code>进行升序排序</li>
+</ul>
+<h3 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h3><p>你也可以提供一个自定义的比较函数或函数对象来控制排序的行为。例如，如果你想以降序排序，可以这样做：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">compare</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a &gt; b; <span class="comment">// 降序排序</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">5</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">2</span>&#125;;</span><br><span class="line">    std::<span class="built_in">sort</span>(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>(), compare);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> num : vec) &#123;</span><br><span class="line">        std::cout &lt;&lt; num &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h3><p>在C++11及以后的版本中，你可以使用Lambda表达式来简化自定义比较函数的书写:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">5</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">2</span>&#125;;</span><br><span class="line">    std::<span class="built_in">sort</span>(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>(), [](<span class="type">int</span> a, <span class="type">int</span> b) &#123;</span><br><span class="line">        <span class="keyword">return</span> a &gt; b; <span class="comment">// 降序排序</span></span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> num : vec) &#123;</span><br><span class="line">        std::cout &lt;&lt; num &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><code>sort</code>函数使用的是快速排序算法，平均时间复杂度为O(n log n)，但在最坏情况下（例如，数组已经排序）时间复杂度为O(n^2)。</li>
+<li><code>sort</code>函数会修改传入的序列，因此不适用于需要保持原序列不变的情况。</li>
+<li>确保传入的迭代器是有效的，并且<code>first</code>和<code>last</code>之间的元素数量是合理的，以避免越界错误。</li>
+</ul>
+<h2 id="unique"><a href="#unique" class="headerlink" title="unique"></a><code>unique</code></h2><h3 id="函数作用"><a href="#函数作用" class="headerlink" title="函数作用"></a>函数作用</h3><p><code>std::unique</code> 函数的作用是移除容器中所有连续重复的元素，只保留每个元素的第一个出现。它不会真正从容器中删除元素，而是将所有重复的元素移动到容器的末尾，并返回一个新的迭代器，指向新的逻辑结束位置。</p>
+<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p><code>std::unique</code> 函数返回的迭代器是一个<strong>指向新逻辑结束位置</strong>的迭代器。这个迭代器指向的位置是第一个不重复元素之后的位置，即所有重复元素都被移动到这个位置之后。</p>
+<h3 id="迭代器类型"><a href="#迭代器类型" class="headerlink" title="迭代器类型"></a>迭代器类型</h3><p><code>unique(v.begin(), v.end())</code> 返回的迭代器类型与传入的迭代器类型相同。如果 <code>v</code> 是一个 <code>std::vector</code>，那么返回的迭代器就是 <code>std::vector&lt;int&gt;::iterator</code> 类型；如果 <code>v</code> 是一个 <code>std::list</code>，那么返回的迭代器就是 <code>std::list&lt;int&gt;::iterator</code> 类型。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>假设 <code>v</code> 是一个 <code>std::vector&lt;int&gt;</code>，那么 <code>v.begin()</code> 和 <code>v.end()</code> 分别是指向 <code>v</code> 的第一个元素和最后一个元素之后的位置的迭代器。<code>unique(v.begin(), v.end())</code> 会处理这个范围内的所有元素，移除连续重复的元素，并返回一个新的迭代器，指向新的逻辑结束位置。</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>这个返回的迭代器通常用于与容器的 <code>erase</code> 方法结合使用，以实际从容器中移除重复元素.<code>v.erase(unique(v.begin(), v.end()), v.end());</code></p>
+<h2 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a><code>rotate</code></h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>这个函数可以对序列（如数组、容器等）中的元素进行循环移动。它将序列中从第一个参数指定的位置开始的所有元素移动到序列的前面，而序列中的第一个元素被移动到最后一个指定的位置</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将vec中从位置1开始的元素（包括1）移动到vec的开头</span></span><br><span class="line">    std::<span class="built_in">rotate</span>(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">begin</span>() + <span class="number">1</span>, vec.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出旋转后的向量</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> num : vec) &#123;</span><br><span class="line">        std::cout &lt;&lt; num &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line">    <span class="comment">//2 3 4 5 1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个例子中，<code>std::rotate</code> 将 <code>vec</code> 中从索引 1 开始的元素（即元素 <code>2, 3, 4, 5</code>）移动到了向量的开头，而元素 <code>1</code> 被移动到了向量的末尾。</p>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
+<li><strong>第一个迭代器</strong>：指向序列中第一个元素的迭代器</li>
+<li><strong>第二个迭代器</strong>：指向序列中要旋转到第一个位置的元素的迭代器</li>
+<li><strong>第三个迭代器</strong>：指向序列中最后一个元素的迭代器</li>
+</ul>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>请注意，<code>std::rotate</code> 的时间复杂度是 O(n)，其中 n 是序列中元素的数量，因为它需要移动所有元素。对于大型数据集，这可能会有性能影响</p>
+<h2 id="max-element"><a href="#max-element" class="headerlink" title="max_element"></a><code>max_element</code></h2><p><strong>请注意，<code>max_element</code> 返回的是一个迭代器指向最大元素的位置，而不是最大元素的值。如果你需要最大元素的值，可以通过解引用迭代器（<code>*max_iter</code>）来获取。</strong></p>
+<p><code>max_element</code> 是 C++ 标准库中的一个函数模板，它用于在给定的范围内查找最大元素。这个函数定义在 <code>&lt;algorithm&gt;</code> 头文件中。<code>max_element</code> 接受三个参数：</p>
+<ol>
+<li><code>first</code>：指向范围开始的迭代器。</li>
+<li><code>last</code>：指向范围结束的迭代器（不包含在内）。</li>
+<li><code>comp</code>：（可选）一个比较函数或函数对象，用于比较两个元素，返回 <code>true</code> 如果第一个参数应该被认为大于第二个参数。</li>
+</ol>
+<p>如果不提供比较函数，<code>max_element</code> 将使用 <code>operator&lt;</code> 来比较元素，这意味着它将找到数值上最大的元素。</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>有趣的算法例子</title>
+    <url>/2024/11/18/Algo/%E7%AE%97%E6%B3%95%E5%AE%9E%E4%BE%8B/%E6%9C%89%E8%B6%A3%E7%9A%84%E7%AE%97%E6%B3%95%E4%BE%8B%E5%AD%90/</url>
+    <content><![CDATA[<h1 id="约瑟夫环（Josephus-problem）"><a href="#约瑟夫环（Josephus-problem）" class="headerlink" title="约瑟夫环（Josephus problem）"></a>约瑟夫环（Josephus problem）</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>这个问题说的是一个小故事。在很久以前，有n个犹太人遭到敌人的追击，他们逃到了一个山洞中，大部分的人决定宁愿去死也不要让敌人抓住。他们围成一圈，一个个轮流报数，报到k的人就要当场自杀，然后下一个人从1开始重新数数。而约瑟夫不想自杀，于是他灵机一动，站到了圈的一个位置上，结果其他人一个个都自杀了，最后只剩下约瑟夫一个人还活着，最终他逃出了山洞。那么问题来了，约瑟夫站的是哪个位置呢？</p>
+<h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><p>递推公式：<strong>f ( N , M ) = ( f ( N − 1 , M ) + M ) % N</strong> </p>
+<ul>
+<li>f ( N , M ) 表示，N个人报数，每报到M时杀掉那个人，最终胜利者的编号</li>
+<li>f ( N − 1 , M )表示，N-1个人报数，每报到M时杀掉那个人，最终胜利者的编号</li>
+</ul>
+<p><strong>你提到的情况其实是约瑟夫问题的经典部分。我们需要确保即使有人被淘汰，计算出的淘汰顺序也不会出错，特别是那些被淘汰后索引位置的调整</strong>。</p>
+<h2 id="简单模拟"><a href="#简单模拟" class="headerlink" title="简单模拟"></a>简单模拟</h2><p>12个人围坐成一圈（编号顺时针方向依次为1-12），沿顺时针方向从1号开始数，当数到k时，则k号被淘汰，接着从k号下一位继续从1开始数，数到k时淘汰第二人，以此类推，直至剩下最后一人，输出最后一人的编号及每一轮的结果。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span> </span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> k;</span><br><span class="line">  cin &gt;&gt; k;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">survive</span><span class="params">(<span class="number">12</span>)</span></span>;</span><br><span class="line">  <span class="built_in">fill</span>(survive.<span class="built_in">begin</span>(),survive.<span class="built_in">end</span>(), <span class="number">1</span>);</span><br><span class="line">  <span class="type">int</span> current = <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; <span class="number">11</span>;i ++)&#123;</span><br><span class="line">    <span class="keyword">while</span>(k != cnt)&#123;</span><br><span class="line">      <span class="keyword">if</span>(survive[current] == <span class="number">1</span>)&#123;</span><br><span class="line">        cnt ++;</span><br><span class="line">      &#125; </span><br><span class="line">      <span class="keyword">if</span> (cnt != k) &#123;  </span><br><span class="line">        current = (current + <span class="number">1</span>) % <span class="number">12</span>; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    survive[current] = <span class="number">0</span>;</span><br><span class="line">    current = (current + <span class="number">1</span>) % <span class="number">12</span>;</span><br><span class="line">    cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>;j &lt; <span class="number">12</span>;j ++)&#123;</span><br><span class="line">      <span class="keyword">if</span>(survive[j] == <span class="number">1</span>) cout &lt;&lt; j + <span class="number">1</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">      <span class="keyword">else</span> cout &lt;&lt; <span class="number">0</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>;j &lt; <span class="number">12</span>;j ++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(survive[j] == <span class="number">1</span>) cout &lt;&lt; j + <span class="number">1</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>排序算法 (sorting algorithm)</title>
+    <url>/2024/10/29/Algo/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><h1 id="比较排序算法"><a href="#比较排序算法" class="headerlink" title="比较排序算法"></a>比较排序算法</h1><h2 id="冒泡排序（Bubble-Sort）"><a href="#冒泡排序（Bubble-Sort）" class="headerlink" title="冒泡排序（Bubble Sort）"></a>冒泡排序（Bubble Sort）</h2><h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><p><strong>冒泡排序 (bubble sort)</strong> 通过连续地比较与交换相邻元素实现排序。这个过程就像气泡从底部升到顶部一样， 因此得名冒泡排序。</p>
+<p>冒泡过程可以利用元素交换操作来模拟：从数组最左端开始向右遍历，依次比较相邻元素大小，如果“左元素 &gt; 右元素”就交换二者。遍历完成后，最大的元素会被移动到数组的最右端。</p>
+<h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><p>设数组的长度为 𝑛 ，冒泡排序的步骤: 挨个计较相邻的数字将最大的数字排在最后</p>
+<ul>
+<li>首先，对 𝑛 个元素执行“冒泡”，将数组的最大元素交换至正确位置</li>
+<li>接下来，对剩余 𝑛 − 1 个元素执行“冒泡”，将第二大元素交换至正确位置 </li>
+<li>以此类推，经过 𝑛 − 1 轮“冒泡”后，前 𝑛 − 1 大的元素都被交换至正确位置</li>
+<li>仅剩的一个元素必定是最小元素，无须排序，因此数组排序完成</li>
+</ul>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 冒泡排序</span></span><br><span class="line"><span class="type">bool</span> swapped;</span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    swapped = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">1</span>; i &lt; v.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v[i - <span class="number">1</span>] &gt; v[i]) &#123;</span><br><span class="line">            <span class="built_in">swap</span>(v[i - <span class="number">1</span>], v[i]);</span><br><span class="line">            swapped = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">while</span> (!swapped);</span><br><span class="line"></span><br><span class="line"><span class="comment">//bubble sort</span></span><br><span class="line"><span class="type">bool</span> swapped;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">9</span>;i &gt; <span class="number">0</span>;i --)&#123;</span><br><span class="line">    swapped = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>;j &lt; i;j ++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[j] &gt; arr[j<span class="number">+1</span>])&#123;</span><br><span class="line">            <span class="built_in">swap</span>(arr[j],arr[j<span class="number">+1</span>]);</span><br><span class="line">            swapped = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!swapped) <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="算法特性"><a href="#算法特性" class="headerlink" title="算法特性"></a>算法特性</h3><ul>
+<li><strong>时间复杂度为 O(n2)、自适应排序</strong>：各轮“冒泡”遍历的数组长度依次为 n−1、n−2、…、2、1 ，总和为 (n−1)n/2 。在引入 <code>flag</code> 优化后，最佳时间复杂度可达到 O(n) 。</li>
+<li><strong>空间复杂度为 O(1)、原地排序</strong>：指针 i 和 j 使用常数大小的额外空间。</li>
+<li><strong>稳定排序</strong>：由于在“冒泡”中遇到相等元素不交换</li>
+</ul>
+<h2 id="选择排序（Selection-Sort）"><a href="#选择排序（Selection-Sort）" class="headerlink" title="选择排序（Selection Sort）"></a>选择排序（Selection Sort）</h2><h3 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h3><p><strong>选择排序（Selection Sort)</strong>  开启一个循环，每轮从未排序区间选择最小的元素，将其放到已排序区间的末尾。</p>
+<h3 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h3><ul>
+<li>初始状态下，所有元素未排序，即未排序（索引）区间为 [0, n−1] </li>
+<li>选取区间 [0, n−1] 中的最小元素，将其与索引 0 处的元素交换。完成后，数组前 1 个元素已排序。</li>
+<li>选取区间 [1, n−1] 中的最小元素，将其与索引 1 处的元素交换。完成后，数组前 2 个元素已排序。</li>
+<li>以此类推。经过 n−1 轮选择与交换后，数组前 n−1 个元素已排序。</li>
+<li>仅剩的一个元素必定是最大元素，无须排序，因此数组排序完成。</li>
+</ul>
+<h3 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 选择排序 */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">selectionSort</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;nums)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">    <span class="comment">// 外循环：未排序区间为 [i, n-1]</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="comment">// 内循环：找到未排序区间内的最小元素</span></span><br><span class="line">        <span class="type">int</span> k = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[j] &lt; nums[k])</span><br><span class="line">                k = j; <span class="comment">// 记录最小元素的索引</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 将该最小元素与未排序区间的首个元素交换</span></span><br><span class="line">        <span class="built_in">swap</span>(nums[i], nums[k]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="算法特性-1"><a href="#算法特性-1" class="headerlink" title="算法特性"></a>算法特性</h3><ul>
+<li><strong>时间复杂度为 O(n2)、非自适应排序</strong>：外循环共 n−1 轮，第一轮的未排序区间长度为 n ，最后一轮的未排序区间长度为 2 ，即各轮外循环分别包含 n、n−1、…、3、2 轮内循环，求和为 (n−1)(n+2)2 。</li>
+<li><strong>空间复杂度为 O(1)、原地排序</strong>：指针 i 和 j 使用常数大小的额外空间。</li>
+<li><strong>非稳定排序</strong>：如图 11-3 所示，元素 <code>nums[i]</code> 有可能被交换至与其相等的元素的右边，导致两者的相对顺序发生改变。</li>
+</ul>
+<h2 id="插入排序（Insertion-Sort）"><a href="#插入排序（Insertion-Sort）" class="headerlink" title="插入排序（Insertion Sort）"></a>插入排序（Insertion Sort）</h2><h3 id="介绍-3"><a href="#介绍-3" class="headerlink" title="介绍"></a>介绍</h3><h3 id="算法流程-2"><a href="#算法流程-2" class="headerlink" title="算法流程"></a>算法流程</h3><h3 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h3><h3 id="算法特性-2"><a href="#算法特性-2" class="headerlink" title="算法特性"></a>算法特性</h3><h2 id="快速排序（Quick-Sort）"><a href="#快速排序（Quick-Sort）" class="headerlink" title="快速排序（Quick Sort）"></a>快速排序（Quick Sort）</h2><h2 id="归并排序（Merge-Sort）"><a href="#归并排序（Merge-Sort）" class="headerlink" title="归并排序（Merge Sort）"></a>归并排序（Merge Sort）</h2><h2 id="希尔排序（Shell-Sort）"><a href="#希尔排序（Shell-Sort）" class="headerlink" title="希尔排序（Shell Sort）"></a>希尔排序（Shell Sort）</h2><h2 id="堆排序（Heap-Sort）"><a href="#堆排序（Heap-Sort）" class="headerlink" title="堆排序（Heap Sort）"></a>堆排序（Heap Sort）</h2><h1 id="非比较排序算法"><a href="#非比较排序算法" class="headerlink" title="非比较排序算法"></a>非比较排序算法</h1><h2 id="桶排序（bucket-sort）"><a href="#桶排序（bucket-sort）" class="headerlink" title="桶排序（bucket sort）"></a>桶排序（bucket sort）</h2><h3 id="介绍-4"><a href="#介绍-4" class="headerlink" title="介绍"></a>介绍</h3><p><strong>桶排序（bucket sort）</strong> 是分治策略的一个典型应用。它通过设置一些具有大小顺序的桶，每个桶对应一个数据范围，将数据平均分配到各个桶中；然后，在每个桶内部分别执行排序；最终按照桶的顺序将所有数据合并。</p>
+<h3 id="算法流程-3"><a href="#算法流程-3" class="headerlink" title="算法流程"></a>算法流程</h3><p>考虑一个长度为 n 的数组，其元素是范围 [0,1) 内的浮点数</p>
+<ul>
+<li><p>初始化 k 个桶，将 n 个元素分配到 k 个桶中。</p>
+</li>
+<li><p>对每个桶分别执行排序（这里采用编程语言的内置排序函数）</p>
+</li>
+<li><p>按照桶从小到大的顺序合并结果。</p>
+<p><img src="https://www.hello-algo.com/chapter_sorting/bucket_sort.assets/bucket_sort_overview.png" alt=""></p>
+</li>
+</ul>
+<h3 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="计数排序（Counting-Sort）"><a href="#计数排序（Counting-Sort）" class="headerlink" title="计数排序（Counting Sort）"></a>计数排序（Counting Sort）</h2><h2 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h2>]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>排序算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搜索算法 (search algorithm)</title>
+    <url>/2024/10/29/Algo/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>搜索算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>复杂度 （Complexity）</title>
+    <url>/2024/10/31/Algo/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%A4%8D%E6%9D%82%E5%BA%A6/</url>
+    <content><![CDATA[<h1 id="时间复杂度-Time-Complexity"><a href="#时间复杂度-Time-Complexity" class="headerlink" title="时间复杂度 (Time Complexity)"></a>时间复杂度 (Time Complexity)</h1><h1 id="空间复杂度-Space-Complexity"><a href="#空间复杂度-Space-Complexity" class="headerlink" title="空间复杂度 (Space Complexity)"></a>空间复杂度 (Space Complexity)</h1>]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>图 (graph)</title>
+    <url>/2024/11/06/Algo/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>数组与链表 (array &amp; linked list)</title>
+    <url>/2024/11/06/Algo/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>栈与队列 (stack &amp; queue)</title>
+    <url>/2024/11/06/Algo/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>堆 (heap)</title>
+    <url>/2024/11/06/Algo/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%A0%86/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
     <title>C-基础笔记1</title>
-    <url>/2024/07/22/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/</url>
+    <url>/2024/07/22/C++/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/</url>
     <content><![CDATA[<h1 id="核心语法-1"><a href="#核心语法-1" class="headerlink" title="核心语法 1"></a>核心语法 1</h1><h4 id="1-注释"><a href="#1-注释" class="headerlink" title="1.注释"></a><strong>1.注释</strong></h4><p><strong><em>==增加代码的可阅读性==</em></strong></p>
 <p>//用于单行注释</p>
 <p>/<em>    </em>/用于多行注释</p>
@@ -142,8 +491,16 @@
       </tags>
   </entry>
   <entry>
+    <title>树 (tree)</title>
+    <url>/2024/11/06/Algo/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
     <title>C-基础笔记2</title>
-    <url>/2024/08/01/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B02/</url>
+    <url>/2024/08/01/C++/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B02/</url>
     <content><![CDATA[<h3 id="算术运算符-取余"><a href="#算术运算符-取余" class="headerlink" title="算术运算符: + - * / %(取余)"></a><strong>算术运算符: + - * / %(取余)</strong></h3><p>1.通用细节:</p>
 <ul>
 <li>整数计算,结果一定是整数</li>
@@ -330,7 +687,7 @@
   </entry>
   <entry>
     <title>C-基础笔记3</title>
-    <url>/2024/08/06/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B03/</url>
+    <url>/2024/08/06/C++/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B03/</url>
     <content><![CDATA[<h1 id="控制流程语句"><a href="#控制流程语句" class="headerlink" title="控制流程语句"></a>控制流程语句</h1><h2 id="顺序结构"><a href="#顺序结构" class="headerlink" title="顺序结构"></a>顺序结构</h2><p>从上往下依次执行，是程序的默认的执行过程</p>
 <h2 id="分支结构"><a href="#分支结构" class="headerlink" title="分支结构"></a>分支结构</h2><p>程序在执行的过程中出现了岔路</p>
 <h3 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h3><p>作用:如果满足条件,才可以执行指定的代码(判断)</p>
@@ -437,7 +794,7 @@
   </entry>
   <entry>
     <title>C-基础笔记4</title>
-    <url>/2024/09/16/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B04/</url>
+    <url>/2024/09/16/C++/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B04/</url>
     <content><![CDATA[<p><strong>数组:一种容器 用来存储同种数据类型的多个值</strong></p>
 <p>数组的定义</p>
 <p>数组的初始化</p>
@@ -456,72 +813,8 @@
       </tags>
   </entry>
   <entry>
-    <title>C++游戏开发1</title>
-    <url>/2024/10/02/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%911/</url>
-    <content><![CDATA[<p>环境选择:Visual Studio 2022 与 EasyX</p>
-<h1 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h1><h2 id="渲染缓冲区"><a href="#渲染缓冲区" class="headerlink" title="渲染缓冲区"></a>渲染缓冲区</h2><p><strong>initgraph(x,y);</strong>初始化</p>
-<p><strong>cleardevice();</strong>清空当前画布</p>
-<h3 id="双缓冲优化"><a href="#双缓冲优化" class="headerlink" title="双缓冲优化"></a>双缓冲优化</h3><p><strong>BeginBatchDraw():</strong>新建画布作为新的渲染缓冲区(默认不可见),随后新的绘图操作将默认在新的画布上进行.</p>
-<p><strong>FlushBatchDraw()&amp;EndBatchDraw():</strong>将窗口当前所显示的缓冲区与新的缓冲区进行交换</p>
-<h2 id="游戏基本主框架"><a href="#游戏基本主框架" class="headerlink" title="游戏基本主框架"></a>游戏基本主框架</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">初始化（）</span><br><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">    读取操作();</span><br><span class="line">    处理数据();</span><br><span class="line">    绘制画面();</span><br><span class="line">&#125;</span><br><span class="line">释放资源();</span><br></pre></td></tr></table></figure>
-<h1 id="井字棋小游戏的实现"><a href="#井字棋小游戏的实现" class="headerlink" title="井字棋小游戏的实现"></a>井字棋小游戏的实现</h1><h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><p>通过二维数组实现</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> board_data[<span class="number">3</span>][<span class="number">3</span>] =</span><br><span class="line">&#123;</span><br><span class="line">	&#123;<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>&#125;,</span><br><span class="line">	&#123;<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>&#125;,</span><br><span class="line">	&#123;<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;-&#x27;</span>&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">char</span> current_piece = <span class="string">&#x27;O&#x27;</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="读取操作"><a href="#读取操作" class="headerlink" title="读取操作"></a>读取操作</h2><p>只考虑鼠标按键按下的消息进行处理，点击时执行落子操作</p>
-<h2 id="处理数据"><a href="#处理数据" class="headerlink" title="处理数据"></a>处理数据</h2><p>胜负判断(通过函数 枚举进行判断)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">CheckWin</span><span class="params">(<span class="type">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">0</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">0</span>][<span class="number">2</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">1</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">2</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">2</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">2</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">0</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">1</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">2</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">2</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">2</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">0</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">2</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (board_data[<span class="number">0</span>][<span class="number">2</span>] == c &amp;&amp; board_data[<span class="number">1</span>][<span class="number">1</span>] == c &amp;&amp; board_data[<span class="number">2</span>][<span class="number">0</span>] == c)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">CheckDraw</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i=<span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">size_t</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (board_data[i][j] == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>游戏结束时用弹窗告诉玩家结果并退出主循环</p>
-<h2 id="绘制画面"><a href="#绘制画面" class="headerlink" title="绘制画面"></a>绘制画面</h2><p>应用EasyX函数实现</p>
-<p>提示玩家当前落子类型</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">DrawTipText</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">static</span> TCHAR str[<span class="number">64</span>];</span><br><span class="line">	_stprintf_s(str, _T(<span class="string">&quot;当前棋子类型:%c&quot;</span>), current_piece);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">settextcolor</span>(<span class="built_in">RGB</span>(<span class="number">225</span>, <span class="number">175</span>, <span class="number">45</span>));</span><br><span class="line">	<span class="built_in">outtextxy</span>(<span class="number">0</span>, <span class="number">0</span>, str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>棋盘与棋子的绘制</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">DrawBoard</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">line</span>(<span class="number">0</span>, <span class="number">200</span>, <span class="number">600</span>, <span class="number">200</span>);</span><br><span class="line">	<span class="built_in">line</span>(<span class="number">0</span>, <span class="number">400</span>, <span class="number">600</span>, <span class="number">400</span>);</span><br><span class="line">	<span class="built_in">line</span>(<span class="number">200</span>, <span class="number">0</span>, <span class="number">200</span>, <span class="number">600</span>);</span><br><span class="line">	<span class="built_in">line</span>(<span class="number">400</span>, <span class="number">0</span>, <span class="number">400</span>, <span class="number">600</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">DrawPiece</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">size_t</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">switch</span> (board_data[i][j])</span><br><span class="line">			&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;O&#x27;</span>:</span><br><span class="line">				<span class="built_in">circle</span>(<span class="number">200</span> * j + <span class="number">100</span>, <span class="number">200</span> * i + <span class="number">100</span>, <span class="number">100</span>);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;X&#x27;</span>:</span><br><span class="line">				<span class="built_in">line</span>(<span class="number">200</span> * j, <span class="number">200</span> * i, <span class="number">200</span> * (j + <span class="number">1</span>), <span class="number">200</span> * (i + <span class="number">1</span>));</span><br><span class="line">				<span class="built_in">line</span>(<span class="number">200</span> * (j + <span class="number">1</span>), <span class="number">200</span> * i, <span class="number">200</span> * j, <span class="number">200</span> * (i + <span class="number">1</span>));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>:</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="游戏主循环"><a href="#游戏主循环" class="headerlink" title="游戏主循环"></a>游戏主循环</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">   <span class="built_in">initgraph</span>(<span class="number">600</span>, <span class="number">600</span>);</span><br><span class="line"><span class="type">bool</span> running = <span class="literal">true</span>;</span><br><span class="line">ExMessage msg;</span><br><span class="line"><span class="built_in">BeginBatchDraw</span>();</span><br></pre></td></tr></table></figure>
-<h3 id="主循环部分"><a href="#主循环部分" class="headerlink" title="主循环部分"></a>主循环部分</h3><p>实现轮流落子功能</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="built_in">peekmessage</span>(&amp;msg))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (msg.message == WM_LBUTTONDOWN)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> x = msg.x;</span><br><span class="line">		<span class="type">int</span> y = msg.y;</span><br><span class="line"></span><br><span class="line">		<span class="type">int</span> index_x = x / <span class="number">200</span>;</span><br><span class="line">		<span class="type">int</span> index_y = y / <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (board_data[index_y][index_x] == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			board_data[index_y][index_x] = current_piece;</span><br><span class="line">			<span class="keyword">if</span> (current_piece == <span class="string">&#x27;O&#x27;</span>)</span><br><span class="line">				current_piece = <span class="string">&#x27;X&#x27;</span>;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				current_piece = <span class="string">&#x27;O&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cleardevice</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">DrawBoard</span>();</span><br><span class="line"><span class="built_in">DrawPiece</span>();</span><br><span class="line"><span class="built_in">DrawTipText</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">FlushBatchDraw</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">EndBatchDraw</span>();</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="胜利检测"><a href="#胜利检测" class="headerlink" title="胜利检测"></a>胜利检测</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">CheckWin</span>(<span class="string">&#x27;X&#x27;</span>))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">MessageBox</span>(<span class="built_in">GetHWnd</span>(), _T(<span class="string">&quot;X 玩家获胜&quot;</span>), _T(<span class="string">&quot;游戏结束&quot;</span>), MB_OK);</span><br><span class="line">	running = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">CheckWin</span>(<span class="string">&#x27;O&#x27;</span>))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">MessageBox</span>(<span class="built_in">GetHWnd</span>(), _T(<span class="string">&quot;O 玩家获胜&quot;</span>), _T(<span class="string">&quot;游戏结束&quot;</span>), MB_OK);</span><br><span class="line">	running = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">CheckDraw</span>())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">MessageBox</span>(<span class="built_in">GetHWnd</span>(), _T(<span class="string">&quot;平局&quot;</span>), _T(<span class="string">&quot;游戏结束&quot;</span>), MB_OK);</span><br><span class="line">	running = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="对游戏的优化-帧时动态延时"><a href="#对游戏的优化-帧时动态延时" class="headerlink" title="对游戏的优化(帧时动态延时)"></a>对游戏的优化(帧时动态延时)</h2><p><strong>思路</strong>:对每秒60fps的实现,相比简单的sleep函数,可在主循环开头调用一次函数获取开始时间;主循环结束后再调用一次函数获取结束时间;从而获取一次主循环花费的时间,在此基础上进行优化</p>
-<ul>
-<li><p><code>DWORD start_time = GetTickCount();</code>//获取开始时间</p>
-</li>
-<li><p><code>DWORD end_time = GetTickCount();</code>//获取结束时间</p>
-</li>
-<li><p><code>DWORD delta_time = end_time - start_time;</code>//计算差值</p>
-</li>
-<li><pre><code>if (delta_time &lt; 1000 / 60)
-&#123;
-    Sleep(1000 / 60 - delta_time);
-&#125;
-</code></pre><p><strong>通过对delta_time的计算从而执行具体的sleep时间,实现完整的60fps每秒游戏,使得画面更完整</strong></p>
-</li>
-</ul>
-<p><strong>思想：主循环内应该尽量避免阻塞式的行为或者过于繁重且耗时过长的任务</strong></p>
-]]></content>
-      <categories>
-        <category>C++游戏开发</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Click Here!</title>
-    <url>/3000/01/01/TEST/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="e0cecbe5fa30fd7b007cc804006aafce27e803f2948ef3a1b5f99be9889f76d8">4630436162ade97ba2718b7d0c4b3b632668badcdd48df7162584188973ee5bd28d29a4b45390574b5943fc7432874ae7f62df632096a79b9b0ae521482e202fdb7048bfe3f19ccd4f1a9b0b7b3303cf69786d1a06d52742ac7fd0d3e08f6738ae81d260154c4a7263abc6b9a9ed636e</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-  </entry>
-  <entry>
     <title>C++基础笔记1</title>
-    <url>/2024/10/01/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/</url>
+    <url>/2024/10/01/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/</url>
     <content><![CDATA[<h2 id="布尔型"><a href="#布尔型" class="headerlink" title="布尔型"></a>布尔型</h2><p>第一位是0则表示false</p>
 <p>否则表示true(1)</p>
 <h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><h3 id="auto-可自动推导类型"><a href="#auto-可自动推导类型" class="headerlink" title="==auto== 可自动推导类型"></a>==auto== 可自动推导类型</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> var_i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">auto</span> var_c = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line"><span class="keyword">auto</span> var_b = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">auto</span> var_d = <span class="number">3.14</span>;</span><br><span class="line">cout &lt;&lt; <span class="built_in">typeid</span>(var_i).<span class="built_in">name</span>() &lt;&lt; endl;<span class="comment">//输出i,其余同理输出对应数据类型</span></span><br></pre></td></tr></table></figure>
@@ -569,8 +862,107 @@
       </tags>
   </entry>
   <entry>
+    <title>C++基础笔记12</title>
+    <url>/2025/01/28/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B012/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++基础笔记11</title>
+    <url>/2025/01/28/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B011/</url>
+    <content><![CDATA[<h2 id="sort"><a href="#sort" class="headerlink" title="sort"></a><code>sort</code></h2><p>排序，复杂度为O(nlogn)</p>
+<p><code>sort(Iterator begin, Iterator end, Function comp)</code></p>
+<h2 id="nth-element"><a href="#nth-element" class="headerlink" title="nth_element"></a><code>nth_element</code></h2><p>将第n小的数字移动到第n位，复杂度O(n)</p>
+<p><code>nth_element(Iterator begin, Iterator nth, Iterator end, Function comp)</code></p>
+<p><code>nth_element(a,begin(), a.begin()+ k, a.end());</code></p>
+<p>此时输出a[k]的值能得到第k小的数字</p>
+<h2 id="lower-bound-amp-upper-bound"><a href="#lower-bound-amp-upper-bound" class="headerlink" title="lower_bound &amp; upper_bound"></a><code>lower_bound</code> &amp; <code>upper_bound</code></h2><p>传入参数相同皆为<code>Iterator begin, Iterator end, Type v, Function comp</code></p>
+<p><strong>在有序的数组中</strong> lower_bound -&gt; 找到第一个大于等于v的迭代器</p>
+<p>​                          upper_bound -&gt; 找到第一个大于v的迭代器</p>
+<p>复杂度为O(logn)</p>
+<h2 id="next-permutation-amp-prev-permutation"><a href="#next-permutation-amp-prev-permutation" class="headerlink" title="next_permutation &amp; prev_permutation"></a><code>next_permutation</code> &amp; <code>prev_permutation</code></h2><h2 id="unique"><a href="#unique" class="headerlink" title="unique"></a><code>unique</code></h2><h2 id="vector"><a href="#vector" class="headerlink" title="vector"></a><code>vector</code></h2><h2 id="queue-stack-deque"><a href="#queue-stack-deque" class="headerlink" title="queue stack deque"></a><code>queue</code> <code>stack</code> <code>deque</code></h2><h3 id="queue-队列"><a href="#queue-队列" class="headerlink" title="queue 队列"></a>queue 队列</h3><p>操作: push/emplace    pop    <strong>front</strong>    empty    size</p>
+<p>pop &lt;— [0, 1, 2, 3] &lt;— push</p>
+<p><strong>不支持下标访问</strong></p>
+<h3 id="stack-栈"><a href="#stack-栈" class="headerlink" title="stack 栈"></a>stack 栈</h3><p>操作: push/emplace    pop    <strong>top</strong>    empty    size</p>
+<p>[ ] &lt;—- push            [ ] —-&gt; pop</p>
+<p><strong>不支持下标访问</strong></p>
+<h3 id="deque-双端队列"><a href="#deque-双端队列" class="headerlink" title="deque 双端队列"></a>deque 双端队列</h3><p>操作: push_back/emplace_back    pop_back    push_front/emplace_front    pop_front    </p>
+<p>front    back    empty    size</p>
+<p><strong>支持下标访问</strong></p>
+<h2 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a><code>priority_queue</code></h2><p>==优先队列 / 堆 大顶堆 小顶堆==</p>
+<p>操作: push/emplace    pop    <strong>top</strong>    empty    size</p>
+<p>属于队列的一种 但pop时按大小进行pop</p>
+<p>eg. &lt;— [3 2 100 0] &lt;— 执行pop操作依次pop出 100 3 2 0 (从大到小)</p>
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a><code>set</code></h2><p>集合: set 有序唯一    </p>
+<p>​         multiset 有序 不唯一    </p>
+<p>​         unordered_set 无序 唯一</p>
+<p>操作: insert erase find count </p>
+<p>有序 元素支持 &lt;           无序 元素支持hash</p>
+<h2 id="map"><a href="#map" class="headerlink" title="map"></a><code>map</code></h2>]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++基础笔记10</title>
+    <url>/2025/02/20/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B010/</url>
+    <content><![CDATA[<h2 id="结构体区别"><a href="#结构体区别" class="headerlink" title="结构体区别"></a>结构体区别</h2><p><code>struct</code>和<code>class</code>仅仅只有默认的访问控制不同</p>
+<p><code>struct</code>默认是public，<code>class</code>默认是private</p>
+<p>如果数据只是简单的聚合就用<code>struct</code>,如果用于表示行为和状态的复杂对象，不能随意让外部访问，则用<code>class</code>(这种访问控制的能力就是<strong>封装性</strong>，类的重要特性)</p>
+<p>通过类定义的变量称之为对象</p>
+<h2 id="类的操作"><a href="#类的操作" class="headerlink" title="类的操作"></a>类的操作</h2><p>访问控制：<code>private, protected, public, friend</code></p>
+<p>用于初始化的函数称为<strong>构造函数</strong></p>
+<p><strong>析构函数</strong>用于对象销毁时做清理，调用时机是对象被销毁时，不管是栈中的对象被自动销毁，还是<code>new</code>出来的对象被手动<code>delete</code>，都会自动调用析构函数</p>
+<p><strong>成员函数</strong> 在对象内写的函数（只有public才能被外部调用，如果是private只能在成员函数内被调用）</p>
+<p>成员函数的<code>this</code>指针指向对象自身，默认会传递</p>
+<p>运算符重载(操作符重载)可以让内置的运算符进行重解释，可以将函数名改成对应的操作符，需要加上<code>operator</code>关键字</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BigInt</span> &#123;</span><br><span class="line">    <span class="type">int</span>* digits = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="type">int</span> size = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">BigInt</span>(<span class="type">const</span> string &amp;str, int_sign)&#123;</span><br><span class="line">        <span class="comment">//构造函数</span></span><br><span class="line">        size = str.<span class="built_in">size</span>();</span><br><span class="line">        digits = <span class="keyword">new</span> <span class="type">int</span>[size];</span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">BigInt</span>()&#123;</span><br><span class="line">        <span class="comment">//析构函数</span></span><br><span class="line">    &#125;</span><br><span class="line">    BigInt <span class="keyword">operator</span>+(<span class="type">const</span> BigInt &amp;x) &#123;&#125;</span><br><span class="line">    <span class="function">BigInt&amp; <span class="title">self_add</span><span class="params">(<span class="type">const</span> BigInt &amp;x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>一般运算符都是由左右两部分组成的 <code>lhs operator rhs</code></p>
+<p>重载运算符的操作就是右边的操作数<code>auto operator-(const Type &amp;rhs)&#123;&#125;</code></p>
+<p><code>explicit</code>关键字代表必须显式转化，类型转化运算符使用，避免因为二义性带来问题</p>
+<p><code>friend</code>友元，在类中声明并加上友元声明，就可以在其他位置进行访问该类的私有成员，也可以单独对类的某个成员函数声明为友元<code>friend double BigFloat::pow(BigInt&amp;);</code></p>
+<p>成员函数的其他命名方法：<code>BigInt BigInt::add(BigInt &amp;X) &#123;&#125;</code></p>
+<h2 id="继承与多态"><a href="#继承与多态" class="headerlink" title="继承与多态"></a>继承与多态</h2>]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++基础笔记13</title>
+    <url>/2025/02/28/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B013/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++基础笔记14</title>
+    <url>/2025/02/28/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B014/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++基础笔记2</title>
-    <url>/2024/10/02/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B02/</url>
+    <url>/2024/10/02/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B02/</url>
     <content><![CDATA[<h2 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h2><h3 id="算术运算"><a href="#算术运算" class="headerlink" title="算术运算"></a>算术运算</h3><p>-用处 单独放在一个操作符前面 表示正负号反转</p>
 <h3 id="赋值运算"><a href="#赋值运算" class="headerlink" title="赋值运算"></a>赋值运算</h3><p>a = a + 5 等效于 a+=5</p>
 <h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p><strong>C++转换示例</strong></p>
@@ -598,92 +990,8 @@
       </tags>
   </entry>
   <entry>
-    <title>C++基础笔记3</title>
-    <url>/2024/10/03/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B03/</url>
-    <content><![CDATA[<h2 id="条件控制"><a href="#条件控制" class="headerlink" title="条件控制"></a>条件控制</h2><p>作用域 定义变量只在{}内部生效</p>
-<p>初始化 <code>if(int pow = x * x; pow &lt; 100)</code></p>
-<p>通常书写</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (x &lt; <span class="number">0</span>) &#123;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;if branch&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (x == <span class="number">0</span>) &#123;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;else if branch&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;else branch&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>书写规范:同样如果只有一行代码可写成一行增加代码的可阅读性</strong></p>
-<p><code>if(condition) only_one_statement</code></p>
-<h2 id="循环控制"><a href="#循环控制" class="headerlink" title="循环控制"></a>循环控制</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i ++) &#123;</span><br><span class="line">    cout &lt;&lt; i &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (++i &lt; <span class="number">10</span>) &#123;</span><br><span class="line">    cout &lt;&lt; i &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">  i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    cout &lt;&lt; i &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  &#125; <span class="keyword">while</span> (++i &lt; <span class="number">10</span>);</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>循环嵌套</strong></p>
-<p>示例九九乘法表</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> a = <span class="number">1</span>; a &lt;= <span class="number">9</span>; a++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> b = <span class="number">1</span>; b &lt;= a; b++)&#123;</span><br><span class="line">        cout &lt;&lt; format(<span class="string">&quot;&#123;&#125;*&#123;&#125;=&#123;:&lt;2&#125;&quot;</span>, a, b, a*b);</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="跳转控制"><a href="#跳转控制" class="headerlink" title="跳转控制"></a>跳转控制</h2><p>break 打破循环,直接结束循环</p>
-<p>coutinue 继续循环 跳过后续未执行的循环体,跳到迭代语句和循环条件之前</p>
-<p>goto 任意跳转至某一个标签</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">label:</span><br><span class="line">  <span class="keyword">if</span>(i &lt; <span class="number">100</span>)&#123;</span><br><span class="line">      cin &gt;&gt; x;</span><br><span class="line">      sum += x;</span><br><span class="line">      i ++;</span><br><span class="line">      <span class="keyword">goto</span> label;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span>(init; expression)&#123;</span><br><span class="line">    <span class="keyword">case</span> constant-expression1:</span><br><span class="line">        branch1;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> constant-expression2:</span><br><span class="line">        branch2;</span><br><span class="line">        <span class="keyword">break</span>; </span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        branch3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>C++学习笔记</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++游戏开发2</title>
-    <url>/2024/10/08/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%912/</url>
-    <content><![CDATA[<h1 id="图片渲染知识"><a href="#图片渲染知识" class="headerlink" title="图片渲染知识"></a>图片渲染知识</h1><h2 id="加载图片"><a href="#加载图片" class="headerlink" title="加载图片"></a>加载图片</h2><p>查看EasyX文档,以加载<em>test.jpg</em>为例</p>
-<p><code>IMAGE img;</code></p>
-<p><code>loadimage(&amp;img, _T(&quot;test.jpg&quot;));</code></p>
-<h2 id="渲染图片"><a href="#渲染图片" class="headerlink" title="渲染图片"></a>渲染图片</h2><p><code>putimage(100,200,&amp;img);</code>//图片左上角坐标</p>
-<h2 id="动画基础"><a href="#动画基础" class="headerlink" title="动画基础"></a>动画基础</h2><h3 id="动画的数据逻辑"><a href="#动画的数据逻辑" class="headerlink" title="动画的数据逻辑"></a>动画的数据逻辑</h3><p><strong>确保动画序列帧的能够间隔固定的时间进行切换,类比定时器的概念实现一个计数器</strong></p>
-<ul>
-<li><p>定义<code>idx_current_anim</code>来存储当前动画的帧索引</p>
-</li>
-<li><p>定义<code>static int counter</code>变量用来记录当前动画帧一共播放了几个游戏帧</p>
-</li>
-</ul>
-<p>==<strong>使用static确保计数器只在第一个游戏帧被初始化为0</strong>==</p>
-<ul>
-<li><p>通过if判断语句使得每五个游戏帧切换一个动画帧;随后考虑到动画帧序列播放结束后的行为,当动画的帧索引到达动画帧总数时,将索引重置为0,从而使得动画循环播放</p>
-</li>
-<li><p>定义<code>const int PLAYER_ANIM_NUM = 6;</code></p>
-</li>
-<li>使动画循环播放,可书写下列代码</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (++counter % <span class="number">5</span> == <span class="number">0</span>)</span><br><span class="line">	index_current_anim++;</span><br><span class="line"></span><br><span class="line">index_current_anim = index_current_anim % PLAYER_ANIM_NUM;</span><br></pre></td></tr></table></figure>
-<h3 id="动画的渲染"><a href="#动画的渲染" class="headerlink" title="动画的渲染"></a>动画的渲染</h3><p>首先将每一张图片加载到程序中</p>
-<ul>
-<li><p>定义IMAGE对象数组</p>
-<p><code>IMAGE img_player_left[PLAYER_ANIM_NUM];</code><br><code>IMAGE img_player_right[PLAYER_ANIM_NUM];</code></p>
-</li>
-<li><p>图片命名十分有规律可使用循环来加载图片.在使用Unicode字符集的情况下,可以使用wstring来拼凑出文件的路径,再传递给loadimage函数,将图片传递到数组中</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">LoadAnimation</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; PLAYER_ANIM_NUM; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		std::wstring path = <span class="string">L&quot;img/paimon_left_&quot;</span> + std::<span class="built_in">to_wstring</span>(i) + <span class="string">L&quot;.png&quot;</span>;</span><br><span class="line">		<span class="built_in">loadimage</span>(&amp;img_paimon_left[i], path.<span class="built_in">c_str</span>());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; PLAYER_ANIM_NUM; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		std::wstring path = <span class="string">L&quot;img/paimon_right_&quot;</span> + std::<span class="built_in">to_wstring</span>(i) + <span class="string">L&quot;.png&quot;</span>;</span><br><span class="line">		<span class="built_in">loadimage</span>(&amp;img_paimon_right[i], path.<span class="built_in">c_str</span>());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>之前定义的动画帧索引此时边可以直接当做IMAGE数组的索引来使用</p>
-<p><code>putimage(500, 500, &amp;img_paimon_left[index_current_anim]);</code></p>
-</li>
-</ul>
-<h3 id="处理带有透明度的图片素材"><a href="#处理带有透明度的图片素材" class="headerlink" title="处理带有透明度的图片素材"></a>处理带有透明度的图片素材</h3><p>解决思路:类比putimage函数封装一个putimage_alpha函数,借助系统绘图函数比较轻巧的实现</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> comment(lib, <span class="string">&quot;MSIMG32.LIB&quot;</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">putimage_alpha</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, IMAGE* img)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> w = img-&gt;<span class="built_in">getwidth</span>();</span><br><span class="line">	<span class="type">int</span> h = img-&gt;<span class="built_in">getheight</span>();</span><br><span class="line">	<span class="built_in">AlphaBlend</span>(<span class="built_in">GetImageHDC</span>(<span class="literal">NULL</span>), x, y, w, h,</span><br><span class="line">		<span class="built_in">GetImageHDC</span>(img), <span class="number">0</span>, <span class="number">0</span>, w, h, &#123; AC_SRC_OVER,<span class="number">0</span>,<span class="number">255</span>,AC_SRC_ALPHA &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>将函数替换<code>putimage_alpha(500, 500, &amp;img_paimon_left[index_current_anim]);</code></p>
-<h1 id="键盘控制角色移动"><a href="#键盘控制角色移动" class="headerlink" title="键盘控制角色移动"></a>键盘控制角色移动</h1><h2 id="常规思路"><a href="#常规思路" class="headerlink" title="常规思路"></a>常规思路</h2><p>定义<code>POINT player_pos = &#123; 500, 500 &#125;;</code>用来存储玩家的位置,并将动画渲染的位置改为player_pos的坐标<code>putimage_alpha(player_pos.x, player_pos.y, &amp;img_paimon_left[index_current_anim]);</code></p>
-<p>定义速度 <code>int PLAYER_SPEED = 5;</code></p>
-<p>在游戏主循环中通过函数判断键盘按下状态从而实现角色移动效果</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (msg.message == WM_KEYDOWN)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">switch</span>(msg.vkcode)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;W&#x27;</span>:</span><br><span class="line">		player_pos.y -= PLAYER_SPEED;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;S&#x27;</span>:</span><br><span class="line">		player_pos.y += PLAYER_SPEED;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;A&#x27;</span>:</span><br><span class="line">		player_pos.x -= PLAYER_SPEED;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;D&#x27;</span>:</span><br><span class="line">		player_pos.x += PLAYER_SPEED;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ul>
-<li>断续:由于当我们按下方向键时,WM_KEYDOWN消息进入事件队列,当保持按键按下一定时间后才会有接连不断的消息被触发</li>
-<li>卡顿:keydown消息的产生与游戏主循环异步进行,且触发的频率与操作系统和硬件设备相关,导致有些游戏帧中时间处理部分对多个WM_KEYDOWN消息进行了处理,其余游戏帧中KEY_DOWN较少或几乎没有,导致角色在某些游戏帧中走得远有些走得近</li>
-</ul>
-<p><strong>实际需求:按键按下时,保证角色在某一个游戏帧中都能连续的移动;即玩家按键按下时,KEYD_DOWN消息触发,标志着角色开始移动,玩家按键抬起时,KEYUP消息触发,标志着角色结束移动</strong></p>
-<h2 id="解放方法"><a href="#解放方法" class="headerlink" title="解放方法"></a>解放方法</h2><p><strong>解决思路:定义布尔变量标识玩家运动状态,不直接对玩家的位置数据进行操作而是改变布尔变量的值</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//定义布尔变量用于表示玩家状态</span></span><br><span class="line"><span class="type">bool</span> is_move_up = <span class="literal">false</span>;</span><br><span class="line"><span class="type">bool</span> is_move_down = <span class="literal">false</span>;</span><br><span class="line"><span class="type">bool</span> is_move_left = <span class="literal">false</span>;</span><br><span class="line"><span class="type">bool</span> is_move_right = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//位于游戏主循环中,检测玩家状态</span></span><br><span class="line"><span class="keyword">if</span> (msg.message == WM_KEYDOWN)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">switch</span>(msg.vkcode)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;W&#x27;</span>:</span><br><span class="line">		is_move_up = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;S&#x27;</span>:</span><br><span class="line">		is_move_down = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;A&#x27;</span>:</span><br><span class="line">		is_move_left = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;D&#x27;</span>:</span><br><span class="line">		is_move_right = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (msg.message == WM_KEYUP)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">switch</span> (msg.vkcode)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;W&#x27;</span>:</span><br><span class="line">		is_move_up = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;S&#x27;</span>:</span><br><span class="line">		is_move_down = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;A&#x27;</span>:</span><br><span class="line">		is_move_left = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&#x27;D&#x27;</span>:</span><br><span class="line">		is_move_right = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//对玩家移动进行操作</span></span><br><span class="line"><span class="keyword">if</span> (is_move_up) player_pos.y -= PLAYER_SPEED;</span><br><span class="line"><span class="keyword">if</span> (is_move_down) player_pos.y += PLAYER_SPEED;</span><br><span class="line"><span class="keyword">if</span> (is_move_left) player_pos.x -= PLAYER_SPEED;</span><br><span class="line"><span class="keyword">if</span> (is_move_right) player_pos.x -= PLAYER_SPEED;</span><br></pre></td></tr></table></figure>
-<h1 id="优化动画数据逻辑"><a href="#优化动画数据逻辑" class="headerlink" title="优化动画数据逻辑"></a>优化动画数据逻辑</h1><p>思路:由于代码相似,可使用类的思想进行封装,定义类用于封装动画相关的数据和逻辑</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>C++游戏开发</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C++基础笔记4</title>
-    <url>/2024/10/09/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B04/</url>
+    <url>/2024/10/09/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B04/</url>
     <content><![CDATA[<h2 id="数组概念"><a href="#数组概念" class="headerlink" title="数组概念"></a>数组概念</h2><p>含义:存储一组相同数据类型元素的集合</p>
 <p>定义方式:<code>类型 数组名[长度]</code> </p>
 <p>类型:int char bool double等  (所有元素的类型相同)</p>
@@ -737,8 +1045,34 @@
       </tags>
   </entry>
   <entry>
+    <title>C++基础笔记3</title>
+    <url>/2024/10/03/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B03/</url>
+    <content><![CDATA[<h2 id="条件控制"><a href="#条件控制" class="headerlink" title="条件控制"></a>条件控制</h2><p>作用域 定义变量只在{}内部生效</p>
+<p>初始化 <code>if(int pow = x * x; pow &lt; 100)</code></p>
+<p>通常书写</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (x &lt; <span class="number">0</span>) &#123;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;if branch&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (x == <span class="number">0</span>) &#123;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;else if branch&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;else branch&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>书写规范:同样如果只有一行代码可写成一行增加代码的可阅读性</strong></p>
+<p><code>if(condition) only_one_statement</code></p>
+<h2 id="循环控制"><a href="#循环控制" class="headerlink" title="循环控制"></a>循环控制</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i ++) &#123;</span><br><span class="line">    cout &lt;&lt; i &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (++i &lt; <span class="number">10</span>) &#123;</span><br><span class="line">    cout &lt;&lt; i &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">  i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    cout &lt;&lt; i &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  &#125; <span class="keyword">while</span> (++i &lt; <span class="number">10</span>);</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>循环嵌套</strong></p>
+<p>示例九九乘法表</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> a = <span class="number">1</span>; a &lt;= <span class="number">9</span>; a++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> b = <span class="number">1</span>; b &lt;= a; b++)&#123;</span><br><span class="line">        cout &lt;&lt; format(<span class="string">&quot;&#123;&#125;*&#123;&#125;=&#123;:&lt;2&#125;&quot;</span>, a, b, a*b);</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="跳转控制"><a href="#跳转控制" class="headerlink" title="跳转控制"></a>跳转控制</h2><p>break 打破循环,直接结束循环</p>
+<p>coutinue 继续循环 跳过后续未执行的循环体,跳到迭代语句和循环条件之前</p>
+<p>goto 任意跳转至某一个标签</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">label:</span><br><span class="line">  <span class="keyword">if</span>(i &lt; <span class="number">100</span>)&#123;</span><br><span class="line">      cin &gt;&gt; x;</span><br><span class="line">      sum += x;</span><br><span class="line">      i ++;</span><br><span class="line">      <span class="keyword">goto</span> label;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span>(init; expression)&#123;</span><br><span class="line">    <span class="keyword">case</span> constant-expression1:</span><br><span class="line">        branch1;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> constant-expression2:</span><br><span class="line">        branch2;</span><br><span class="line">        <span class="keyword">break</span>; </span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        branch3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++基础笔记5</title>
-    <url>/2024/10/15/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B05/</url>
+    <url>/2024/10/15/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B05/</url>
     <content><![CDATA[<h1 id="STL"><a href="#STL" class="headerlink" title="STL"></a>STL</h1><h2 id="初步介绍"><a href="#初步介绍" class="headerlink" title="初步介绍"></a>初步介绍</h2><p>STL(Standard Template Library)，C++标准库的一部分，可以帮助我们处理常见的数据结构和算法。容器是STL的重要组成部分，用于存储和组织数据的对象。</p>
 <h1 id="vertor"><a href="#vertor" class="headerlink" title="vertor"></a>vertor</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><strong>动态数据容器</strong>：相比于数组在一开始就申明了大小，vector无需再申明时确定大小，可以做到动态调整容量，所以称之为动态数组</p>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
@@ -826,52 +1160,8 @@
       </tags>
   </entry>
   <entry>
-    <title>算法基础数学知识1</title>
-    <url>/2024/10/19/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E5%9F%BA%E7%A1%80%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%861/</url>
-    <content><![CDATA[<h2 id="数论—反复取模"><a href="#数论—反复取模" class="headerlink" title="数论—反复取模"></a>数论—反复取模</h2><p>判断a的b次方末尾3位数</p>
-<p>在计算时可在每次乘a时对1000取模,根据<del>高深的</del>数论知识,结果不影响</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(b --)&#123;</span><br><span class="line">       res *= a;</span><br><span class="line">       res %= <span class="number">1000</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="R进制转换"><a href="#R进制转换" class="headerlink" title="R进制转换"></a>R进制转换</h2><p>对数字进行R进制转换,可用该数字对R取模得到个位,再除以R,再次取模,反复操作以获取各个位置的数,存储于vector中再进行输入</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取每一位方法</span></span><br><span class="line"><span class="keyword">while</span>(n)&#123;</span><br><span class="line">    digits.<span class="built_in">push_back</span>(n % r);</span><br><span class="line">    n /= r;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">reverse</span>(digits.<span class="built_in">begin</span>(), digits.<span class="built_in">end</span>());<span class="comment">//获取是从后往前,因此需要反转再输出</span></span><br><span class="line"><span class="comment">//分类讨论，字母可用ASCII码表处理</span></span><br></pre></td></tr></table></figure>
-<h2 id="循环相邻"><a href="#循环相邻" class="headerlink" title="循环相邻"></a>循环相邻</h2><p>这是<code>digits</code>字符串中的第<code>(i+1)</code>个字符，但由于使用了模运算<code>%</code>，当<code>i</code>等于<code>len - 1</code>（即字符串的最后一个字符）时，<code>(i+1) % len</code>将得到0，也就是字符串的第一个字符，这样实现了循环相邻的效果</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>;i &lt; len;i ++)&#123;</span><br><span class="line">    str[i] = digits[i] + digits[(i<span class="number">+1</span>) % len];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="密码加密"><a href="#密码加密" class="headerlink" title="密码加密"></a>密码加密</h2><p>需要保证ASCII码加密后仍是字母因此使用取模运算</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">isupper</span>(str[i])) &#123;</span><br><span class="line">      str[i] = (str[i] - <span class="string">&#x27;A&#x27;</span> + <span class="number">3</span>) % <span class="number">26</span> + <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      str[i] = (str[i] - <span class="string">&#x27;a&#x27;</span> + <span class="number">3</span>) % <span class="number">26</span> + <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>基础数学知识</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>递归</title>
-    <url>/2024/11/17/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E9%80%92%E5%BD%92/</url>
-    <content><![CDATA[<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p><strong>递归</strong>，即调用函数自身。本质上是将问题拆解成更小规模的相同问题。</p>
-<p>简单优化思路（==记忆化搜索==）：如果有重复计算，将结果保存下来</p>
-<p>递归方法：</p>
-<ul>
-<li>确定问题</li>
-<li>解决基准问题</li>
-<li>拆解问题</li>
-</ul>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="斐波那契数列（Fibonacci）"><a href="#斐波那契数列（Fibonacci）" class="headerlink" title="斐波那契数列（Fibonacci）"></a>斐波那契数列（Fibonacci）</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">fib</span>(n<span class="number">-1</span>) + <span class="built_in">fib</span>(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当出现重复问题时数据会成指数型增长,子问题会被重复计算多次.</p>
-<p>可以在计算时将计算过的保存下来,并在计算时再判断是否计算过,用来优化性能</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">saved</span><span class="params">(n,<span class="number">-1</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(saved[n] == <span class="number">-1</span>)&#123;</span><br><span class="line">        saved[n] = <span class="built_in">fib</span>(n<span class="number">-1</span>) + <span class="built_in">fib</span>(n<span class="number">-2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> saved[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="汉诺塔-honai"><a href="#汉诺塔-honai" class="headerlink" title="汉诺塔(honai)"></a>汉诺塔(honai)</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">hanoi</span><span class="params">(<span class="type">int</span> n, <span class="type">char</span> F, <span class="type">char</span> A, <span class="type">char</span> T)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;move %d from %c to %c\n&quot;</span>, n, F, T);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">hanoi</span>(n - <span class="number">1</span>, F, T, A);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;move %d from %c to %c\n&quot;</span>, n, F, T);</span><br><span class="line">    <span class="built_in">hanoi</span>(n - <span class="number">1</span>, A, F, T);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>基础数学知识</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C++基础笔记6</title>
-    <url>/2024/10/29/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B06/</url>
+    <url>/2024/10/29/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B06/</url>
     <content><![CDATA[<h1 id="字符数组-amp-字符串"><a href="#字符数组-amp-字符串" class="headerlink" title="字符数组&amp;字符串"></a>字符数组&amp;字符串</h1><h2 id="定义-amp-初始化"><a href="#定义-amp-初始化" class="headerlink" title="定义&amp;初始化"></a>定义&amp;初始化</h2><p><code>char str[] = &#123;&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;&#125;;</code></p>
 <p><code>char str[] = &quot;abcd&quot;;</code></p>
 <p>==注意：字符串包含最后<code>\0</code>终止符,所以其实有五个元素==</p>
@@ -1057,7 +1347,7 @@
   </entry>
   <entry>
     <title>C++基础笔记7</title>
-    <url>/2024/10/30/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B07/</url>
+    <url>/2024/10/30/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B07/</url>
     <content><![CDATA[<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*返回类型 函数名(参数列表)&#123;</span></span><br><span class="line"><span class="comment">    函数体;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">//定义函数</span></span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">power</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> res = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(n--)&#123;</span><br><span class="line">        res *= x;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//调用函数</span></span><br><span class="line"><span class="built_in">power</span>(<span class="number">2</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p><strong>返回类型</strong></p>
@@ -1125,6 +1415,22 @@
 <p><strong>例子 5：捕获外部变量并修改</strong></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">auto</span> lambda = [&amp;a]() &#123; a = <span class="number">20</span>; &#125;;</span><br><span class="line"><span class="built_in">lambda</span>(); <span class="comment">// 修改外部变量 a 的值</span></span><br></pre></td></tr></table></figure>
 <p>Lambda 函数可以被存储在变量中，作为参数传递给函数，或者直接在需要的地方使用。它们是现代 C++ 编程中非常灵活和强大的工具。</p>
+<h1 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h1><h2 id="sort"><a href="#sort" class="headerlink" title="sort"></a><code>sort</code></h2><p><code>void sort(Iterator first, Iterator last, Function comparer);</code></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">comparer</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="comment">//a是否在b前面，a是否小于b</span></span><br><span class="line">    <span class="keyword">if</span>(a % <span class="number">2</span> != b % <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> a % <span class="number">2</span> == <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a &lt; b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> arr[] = &#123;<span class="number">5</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">6</span>&#125;;</span><br><span class="line">    <span class="built_in">sort</span>(arr, arr + <span class="number">9</span>, comparer);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//或者直接写</span></span><br><span class="line"><span class="built_in">sort</span>(arr , arr + <span class="number">9</span>, [](<span class="type">int</span> a, <span class="type">int</span> b) -&gt; <span class="type">bool</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a % <span class="number">2</span> != b % <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> a % <span class="number">2</span> == <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a &lt; b;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="find-if"><a href="#find-if" class="headerlink" title="find_if"></a><code>find_if</code></h2><p>作用：查找范围内第一个满足条件的元素 </p>
+<p>返回值为迭代器或者地址</p>
+<p><code>Iterator find_if(Iterator first, Iterator last, Function matcher);</code></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">matcher</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x &gt; target;</span><br><span class="line">&#125;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">5</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">100</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">6</span>&#125;;</span><br><span class="line"><span class="type">int</span> target = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">find_if</span>(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>(), [target](<span class="type">int</span> x) &#123;</span><br><span class="line">    <span class="keyword">return</span> x &gt; target;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong><code>[]</code>的意义是捕获，代表捕获一些变量使得可以在函数内正常访问</strong></p>
+<h2 id="捕获"><a href="#捕获" class="headerlink" title="[]捕获"></a><code>[]</code>捕获</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x, y ,z;</span><br><span class="line"><span class="comment">//值捕获</span></span><br><span class="line">[x]() &#123;</span><br><span class="line">    x;</span><br><span class="line">    x = <span class="number">1</span>;<span class="comment">//错误的写法，因为不能在函数内修改值的量</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//引用捕获</span></span><br><span class="line"><span class="comment">//如果想修改x的值，需要加上引用，写作 [&amp;x]</span></span><br><span class="line">[=]() &#123;</span><br><span class="line">    <span class="comment">//写等于号代表捕获了x, y, z</span></span><br><span class="line">    x, y, z;</span><br><span class="line">&#125;</span><br><span class="line">[&amp;]() &#123;</span><br><span class="line">    <span class="comment">//只写引用符号代表引用捕获了x, y, z</span></span><br><span class="line">    x = y = z = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//也可以混合使用</span></span><br><span class="line"><span class="comment">//初始化捕获</span></span><br><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line">[x, init = x * x]() <span class="keyword">mutable</span> &#123;</span><br><span class="line">    x, init;</span><br><span class="line">    <span class="comment">//只在匿名函数内生效</span></span><br><span class="line">    <span class="comment">//加上mutable的修改 只在函数内部生效 和引用捕获不同	</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>判断依据:</p>
+<ul>
+<li>如果想在函数内改变变量 使用引用捕获</li>
+<li>vector string 等建议使用引用捕获</li>
+</ul>
+<p>==<code>mutable</code>==可改变的，加上mutable关键字之后可以改变捕获的值（只在函数内部生效，和引用捕获不同） <strong>加在括号和花括号之间</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> swap = [](<span class="type">int</span> &amp;a, <span class="type">int</span> &amp;b) &#123;  &#125;;<span class="comment">//花括号内写函数具体内容  </span></span><br></pre></td></tr></table></figure>
+<h2 id="匿名函数的递归调用"><a href="#匿名函数的递归调用" class="headerlink" title="匿名函数的递归调用"></a>匿名函数的递归调用</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> fib = [](<span class="keyword">auto</span>&amp; self, <span class="type">int</span> x) &#123;</span><br><span class="line">    <span class="keyword">if</span>(x &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">self</span>(self, x - <span class="number">1</span>) + <span class="built_in">self</span>(self, x - <span class="number">2</span>);</span><br><span class="line">&#125;;<span class="comment">//self代表函数自身</span></span><br><span class="line">cout &lt;&lt; <span class="built_in">fib</span>(fib, <span class="number">10</span>) &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>C++学习笔记</category>
@@ -1132,267 +1438,10 @@
       <tags>
         <tag>C/C++</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>图 (graph)</title>
-    <url>/2024/11/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>堆 (heap)</title>
-    <url>/2024/11/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%A0%86/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>algorithm头文件常用函数</title>
-    <url>/2024/11/05/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/algorithm/</url>
-    <content><![CDATA[<h2 id="reverse"><a href="#reverse" class="headerlink" title="reverse"></a><code>reverse</code></h2><p><strong>倒转数组</strong>  <code>reverse(v.begin(), v.end());</code></p>
-<h2 id="sort"><a href="#sort" class="headerlink" title="sort"></a><code>sort</code></h2><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>sort(first, last, comp);</code></p>
-<ul>
-<li><strong>first:</strong>  指向要排序的序列的起始位置的迭代器</li>
-<li><strong>last: </strong>指向要排序的序列的结束位置的迭代器（不包含该位置）</li>
-<li><strong>comp:</strong> 一个可选的比较函数或函数对象，用于定义排序的顺序。如果不提供，则默认使用<code>operator&lt;</code>进行升序排序</li>
-</ul>
-<h3 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h3><p>你也可以提供一个自定义的比较函数或函数对象来控制排序的行为。例如，如果你想以降序排序，可以这样做：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">compare</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a &gt; b; <span class="comment">// 降序排序</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">5</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">2</span>&#125;;</span><br><span class="line">    std::<span class="built_in">sort</span>(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>(), compare);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> num : vec) &#123;</span><br><span class="line">        std::cout &lt;&lt; num &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h3><p>在C++11及以后的版本中，你可以使用Lambda表达式来简化自定义比较函数的书写:</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">5</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">2</span>&#125;;</span><br><span class="line">    std::<span class="built_in">sort</span>(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>(), [](<span class="type">int</span> a, <span class="type">int</span> b) &#123;</span><br><span class="line">        <span class="keyword">return</span> a &gt; b; <span class="comment">// 降序排序</span></span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> num : vec) &#123;</span><br><span class="line">        std::cout &lt;&lt; num &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
-<li><code>sort</code>函数使用的是快速排序算法，平均时间复杂度为O(n log n)，但在最坏情况下（例如，数组已经排序）时间复杂度为O(n^2)。</li>
-<li><code>sort</code>函数会修改传入的序列，因此不适用于需要保持原序列不变的情况。</li>
-<li>确保传入的迭代器是有效的，并且<code>first</code>和<code>last</code>之间的元素数量是合理的，以避免越界错误。</li>
-</ul>
-<h2 id="unique"><a href="#unique" class="headerlink" title="unique"></a><code>unique</code></h2><h3 id="函数作用"><a href="#函数作用" class="headerlink" title="函数作用"></a>函数作用</h3><p><code>std::unique</code> 函数的作用是移除容器中所有连续重复的元素，只保留每个元素的第一个出现。它不会真正从容器中删除元素，而是将所有重复的元素移动到容器的末尾，并返回一个新的迭代器，指向新的逻辑结束位置。</p>
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p><code>std::unique</code> 函数返回的迭代器是一个<strong>指向新逻辑结束位置</strong>的迭代器。这个迭代器指向的位置是第一个不重复元素之后的位置，即所有重复元素都被移动到这个位置之后。</p>
-<h3 id="迭代器类型"><a href="#迭代器类型" class="headerlink" title="迭代器类型"></a>迭代器类型</h3><p><code>unique(v.begin(), v.end())</code> 返回的迭代器类型与传入的迭代器类型相同。如果 <code>v</code> 是一个 <code>std::vector</code>，那么返回的迭代器就是 <code>std::vector&lt;int&gt;::iterator</code> 类型；如果 <code>v</code> 是一个 <code>std::list</code>，那么返回的迭代器就是 <code>std::list&lt;int&gt;::iterator</code> 类型。</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>假设 <code>v</code> 是一个 <code>std::vector&lt;int&gt;</code>，那么 <code>v.begin()</code> 和 <code>v.end()</code> 分别是指向 <code>v</code> 的第一个元素和最后一个元素之后的位置的迭代器。<code>unique(v.begin(), v.end())</code> 会处理这个范围内的所有元素，移除连续重复的元素，并返回一个新的迭代器，指向新的逻辑结束位置。</p>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>这个返回的迭代器通常用于与容器的 <code>erase</code> 方法结合使用，以实际从容器中移除重复元素.<code>v.erase(unique(v.begin(), v.end()), v.end());</code></p>
-<h2 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a><code>rotate</code></h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>这个函数可以对序列（如数组、容器等）中的元素进行循环移动。它将序列中从第一个参数指定的位置开始的所有元素移动到序列的前面，而序列中的第一个元素被移动到最后一个指定的位置</p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将vec中从位置1开始的元素（包括1）移动到vec的开头</span></span><br><span class="line">    std::<span class="built_in">rotate</span>(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">begin</span>() + <span class="number">1</span>, vec.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出旋转后的向量</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> num : vec) &#123;</span><br><span class="line">        std::cout &lt;&lt; num &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line">    <span class="comment">//2 3 4 5 1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在这个例子中，<code>std::rotate</code> 将 <code>vec</code> 中从索引 1 开始的元素（即元素 <code>2, 3, 4, 5</code>）移动到了向量的开头，而元素 <code>1</code> 被移动到了向量的末尾。</p>
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
-<li><strong>第一个迭代器</strong>：指向序列中第一个元素的迭代器</li>
-<li><strong>第二个迭代器</strong>：指向序列中要旋转到第一个位置的元素的迭代器</li>
-<li><strong>第三个迭代器</strong>：指向序列中最后一个元素的迭代器</li>
-</ul>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>请注意，<code>std::rotate</code> 的时间复杂度是 O(n)，其中 n 是序列中元素的数量，因为它需要移动所有元素。对于大型数据集，这可能会有性能影响</p>
-<h2 id="max-element"><a href="#max-element" class="headerlink" title="max_element"></a><code>max_element</code></h2><p><strong>请注意，<code>max_element</code> 返回的是一个迭代器指向最大元素的位置，而不是最大元素的值。如果你需要最大元素的值，可以通过解引用迭代器（<code>*max_iter</code>）来获取。</strong></p>
-<p><code>max_element</code> 是 C++ 标准库中的一个函数模板，它用于在给定的范围内查找最大元素。这个函数定义在 <code>&lt;algorithm&gt;</code> 头文件中。<code>max_element</code> 接受三个参数：</p>
-<ol>
-<li><code>first</code>：指向范围开始的迭代器。</li>
-<li><code>last</code>：指向范围结束的迭代器（不包含在内）。</li>
-<li><code>comp</code>：（可选）一个比较函数或函数对象，用于比较两个元素，返回 <code>true</code> 如果第一个参数应该被认为大于第二个参数。</li>
-</ol>
-<p>如果不提供比较函数，<code>max_element</code> 将使用 <code>operator&lt;</code> 来比较元素，这意味着它将找到数值上最大的元素。</p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>数组与链表 (array &amp; linked list)</title>
-    <url>/2024/11/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>复杂度 （Complexity）</title>
-    <url>/2024/10/31/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%A4%8D%E6%9D%82%E5%BA%A6/</url>
-    <content><![CDATA[<h1 id="时间复杂度-Time-Complexity"><a href="#时间复杂度-Time-Complexity" class="headerlink" title="时间复杂度 (Time Complexity)"></a>时间复杂度 (Time Complexity)</h1><h1 id="空间复杂度-Space-Complexity"><a href="#空间复杂度-Space-Complexity" class="headerlink" title="空间复杂度 (Space Complexity)"></a>空间复杂度 (Space Complexity)</h1>]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>位运算</title>
-    <url>/2024/11/18/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
-    <content><![CDATA[<h1 id="常见的位运算"><a href="#常见的位运算" class="headerlink" title="常见的位运算"></a>常见的位运算</h1><h2 id="（取反）"><a href="#（取反）" class="headerlink" title="~ （取反）"></a>~ （取反）</h2><p>取相反数，<code>e = ~ a + 1</code></p>
-<h2 id="（或）；-amp-（与）；-（异或）"><a href="#（或）；-amp-（与）；-（异或）" class="headerlink" title="| （或）；&amp; （与）；^ （异或）"></a>| （或）；&amp; （与）；^ （异或）</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> g = <span class="number">0b0001010</span>;</span><br><span class="line"><span class="type">int</span> h = <span class="number">0b0001100</span>;</span><br><span class="line">cout &lt;&lt; (g | h); <span class="comment">//或运算，每一位只要有一位有1，就能够保留</span></span><br><span class="line">cout &lt;&lt; (g &amp; h); <span class="comment">//与运算，只有两位都是1，才可以保留</span></span><br><span class="line">cout &lt;&lt; (g ^ h); <span class="comment">//异或，相同就是0，不同就是1</span></span><br></pre></td></tr></table></figure>
-<h2 id="lt-lt-（左移）"><a href="#lt-lt-（左移）" class="headerlink" title="&lt;&lt; （左移）"></a>&lt;&lt; （左移）</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//整体状态向左移动,用0补右边</span></span><br><span class="line"><span class="type">int</span> i = <span class="number">0b0011010</span>;</span><br><span class="line">cout &lt;&lt; (i &lt;&lt; <span class="number">1</span>);</span><br><span class="line"><span class="comment">//000000&#x27;1101&#x27;0</span></span><br><span class="line"><span class="comment">//00000&#x27;1101&#x27;00</span></span><br></pre></td></tr></table></figure>
-<h2 id="gt-gt-gt-gt-gt-（右移）"><a href="#gt-gt-gt-gt-gt-（右移）" class="headerlink" title="&gt;&gt;  , &gt;&gt;&gt;（右移）"></a>&gt;&gt;  , &gt;&gt;&gt;（右移）</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//对非负数效果一样,向右移,并且用0来补充左边</span></span><br><span class="line"><span class="comment">//而对负数效果不一样</span></span><br><span class="line"><span class="comment">//&#x27;&gt;&gt;&#x27;用符号位来补;&#x27;&gt;&gt;&gt;&#x27;一律用0来补位</span></span><br><span class="line"><span class="comment">//1111 0000 0000 (分别向右移动2位)</span></span><br><span class="line"><span class="comment">//1111 1100 0000 </span></span><br><span class="line"><span class="comment">//0011 1100 0000</span></span><br></pre></td></tr></table></figure>
-<h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2><p>对于<strong>非负数</strong>来说:</p>
-<ul>
-<li>非负数 &lt;&lt; i ，等同于乘以2的i次方</li>
-<li>非负数 &gt;&gt; i ，等同于除以2的i次方</li>
-</ul>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>排序算法 (sorting algorithm)</title>
-    <url>/2024/10/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><h1 id="比较排序算法"><a href="#比较排序算法" class="headerlink" title="比较排序算法"></a>比较排序算法</h1><h2 id="冒泡排序（Bubble-Sort）"><a href="#冒泡排序（Bubble-Sort）" class="headerlink" title="冒泡排序（Bubble Sort）"></a>冒泡排序（Bubble Sort）</h2><h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><p><strong>冒泡排序 (bubble sort)</strong> 通过连续地比较与交换相邻元素实现排序。这个过程就像气泡从底部升到顶部一样， 因此得名冒泡排序。</p>
-<p>冒泡过程可以利用元素交换操作来模拟：从数组最左端开始向右遍历，依次比较相邻元素大小，如果“左元素 &gt; 右元素”就交换二者。遍历完成后，最大的元素会被移动到数组的最右端。</p>
-<h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><p>设数组的长度为 𝑛 ，冒泡排序的步骤: 挨个计较相邻的数字将最大的数字排在最后</p>
-<ul>
-<li>首先，对 𝑛 个元素执行“冒泡”，将数组的最大元素交换至正确位置</li>
-<li>接下来，对剩余 𝑛 − 1 个元素执行“冒泡”，将第二大元素交换至正确位置 </li>
-<li>以此类推，经过 𝑛 − 1 轮“冒泡”后，前 𝑛 − 1 大的元素都被交换至正确位置</li>
-<li>仅剩的一个元素必定是最小元素，无须排序，因此数组排序完成</li>
-</ul>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 冒泡排序</span></span><br><span class="line"><span class="type">bool</span> swapped;</span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    swapped = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">1</span>; i &lt; v.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v[i - <span class="number">1</span>] &gt; v[i]) &#123;</span><br><span class="line">            <span class="built_in">swap</span>(v[i - <span class="number">1</span>], v[i]);</span><br><span class="line">            swapped = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">while</span> (!swapped);</span><br><span class="line"></span><br><span class="line"><span class="comment">//bubble sort</span></span><br><span class="line"><span class="type">bool</span> swapped;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">9</span>;i &gt; <span class="number">0</span>;i --)&#123;</span><br><span class="line">    swapped = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>;j &lt; i;j ++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[j] &gt; arr[j<span class="number">+1</span>])&#123;</span><br><span class="line">            <span class="built_in">swap</span>(arr[j],arr[j<span class="number">+1</span>]);</span><br><span class="line">            swapped = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!swapped) <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="算法特性"><a href="#算法特性" class="headerlink" title="算法特性"></a>算法特性</h3><ul>
-<li><strong>时间复杂度为 O(n2)、自适应排序</strong>：各轮“冒泡”遍历的数组长度依次为 n−1、n−2、…、2、1 ，总和为 (n−1)n/2 。在引入 <code>flag</code> 优化后，最佳时间复杂度可达到 O(n) 。</li>
-<li><strong>空间复杂度为 O(1)、原地排序</strong>：指针 i 和 j 使用常数大小的额外空间。</li>
-<li><strong>稳定排序</strong>：由于在“冒泡”中遇到相等元素不交换</li>
-</ul>
-<h2 id="选择排序（Selection-Sort）"><a href="#选择排序（Selection-Sort）" class="headerlink" title="选择排序（Selection Sort）"></a>选择排序（Selection Sort）</h2><h3 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h3><p><strong>选择排序（Selection Sort)</strong>  开启一个循环，每轮从未排序区间选择最小的元素，将其放到已排序区间的末尾。</p>
-<h3 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h3><ul>
-<li>初始状态下，所有元素未排序，即未排序（索引）区间为 [0, n−1] </li>
-<li>选取区间 [0, n−1] 中的最小元素，将其与索引 0 处的元素交换。完成后，数组前 1 个元素已排序。</li>
-<li>选取区间 [1, n−1] 中的最小元素，将其与索引 1 处的元素交换。完成后，数组前 2 个元素已排序。</li>
-<li>以此类推。经过 n−1 轮选择与交换后，数组前 n−1 个元素已排序。</li>
-<li>仅剩的一个元素必定是最大元素，无须排序，因此数组排序完成。</li>
-</ul>
-<h3 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 选择排序 */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">selectionSort</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;nums)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">    <span class="comment">// 外循环：未排序区间为 [i, n-1]</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="comment">// 内循环：找到未排序区间内的最小元素</span></span><br><span class="line">        <span class="type">int</span> k = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[j] &lt; nums[k])</span><br><span class="line">                k = j; <span class="comment">// 记录最小元素的索引</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 将该最小元素与未排序区间的首个元素交换</span></span><br><span class="line">        <span class="built_in">swap</span>(nums[i], nums[k]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="算法特性-1"><a href="#算法特性-1" class="headerlink" title="算法特性"></a>算法特性</h3><ul>
-<li><strong>时间复杂度为 O(n2)、非自适应排序</strong>：外循环共 n−1 轮，第一轮的未排序区间长度为 n ，最后一轮的未排序区间长度为 2 ，即各轮外循环分别包含 n、n−1、…、3、2 轮内循环，求和为 (n−1)(n+2)2 。</li>
-<li><strong>空间复杂度为 O(1)、原地排序</strong>：指针 i 和 j 使用常数大小的额外空间。</li>
-<li><strong>非稳定排序</strong>：如图 11-3 所示，元素 <code>nums[i]</code> 有可能被交换至与其相等的元素的右边，导致两者的相对顺序发生改变。</li>
-</ul>
-<h2 id="插入排序（Insertion-Sort）"><a href="#插入排序（Insertion-Sort）" class="headerlink" title="插入排序（Insertion Sort）"></a>插入排序（Insertion Sort）</h2><h3 id="介绍-3"><a href="#介绍-3" class="headerlink" title="介绍"></a>介绍</h3><h3 id="算法流程-2"><a href="#算法流程-2" class="headerlink" title="算法流程"></a>算法流程</h3><h3 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h3><h3 id="算法特性-2"><a href="#算法特性-2" class="headerlink" title="算法特性"></a>算法特性</h3><h2 id="快速排序（Quick-Sort）"><a href="#快速排序（Quick-Sort）" class="headerlink" title="快速排序（Quick Sort）"></a>快速排序（Quick Sort）</h2><h2 id="归并排序（Merge-Sort）"><a href="#归并排序（Merge-Sort）" class="headerlink" title="归并排序（Merge Sort）"></a>归并排序（Merge Sort）</h2><h2 id="希尔排序（Shell-Sort）"><a href="#希尔排序（Shell-Sort）" class="headerlink" title="希尔排序（Shell Sort）"></a>希尔排序（Shell Sort）</h2><h2 id="堆排序（Heap-Sort）"><a href="#堆排序（Heap-Sort）" class="headerlink" title="堆排序（Heap Sort）"></a>堆排序（Heap Sort）</h2><h1 id="非比较排序算法"><a href="#非比较排序算法" class="headerlink" title="非比较排序算法"></a>非比较排序算法</h1><h2 id="桶排序（bucket-sort）"><a href="#桶排序（bucket-sort）" class="headerlink" title="桶排序（bucket sort）"></a>桶排序（bucket sort）</h2><h3 id="介绍-4"><a href="#介绍-4" class="headerlink" title="介绍"></a>介绍</h3><p><strong>桶排序（bucket sort）</strong> 是分治策略的一个典型应用。它通过设置一些具有大小顺序的桶，每个桶对应一个数据范围，将数据平均分配到各个桶中；然后，在每个桶内部分别执行排序；最终按照桶的顺序将所有数据合并。</p>
-<h3 id="算法流程-3"><a href="#算法流程-3" class="headerlink" title="算法流程"></a>算法流程</h3><p>考虑一个长度为 n 的数组，其元素是范围 [0,1) 内的浮点数</p>
-<ul>
-<li><p>初始化 k 个桶，将 n 个元素分配到 k 个桶中。</p>
-</li>
-<li><p>对每个桶分别执行排序（这里采用编程语言的内置排序函数）</p>
-</li>
-<li><p>按照桶从小到大的顺序合并结果。</p>
-<p><img src="https://www.hello-algo.com/chapter_sorting/bucket_sort.assets/bucket_sort_overview.png" alt=""></p>
-</li>
-</ul>
-<h3 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="计数排序（Counting-Sort）"><a href="#计数排序（Counting-Sort）" class="headerlink" title="计数排序（Counting Sort）"></a>计数排序（Counting Sort）</h2><h2 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h2>]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>排序算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>树 (tree)</title>
-    <url>/2024/11/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>栈与队列 (stack &amp; queue)</title>
-    <url>/2024/11/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>搜索算法 (search algorithm)</title>
-    <url>/2024/10/29/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>搜索算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>有趣的算法例子</title>
-    <url>/2024/11/18/%E7%AE%97%E6%B3%95%E5%AE%9E%E4%BE%8B/%E6%9C%89%E8%B6%A3%E7%9A%84%E7%AE%97%E6%B3%95%E4%BE%8B%E5%AD%90/</url>
-    <content><![CDATA[<h1 id="约瑟夫环（Josephus-problem）"><a href="#约瑟夫环（Josephus-problem）" class="headerlink" title="约瑟夫环（Josephus problem）"></a>约瑟夫环（Josephus problem）</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>这个问题说的是一个小故事。在很久以前，有n个犹太人遭到敌人的追击，他们逃到了一个山洞中，大部分的人决定宁愿去死也不要让敌人抓住。他们围成一圈，一个个轮流报数，报到k的人就要当场自杀，然后下一个人从1开始重新数数。而约瑟夫不想自杀，于是他灵机一动，站到了圈的一个位置上，结果其他人一个个都自杀了，最后只剩下约瑟夫一个人还活着，最终他逃出了山洞。那么问题来了，约瑟夫站的是哪个位置呢？</p>
-<h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><p>递推公式：<strong>f ( N , M ) = ( f ( N − 1 , M ) + M ) % N</strong> </p>
-<ul>
-<li>f ( N , M ) 表示，N个人报数，每报到M时杀掉那个人，最终胜利者的编号</li>
-<li>f ( N − 1 , M )表示，N-1个人报数，每报到M时杀掉那个人，最终胜利者的编号</li>
-</ul>
-<p><strong>你提到的情况其实是约瑟夫问题的经典部分。我们需要确保即使有人被淘汰，计算出的淘汰顺序也不会出错，特别是那些被淘汰后索引位置的调整</strong>。</p>
-<h2 id="简单模拟"><a href="#简单模拟" class="headerlink" title="简单模拟"></a>简单模拟</h2><p>12个人围坐成一圈（编号顺时针方向依次为1-12），沿顺时针方向从1号开始数，当数到k时，则k号被淘汰，接着从k号下一位继续从1开始数，数到k时淘汰第二人，以此类推，直至剩下最后一人，输出最后一人的编号及每一轮的结果。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span> </span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> k;</span><br><span class="line">  cin &gt;&gt; k;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">survive</span><span class="params">(<span class="number">12</span>)</span></span>;</span><br><span class="line">  <span class="built_in">fill</span>(survive.<span class="built_in">begin</span>(),survive.<span class="built_in">end</span>(), <span class="number">1</span>);</span><br><span class="line">  <span class="type">int</span> current = <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; <span class="number">11</span>;i ++)&#123;</span><br><span class="line">    <span class="keyword">while</span>(k != cnt)&#123;</span><br><span class="line">      <span class="keyword">if</span>(survive[current] == <span class="number">1</span>)&#123;</span><br><span class="line">        cnt ++;</span><br><span class="line">      &#125; </span><br><span class="line">      <span class="keyword">if</span> (cnt != k) &#123;  </span><br><span class="line">        current = (current + <span class="number">1</span>) % <span class="number">12</span>; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    survive[current] = <span class="number">0</span>;</span><br><span class="line">    current = (current + <span class="number">1</span>) % <span class="number">12</span>;</span><br><span class="line">    cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>;j &lt; <span class="number">12</span>;j ++)&#123;</span><br><span class="line">      <span class="keyword">if</span>(survive[j] == <span class="number">1</span>) cout &lt;&lt; j + <span class="number">1</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">      <span class="keyword">else</span> cout &lt;&lt; <span class="number">0</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>;j &lt; <span class="number">12</span>;j ++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(survive[j] == <span class="number">1</span>) cout &lt;&lt; j + <span class="number">1</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2024/11/18/%E7%AE%97%E6%B3%95/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2024/11/18/%E7%AE%97%E6%B3%95/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>贪心算法 （greedy algorithm）</title>
-    <url>/2024/10/02/%E7%AE%97%E6%B3%95/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h1 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h1><h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul>
-<li><strong>贪心选择性质</strong>：只有当局部最优选择始终可以导致全局最优解时，贪心算法才能保证得到最优解。</li>
-<li><strong>最优子结构</strong>：原问题的最优解包含子问题的最优解。</li>
-</ul>
-<h2 id="集体流程"><a href="#集体流程" class="headerlink" title="集体流程"></a>集体流程</h2><p>贪心问题的解决流程大体可分为以下三步。</p>
-<ol>
-<li><strong>问题分析</strong>：梳理与理解问题特性，包括状态定义、优化目标和约束条件等。这一步在回溯和动态规划中都有涉及。</li>
-<li><strong>确定贪心策略</strong>：确定如何在每一步中做出贪心选择。这个策略能够在每一步减小问题的规模，并最终解决整个问题。</li>
-<li><strong>正确性证明</strong>：通常需要证明问题具有贪心选择性质和最优子结构。这个步骤可能需要用到数学证明，例如归纳法或反证法等。</li>
-</ol>
-<p>确定贪心策略是求解问题的核心步骤，但实施起来可能并不容易，主要有以下原因。</p>
-<ul>
-<li><strong>不同问题的贪心策略的差异较大</strong>。对于许多问题来说，贪心策略比较浅显，我们通过一些大概的思考与尝试就能得出。而对于一些复杂问题，贪心策略可能非常隐蔽，这种情况就非常考验个人的解题经验与算法能力了。</li>
-<li><strong>某些贪心策略具有较强的迷惑性</strong>。当我们满怀信心设计好贪心策略，写出解题代码并提交运行，很可能发现部分测试样例无法通过。这是因为设计的贪心策略只是“部分正确”的，上文介绍的零钱兑换就是一个典型案例。</li>
-</ul>
-<p>为了保证正确性，我们应该对贪心策略进行严谨的数学证明，<strong>通常需要用到反证法或数学归纳法</strong>。</p>
-<p>然而，正确性证明也很可能不是一件易事。如若没有头绪，我们通常会选择面向测试用例进行代码调试，一步步修改与验证贪心策略。</p>
-<h2 id="贪心算法典型例题"><a href="#贪心算法典型例题" class="headerlink" title="贪心算法典型例题"></a>贪心算法典型例题</h2><p>贪心算法常常应用在满足贪心选择性质和最优子结构的优化问题中，以下列举了一些典型的贪心算法问题。</p>
-<ul>
-<li><strong>硬币找零问题</strong>：在某些硬币组合下，贪心算法总是可以得到最优解。</li>
-<li><strong>区间调度问题</strong>：假设你有一些任务，每个任务在一段时间内进行，你的目标是完成尽可能多的任务。如果每次都选择结束时间最早的任务，那么贪心算法就可以得到最优解。</li>
-<li><strong>分数背包问题</strong>：给定一组物品和一个载重量，你的目标是选择一组物品，使得总重量不超过载重量，且总价值最大。如果每次都选择性价比最高（价值 / 重量）的物品，那么贪心算法在一些情况下可以得到最优解。</li>
-<li><strong>股票买卖问题</strong>：给定一组股票的历史价格，你可以进行多次买卖，但如果你已经持有股票，那么在卖出之前不能再买，目标是获取最大利润。</li>
-<li><strong>霍夫曼编码</strong>：霍夫曼编码是一种用于无损数据压缩的贪心算法。通过构建霍夫曼树，每次选择出现频率最低的两个节点合并，最后得到的霍夫曼树的带权路径长度（编码长度）最小。</li>
-<li><strong>Dijkstra 算法</strong>：它是一种解决给定源顶点到其余各顶点的最短路径问题的贪心算法。</li>
-</ul>
-<h1 id="题型"><a href="#题型" class="headerlink" title="题型"></a>题型</h1>]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>C++基础笔记8</title>
-    <url>/2024/11/27/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B08/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>C++学习笔记</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>模拟算法</title>
-    <url>/2024/10/02/%E7%AE%97%E6%B3%95/%E6%A8%A1%E6%8B%9F%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<p>由于c++各类型存储都有一定的范围限制，因此在处理大数子的计算上需要使用到模拟算法，采用小学学过的模拟竖式的思想进行计算</p>
-<h1 id="高精度加法"><a href="#高精度加法" class="headerlink" title="高精度加法"></a>高精度加法</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    string s1,s2;</span><br><span class="line">    <span class="type">int</span> a1[<span class="number">210</span>],a2[<span class="number">210</span>],a3[<span class="number">210</span>]=&#123;&#125;;</span><br><span class="line">    <span class="built_in">getline</span>(cin,s1);</span><br><span class="line">    <span class="built_in">getline</span>(cin,s2);</span><br><span class="line">    <span class="comment">//存储在数组中依次相加存储在a3中(过程省略)</span></span><br><span class="line">    <span class="comment">//下面是处理进位的代码</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; len; i ++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(a3[i] &gt; <span class="number">10</span>)&#123;</span><br><span class="line">            a3[i<span class="number">+1</span>] = a3[i<span class="number">+1</span>] + a3[i] / <span class="number">10</span>;</span><br><span class="line">            a3[i] = a3[i] % <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        a3[i] = a1[i] + a2[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//逆序输出a3得到结果</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="高精度减法"><a href="#高精度减法" class="headerlink" title="高精度减法"></a>高精度减法</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//初始化相同</span></span><br><span class="line">    <span class="comment">//下面处理借位相减的过程</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; len;i ++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(a1[i] &lt; a2[i])&#123;</span><br><span class="line">            a1[i] += <span class="number">10</span>;</span><br><span class="line">            a1[i<span class="number">+1</span>] -= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        a3[i] = a1[i] - a2[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//输出同理,定义flag判断结果的正负性</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
   </entry>
   <entry>
     <title>C++基础笔记9</title>
-    <url>/2024/12/21/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B09/</url>
+    <url>/2024/12/21/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B09/</url>
     <content><![CDATA[<h1 id="纯数据结构体"><a href="#纯数据结构体" class="headerlink" title="纯数据结构体"></a>纯数据结构体</h1><h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p>作用：将多个类型聚合成一个整体成为一个新类型</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span>&#123;</span><br><span class="line">    <span class="type">int</span> score;</span><br><span class="line">    string name;<span class="comment">//成员变量</span></span><br><span class="line">&#125;;</span><br><span class="line">Student stu, stus[<span class="number">100</span>];</span><br><span class="line">Student* pstu = <span class="keyword">new</span> Student;</span><br><span class="line"><span class="comment">//可以像普通类型一样声明定义的变量,单个变量或者数组都可以</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span>&#123;</span><br><span class="line">    <span class="type">int</span> score;</span><br><span class="line">    string name;<span class="comment">//成员变量</span></span><br><span class="line">&#125; stu, stus[<span class="number">10</span>];<span class="comment">//定义也可以直接在结构后面跟上变量名(匿名结构体)</span></span><br><span class="line"><span class="comment">//由于没有起名不可以正常的定义其他变量，但可以通过C++11增加的decltype关键字获取</span></span><br><span class="line"><span class="comment">//例如 decltype(Stu) stu2;</span></span><br></pre></td></tr></table></figure>
 <p>访问成员变量只需要用<code>stu.score</code> <code>stu.name</code></p>
@@ -1432,5 +1481,124 @@
       <tags>
         <tag>C/C++</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2024/11/18/Algo/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>C++基础笔记8</title>
+    <url>/2024/11/27/C++/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B08/</url>
+    <content><![CDATA[<h1 id="指针和内存"><a href="#指针和内存" class="headerlink" title="指针和内存"></a>指针和内存</h1><p>指针存储的值并不是实际的内存数据，而是内存地址，通过指针可以直接对内存数据进行精细化的操作</p>
+<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span>* ptr;   <span class="comment">//占8字节</span></span><br><span class="line"><span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;i; <span class="comment">//&amp; 取地址符 可以获取变量的内存地址</span></span><br></pre></td></tr></table></figure>
+<h3 id="指针的使用"><a href="#指针的使用" class="headerlink" title="指针的使用"></a>指针的使用</h3><p><code>void* ptr;</code>只是地址,没有指明类型信息,因此可以存储任意类型数据的地址,需要获取值的时候再转成对应的类型来取值,也被称为万能指针</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//指针的值作为地址,实际解决需要通过指针获取地址对应的数据</span></span><br><span class="line"><span class="comment">//* 指针的取值,指针解引用</span></span><br><span class="line"><span class="type">int</span> var = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;var;</span><br><span class="line">cout &lt;&lt; *ptr &lt;&lt; endl; <span class="comment">// 1</span></span><br><span class="line">*ptr = <span class="number">2</span>; <span class="comment">//改变了原本的变量,指针指向的值也会跟着变,因为是对同一块内存数据的操作</span></span><br><span class="line">cout &lt;&lt; var &lt;&lt; endl; <span class="comment">// 2</span></span><br><span class="line">var = <span class="number">3</span>;</span><br><span class="line">cout &lt;&lt; *ptr &lt;&lt; endl; <span class="comment">// 3</span></span><br><span class="line"><span class="type">int</span>* p;</span><br><span class="line">*p; <span class="comment">//野指针, 无意义的指针</span></span><br><span class="line"><span class="type">int</span>* p = <span class="literal">NULL</span>;</span><br><span class="line"><span class="type">int</span>* p = <span class="literal">nullptr</span>;<span class="comment">//空指针</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="指针和复合类型"><a href="#指针和复合类型" class="headerlink" title="指针和复合类型"></a>指针和复合类型</h2><h3 id="指针的特性"><a href="#指针的特性" class="headerlink" title="指针的特性"></a>指针的特性</h3><p>指针 —&gt; 内存地址 —&gt; uint64_t</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">1</span>,y = <span class="number">123</span>;</span><br><span class="line"><span class="type">uint64_t</span> addr = (<span class="type">uint64_t</span>)&amp;x;</span><br><span class="line">cout &lt;&lt; *(<span class="type">int</span>*)(addr + <span class="number">4</span>) &lt;&lt; endl; <span class="comment">//得到y的值</span></span><br><span class="line"><span class="comment">//指针在做地址偏移时会自动乘上类型的大小  (ptr + 1 * sizeof(int))</span></span><br><span class="line">cout &lt;&lt; ptr[<span class="number">1</span>] &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<p><strong>c++提供的语法糖,直接使用下标运算符进行地址偏移,但注意要在连续明确的内存下这样操作才有意义</strong></p>
+<h3 id="数组-字符串-对象-函数"><a href="#数组-字符串-对象-函数" class="headerlink" title="数组    字符串    对象    函数"></a>数组    字符串    对象    函数</h3><h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span>* ptr = arr;	<span class="comment">//进行隐式转化 转为了第一个元素的首地址</span></span><br><span class="line">cout &lt;&lt; ptr[i] &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<p>数组实际类型为 <code>int [5]</code> 因此定义一个指向数组的指针应该写 <code>int (*ptr) [5] = &amp;arr;</code></p>
+<p>或者使用c++的<code>using</code>关键字写作<code>using Array5 = int[5];</code>就可以像普通变量一样定义数组和指向数组的指针<code>Array5* ptr = &amp;arr;</code></p>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><p><code>char *p;</code>字符指针,在输出时会一直+1做地址偏移,直到遇到内存为0的地址;通过这一特性,就带有终止符的字符数组首元素地址赋值给字符指针,就能把这个指针直接当字符串使用</p>
+<p><code>char str[] = &quot;hello&quot;; char* pstr = str;</code> 输出得到结果<code>hello</code></p>
+<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><p>对于<code>vector</code>等stl容器,同样可以通过定义对应类型加星号来定义指针<code>vector&lt;int&gt;* ptr = &amp;vec;</code>, 可以像原来的变量<code>(*ptr).push_back(1);</code>来访问</p>
+<p><strong><code>ptr-&gt;push_ack(2);</code></strong>c语言提供的语法糖,通过箭头进行访问</p>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><p>函数指针可以指向函数,并且可以像函数一样使用</p>
+<h1 id="C-内存模型"><a href="#C-内存模型" class="headerlink" title="C++内存模型"></a>C++内存模型</h1><p>内存分为：代码区     <code>.text</code>    <code>.rodata</code></p>
+<p>​                  全局区     <code>.data</code>(初始化)    <code>.bss</code>（未初始化）</p>
+<p>​                  堆区    栈区</p>
+<h2 id="数据的生命周期："><a href="#数据的生命周期：" class="headerlink" title="数据的生命周期："></a><strong>数据的生命周期：</strong></h2><ul>
+<li><strong>出生              -&gt;    死亡</strong></li>
+<li><strong>申请，分配   -&gt;    销毁，释放</strong></li>
+<li><p><strong>可被访问       -&gt;    无法被访问</strong></p>
+</li>
+<li><p><strong>静态生命周期</strong>：代码区 全局区</p>
+<p>程序启动 —&gt; 程序关闭</p>
+</li>
+<li><p><strong>动态生命周期</strong>：堆区</p>
+<p>new —&gt; delete   手动申请时分配，手动删除时释放</p>
+</li>
+<li><p><strong>自动生命周期</strong>：栈区</p>
+<p>在函数体内或花括号内定义时分配，函数结束或花括号结束释放</p>
+</li>
+</ul>
+<h3 id="自动生命周期"><a href="#自动生命周期" class="headerlink" title="自动生命周期"></a>自动生命周期</h3><p>类似栈，不断入栈出栈的过程。栈的大小有限，使用过多会导致栈溢出。</p>
+<h3 id="静态生命周期"><a href="#静态生命周期" class="headerlink" title="静态生命周期"></a>静态生命周期</h3><p><strong>全局变量</strong>  直接在函数体外定义即可（值是确定的，一定为0）</p>
+<p><strong>静态变量</strong>  加上<code>static</code>关键字（这样定义的变量也是整个程序执行过程中都存在）</p>
+<h3 id="动态生命周期"><a href="#动态生命周期" class="headerlink" title="动态生命周期"></a>动态生命周期</h3><p>c语言通过<code>&lt;stdlib.h&gt;</code>中的<code>malloc</code>申请内存（通过free释放）</p>
+<p>c++新增关键字<code>new</code>来申请内存，申请时可以说明这块内存用来做什么（通过delete释放）</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>* p1 = <span class="keyword">new</span> <span class="type">int</span>;<span class="comment">//undefined</span></span><br><span class="line"><span class="type">int</span>* p2 = <span class="keyword">new</span> <span class="type">int</span>[<span class="number">5</span>]();<span class="comment">//0,0,0,0,0</span></span><br><span class="line"><span class="type">int</span>* (*p3)[<span class="number">5</span>] =(<span class="built_in">int</span>(*)[<span class="number">5</span>]) <span class="keyword">new</span> <span class="type">int</span>[<span class="number">5</span>]();<span class="comment">//0,0,0,0,0</span></span><br><span class="line"><span class="type">int</span>* p4 = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">5</span>);<span class="comment">//5</span></span><br><span class="line"><span class="type">int</span>* p5 = <span class="keyword">new</span> <span class="type">int</span>[<span class="number">5</span>]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;<span class="comment">//1,2,3,4,5</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt;* p = <span class="keyword">new</span> vector&lt;<span class="type">int</span>&gt;;<span class="comment">//[]</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt;* p = <span class="keyword">new</span> <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">5</span>, <span class="number">1</span>);<span class="comment">//1,1,1,1,1</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt;* p = <span class="keyword">new</span> vector&lt;<span class="type">int</span>&gt;&#123;<span class="number">5</span>,<span class="number">1</span>&#125;;<span class="comment">//5,1</span></span><br></pre></td></tr></table></figure>
+<p>注意：只有<code>malloc</code>和<code>new</code>出来的数据在堆区，指针只是保存了堆区数据的地址，依然还是栈区的数据，也受自动生命周期的限制，所以遇到下一个花括号时就会被销毁。但此时堆区的数据仍然存在，这就是<strong>内存泄漏</strong>。</p>
+<p>所以在使用完这块内存后，需要将这块内存进行释放。在释放完后最好将指针改成<code>nullptr</code>，否则会变成<strong>悬挂指针</strong>（野指针的一种，难以定位会造成不以察觉的bug）</p>
+<p>c语言的另外两个函数<code>calloc</code> <code>realloc</code></p>
+<p><strong>内存池</strong> 自行查阅</p>
+<p><code>new Type[]</code>，<code>[]</code>代表元素个数</p>
+<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><p><code>share_ptr</code>    <code>unique_ptr</code>    <code>week_ptr</code></p>
+]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>贪心算法 （greedy algorithm）</title>
+    <url>/2024/10/02/Algo/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/%E8%B4%AA%E5%BF%83/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h1><h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul>
+<li><strong>贪心选择性质</strong>：只有当局部最优选择始终可以导致全局最优解时，贪心算法才能保证得到最优解。</li>
+<li><strong>最优子结构</strong>：原问题的最优解包含子问题的最优解。</li>
+</ul>
+<h2 id="集体流程"><a href="#集体流程" class="headerlink" title="集体流程"></a>集体流程</h2><p>贪心问题的解决流程大体可分为以下三步。</p>
+<ol>
+<li><strong>问题分析</strong>：梳理与理解问题特性，包括状态定义、优化目标和约束条件等。这一步在回溯和动态规划中都有涉及。</li>
+<li><strong>确定贪心策略</strong>：确定如何在每一步中做出贪心选择。这个策略能够在每一步减小问题的规模，并最终解决整个问题。</li>
+<li><strong>正确性证明</strong>：通常需要证明问题具有贪心选择性质和最优子结构。这个步骤可能需要用到数学证明，例如归纳法或反证法等。</li>
+</ol>
+<p>确定贪心策略是求解问题的核心步骤，但实施起来可能并不容易，主要有以下原因。</p>
+<ul>
+<li><strong>不同问题的贪心策略的差异较大</strong>。对于许多问题来说，贪心策略比较浅显，我们通过一些大概的思考与尝试就能得出。而对于一些复杂问题，贪心策略可能非常隐蔽，这种情况就非常考验个人的解题经验与算法能力了。</li>
+<li><strong>某些贪心策略具有较强的迷惑性</strong>。当我们满怀信心设计好贪心策略，写出解题代码并提交运行，很可能发现部分测试样例无法通过。这是因为设计的贪心策略只是“部分正确”的，上文介绍的零钱兑换就是一个典型案例。</li>
+</ul>
+<p>为了保证正确性，我们应该对贪心策略进行严谨的数学证明，<strong>通常需要用到反证法或数学归纳法</strong>。</p>
+<p>然而，正确性证明也很可能不是一件易事。如若没有头绪，我们通常会选择面向测试用例进行代码调试，一步步修改与验证贪心策略。</p>
+<h2 id="贪心算法典型例题"><a href="#贪心算法典型例题" class="headerlink" title="贪心算法典型例题"></a>贪心算法典型例题</h2><p>贪心算法常常应用在满足贪心选择性质和最优子结构的优化问题中，以下列举了一些典型的贪心算法问题。</p>
+<ul>
+<li><strong>硬币找零问题</strong>：在某些硬币组合下，贪心算法总是可以得到最优解。</li>
+<li><strong>区间调度问题</strong>：假设你有一些任务，每个任务在一段时间内进行，你的目标是完成尽可能多的任务。如果每次都选择结束时间最早的任务，那么贪心算法就可以得到最优解。</li>
+<li><strong>分数背包问题</strong>：给定一组物品和一个载重量，你的目标是选择一组物品，使得总重量不超过载重量，且总价值最大。如果每次都选择性价比最高（价值 / 重量）的物品，那么贪心算法在一些情况下可以得到最优解。</li>
+<li><strong>股票买卖问题</strong>：给定一组股票的历史价格，你可以进行多次买卖，但如果你已经持有股票，那么在卖出之前不能再买，目标是获取最大利润。</li>
+<li><strong>霍夫曼编码</strong>：霍夫曼编码是一种用于无损数据压缩的贪心算法。通过构建霍夫曼树，每次选择出现频率最低的两个节点合并，最后得到的霍夫曼树的带权路径长度（编码长度）最小。</li>
+<li><strong>Dijkstra 算法</strong>：它是一种解决给定源顶点到其余各顶点的最短路径问题的贪心算法。</li>
+</ul>
+<h1 id="题型"><a href="#题型" class="headerlink" title="题型"></a>题型</h1>]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>模拟算法</title>
+    <url>/2025/01/29/Algo/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/%E6%9E%9A%E4%B8%BE/%E6%9E%9A%E4%B8%BE%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="枚举算法"><a href="#枚举算法" class="headerlink" title="枚举算法"></a>枚举算法</h2><h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2>]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2024/11/18/Algo/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/%E5%9B%9E%E6%BA%AF/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>模拟算法</title>
+    <url>/2024/10/02/Algo/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/%E6%9E%9A%E4%B8%BE/%E6%A8%A1%E6%8B%9F%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<p>由于c++各类型存储都有一定的范围限制，因此在处理大数子的计算上需要使用到模拟算法，采用小学学过的模拟竖式的思想进行计算</p>
+<h1 id="高精度加法"><a href="#高精度加法" class="headerlink" title="高精度加法"></a>高精度加法</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    string s1,s2;</span><br><span class="line">    <span class="type">int</span> a1[<span class="number">210</span>],a2[<span class="number">210</span>],a3[<span class="number">210</span>]=&#123;&#125;;</span><br><span class="line">    <span class="built_in">getline</span>(cin,s1);</span><br><span class="line">    <span class="built_in">getline</span>(cin,s2);</span><br><span class="line">    <span class="comment">//存储在数组中依次相加存储在a3中(过程省略)</span></span><br><span class="line">    <span class="comment">//下面是处理进位的代码</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; len; i ++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(a3[i] &gt; <span class="number">10</span>)&#123;</span><br><span class="line">            a3[i<span class="number">+1</span>] = a3[i<span class="number">+1</span>] + a3[i] / <span class="number">10</span>;</span><br><span class="line">            a3[i] = a3[i] % <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        a3[i] = a1[i] + a2[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//逆序输出a3得到结果</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="高精度减法"><a href="#高精度减法" class="headerlink" title="高精度减法"></a>高精度减法</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//初始化相同</span></span><br><span class="line">    <span class="comment">//下面处理借位相减的过程</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; len;i ++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(a1[i] &lt; a2[i])&#123;</span><br><span class="line">            a1[i] += <span class="number">10</span>;</span><br><span class="line">            a1[i<span class="number">+1</span>] -= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        a3[i] = a1[i] - a2[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//输出同理,定义flag判断结果的正负性</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
   </entry>
 </search>
