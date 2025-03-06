@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C++基础笔记1 | Frite的个人博客</title><meta name="author" content="Frite"><meta name="copyright" content="Frite"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="基础数据类型与高级输出（补充）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++基础笔记1">
+<meta property="og:url" content="http://frite30.github.io/2024/10/01/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/index.html">
+<meta property="og:site_name" content="Frite的个人博客">
+<meta property="og:description" content="基础数据类型与高级输出（补充）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/Frite30/CDN/raw/main/CDN/cover/C++_pri/C++_pri_1.jpg">
+<meta property="article:published_time" content="2024-10-01T05:40:00.000Z">
+<meta property="article:modified_time" content="2024-12-25T13:29:45.040Z">
+<meta property="article:author" content="Frite">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/Frite30/CDN/raw/main/CDN/cover/C++_pri/C++_pri_1.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://frite30.github.io/2024/10/01/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":50},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'C++基础笔记1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-12-25 21:29:45'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/side profile.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我~</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://github.com/Frite30/CDN/raw/main/CDN/cover/C++_pri/C++_pri_1.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Frite的个人博客"><span class="site-name">Frite的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我~</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">C++基础笔记1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon fas fa-history"></i><span class="post-meta-label">更新于</span><time datetime="2024-12-25T13:29:45.040Z" title="更新于 2024-12-25 21:29:45">2024-12-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">C++学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">932</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="C++基础笔记1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="布尔型"><a href="#布尔型" class="headerlink" title="布尔型"></a>布尔型</h2><p>第一位是0则表示false</p>
+<p>否则表示true(1)</p>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><h3 id="auto-可自动推导类型"><a href="#auto-可自动推导类型" class="headerlink" title="==auto== 可自动推导类型"></a>==auto== 可自动推导类型</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> var_i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">auto</span> var_c = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line"><span class="keyword">auto</span> var_b = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">auto</span> var_d = <span class="number">3.14</span>;</span><br><span class="line">cout &lt;&lt; <span class="built_in">typeid</span>(var_i).<span class="built_in">name</span>() &lt;&lt; endl;<span class="comment">//输出i,其余同理输出对应数据类型</span></span><br></pre></td></tr></table></figure>
+<h2 id="输出数据"><a href="#输出数据" class="headerlink" title="输出数据"></a>输出数据</h2><h3 id="printf"><a href="#printf" class="headerlink" title="printf"></a>printf</h3><h4 id="数字类型"><a href="#数字类型" class="headerlink" title="数字类型"></a>数字类型</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> d = <span class="number">255</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, d);<span class="comment">//%d 十进制;%o 八进制;%x 十六进制;</span></span><br><span class="line"><span class="comment">//在前面加上# 即可输出对应进制 如 &quot;%#x\n&quot;,d 输出得到0xff 表示16进制(八进制前跟0;十六进制前跟0x)</span></span><br></pre></td></tr></table></figure>
+<p>printf中输出不同大小的整形时,需要在类型前加大小修饰符</p>
+<p>s<strong>h</strong>ort <strong>l</strong>ong <strong>l</strong>ong<strong>l</strong>ong</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="type">long</span> lld = <span class="number">2147486948</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, lld)</span><br></pre></td></tr></table></figure>
+<h4 id="字符型"><a href="#字符型" class="headerlink" title="字符型"></a>字符型</h4><p>printf输出字符型用%c</p>
+<h4 id="输出宽度"><a href="#输出宽度" class="headerlink" title="输出宽度"></a>输出宽度</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%7d|\n&quot;</span>, d);<span class="comment">//右对齐</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-7d|\n&quot;</span> d);<span class="comment">//左对齐</span></span><br></pre></td></tr></table></figure>
+<h3 id="cout"><a href="#cout" class="headerlink" title="cout"></a>cout</h3><h4 id="数字类型-1"><a href="#数字类型-1" class="headerlink" title="数字类型"></a>数字类型</h4><p>C++中进行优化</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; oct;</span><br><span class="line"><span class="comment">//cout &lt;&lt; dec; 十进制</span></span><br><span class="line"><span class="comment">//cout &lt;&lt; hex; 十六进制</span></span><br><span class="line"><span class="comment">//cout &lt;&lt; uppercase; 十六进制字母显示为大写(nouppercase小写)</span></span><br><span class="line"><span class="comment">//cout &lt;&lt; showbase; 数字前显示进制符号</span></span><br><span class="line">cout.<span class="built_in">setf</span>(ios::oct, ios::basefield);</span><br><span class="line">cout.<span class="built_in">flag</span>(ios::oct);</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line">cout &lt;&lt; <span class="built_in">setbase</span>(<span class="number">8</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="字符型-1"><a href="#字符型-1" class="headerlink" title="字符型"></a>字符型</h4><p>cout直接输出字符型 cout &lt;&lt; c &lt;&lt; endl;</p>
+<p><img src="E:\Blog\source\img\fixed pre.png" alt="fixed pre"></p>
+<p>cout.precision();限制的是输出数字的个数</p>
+<p>加上cout &lt;&lt; fixed; 限制则是输出小数点后的个数</p>
+<h4 id="输出宽度-1"><a href="#输出宽度-1" class="headerlink" title="输出宽度"></a>输出宽度</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cout.<span class="built_in">width</span>(<span class="number">7</span>);</span><br><span class="line">cout &lt;&lt; d &lt;&lt; <span class="string">&#x27;|&#x27;</span> &lt;&lt; endl;<span class="comment">//仅生效一次 默认右对齐</span></span><br><span class="line">cout &lt;&lt; left;<span class="comment">//来控制左右</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> cout.<span class="built_in">width</span>(<span class="number">3</span>);</span><br><span class="line">    cout.<span class="built_in">fill</span>(<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">    cout &lt;&lt; res;</span><br><span class="line"><span class="comment">//cout输入3位,不足3位时补0,例如res = 8,输出008</span></span><br></pre></td></tr></table></figure>
+<h3 id="format-C-20-新特性"><a href="#format-C-20-新特性" class="headerlink" title="format(C++ 20 新特性)"></a>format(C++ 20 新特性)</h3><h4 id="数字类型-2"><a href="#数字类型-2" class="headerlink" title="数字类型"></a>数字类型</h4><p>C++ 20 取二者之长</p>
+<p><img src="E:\Blog\source\img\format.png" alt="format"></p>
+<p>cout &lt;&lt; format(“{}”, c) &lt;&lt; endl;</p>
+<p><img src="E:\Blog\source\img\fixed pre format.png" alt="fixed pre format"></p>
+<h4 id="输出宽度-2"><a href="#输出宽度-2" class="headerlink" title="输出宽度"></a>输出宽度</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; format(<span class="string">&quot;&#123;:&gt;7&#125;|&quot;</span>, d) &lt;&lt; endl;</span><br><span class="line"><span class="comment">// &gt;右对齐 &lt;左对齐 ^居中对齐</span></span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="E:\Blog\source\img\sum up.png" alt="sum up"></p>
+<h2 id="补充sprintf"><a href="#补充sprintf" class="headerlink" title="补充sprintf"></a>补充<code>sprintf</code></h2><p><code>sprintf</code> 是一个在 C 和 C++ 语言中使用的函数，它属于标准库中的输入/输出部分。<code>sprintf</code> 函数的作用是将格式化的数据写入一个字符串中，类似于 <code>printf</code> 函数，但它将输出写入一个字符串变量而不是直接输出到控制台。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sprintf</span><span class="params">(<span class="type">char</span> *str, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>str</code>：指向目标字符串的指针，<code>sprintf</code> 会将格式化后的字符串存储在这里。</li>
+<li><code>format</code>：格式化字符串，它指定了后续参数如何被格式化和插入到最终的字符串中。</li>
+<li><code>...</code>：可变参数列表，这些参数将根据 <code>format</code> 字符串中的格式说明符被格式化并插入到字符串中。</li>
+</ul>
+<p><code>sprintf</code> 的使用示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> buffer[<span class="number">100</span>];</span><br><span class="line"><span class="type">int</span> num = <span class="number">42</span>;</span><br><span class="line"><span class="built_in">sprintf</span>(buffer, <span class="string">&quot;The answer is %d&quot;</span>, num);</span><br><span class="line"><span class="comment">// 此时 buffer 包含了字符串 &quot;The answer is 42&quot;</span></span><br></pre></td></tr></table></figure>
+<p>在上面的例子中，<code>%d</code> 是一个格式说明符，它告诉 <code>sprintf</code> 将一个整数转换成字符串并插入到 <code>buffer</code> 中。</p>
+<p>在下面这个例子，<code>sprintf</code>很好的处理的时间点小于0的问题，将3:30补充为03：30。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">string <span class="title">getstr</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">3</span>];</span><br><span class="line">    <span class="built_in">sprintf</span>(buf, <span class="string">&quot;%02d&quot;</span>, a);</span><br><span class="line">    <span class="function">string <span class="title">h</span><span class="params">(buf)</span></span>;</span><br><span class="line">    <span class="built_in">sprintf</span>(buf, <span class="string">&quot;%02d&quot;</span>, b);</span><br><span class="line">    <span class="function">string <span class="title">m</span><span class="params">(buf)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> h + <span class="string">&quot;:&quot;</span> + m;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，<code>sprintf</code> 存在安全风险，因为它可能导致缓冲区溢出，如果格式化后的字符串长度超过了 <code>buffer</code> 的大小。因此，在实际编程中，推荐使用 <code>snprintf</code> 函数，它允许你指定目标缓冲区的最大长度，从而避免溢出：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">snprintf</span><span class="params">(<span class="type">char</span> *str, <span class="type">size_t</span> size, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br></pre></td></tr></table></figure>
+<p><code>size</code> 参数指定了 <code>str</code> 缓冲区的最大长度，<code>snprintf</code> 会在达到这个长度之前停止写入，并且总是以空字符结尾。这样可以更安全地避免缓冲区溢出的问题。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://Frite30.github.io">Frite</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://frite30.github.io/2024/10/01/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/">http://frite30.github.io/2024/10/01/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Frite30.github.io" target="_blank">Frite的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C-C/">C/C++</a></div><div class="post_share"><div class="social-share" data-image="https://github.com/Frite30/CDN/raw/main/CDN/cover/C++_pri/C++_pri_1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/bits/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/bits/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/10/02/Algo/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/%E6%9E%9A%E4%B8%BE/%E6%A8%A1%E6%8B%9F%E7%AE%97%E6%B3%95/" title="模拟算法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">模拟算法</div></div></a></div><div class="next-post pull-right"><a href="/2024/09/16/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/C-%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B04/" title="C-基础笔记4"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C-基础笔记4</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/10/02/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%911/" title="C++游戏开发1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-02</div><div class="title">C++游戏开发1</div></div></a></div><div><a href="/2024/10/08/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%912/" title="C++游戏开发2"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-08</div><div class="title">C++游戏开发2</div></div></a></div><div><a href="/2025/02/20/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B010/" title="C++基础笔记10"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-20</div><div class="title">C++基础笔记10</div></div></a></div><div><a href="/2025/01/28/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B012/" title="C++基础笔记12"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-28</div><div class="title">C++基础笔记12</div></div></a></div><div><a href="/2025/02/28/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B013/" title="C++基础笔记13"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-28</div><div class="title">C++基础笔记13</div></div></a></div><div><a href="/2025/01/28/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B011/" title="C++基础笔记11"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-28</div><div class="title">C++基础笔记11</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Frite</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" href="https://frite30.github.io/"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://frite30.github.io/" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">努力成为一个很好的人~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">布尔型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.</span> <span class="toc-text">补充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#auto-%E5%8F%AF%E8%87%AA%E5%8A%A8%E6%8E%A8%E5%AF%BC%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">&#x3D;&#x3D;auto&#x3D;&#x3D; 可自动推导类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%95%B0%E6%8D%AE"><span class="toc-number">2.</span> <span class="toc-text">输出数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#printf"><span class="toc-number">2.1.</span> <span class="toc-text">printf</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.1.1.</span> <span class="toc-text">数字类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%9E%8B"><span class="toc-number">2.1.2.</span> <span class="toc-text">字符型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%AE%BD%E5%BA%A6"><span class="toc-number">2.1.3.</span> <span class="toc-text">输出宽度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cout"><span class="toc-number">2.2.</span> <span class="toc-text">cout</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">数字类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%9E%8B-1"><span class="toc-number">2.2.2.</span> <span class="toc-text">字符型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%AE%BD%E5%BA%A6-1"><span class="toc-number">2.2.3.</span> <span class="toc-text">输出宽度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#format-C-20-%E6%96%B0%E7%89%B9%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">format(C++ 20 新特性)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B-2"><span class="toc-number">2.3.1.</span> <span class="toc-text">数字类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%AE%BD%E5%BA%A6-2"><span class="toc-number">2.3.2.</span> <span class="toc-text">输出宽度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85sprintf"><span class="toc-number">3.</span> <span class="toc-text">补充sprintf</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/3000/01/01/TEST/" title="Click Here!">Click Here!</a><time datetime="2999-12-31T16:00:00.000Z" title="发表于 3000-01-01 00:00:00">3000-01-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/03/Python/Python%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Python%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/" title="无题">无题</a><time datetime="2025-03-03T09:35:28.704Z" title="发表于 2025-03-03 17:35:28">2025-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/28/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B013/" title="C++基础笔记13">C++基础笔记13</a><time datetime="2025-02-28T11:49:59.000Z" title="发表于 2025-02-28 19:49:59">2025-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/28/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B014/" title="C++基础笔记14">C++基础笔记14</a><time datetime="2025-02-28T11:49:59.000Z" title="发表于 2025-02-28 19:49:59">2025-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/20/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B010/" title="C++基础笔记10">C++基础笔记10</a><time datetime="2025-02-20T11:49:59.000Z" title="发表于 2025-02-20 19:49:59">2025-02-20</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://github.com/Frite30/CDN/raw/main/CDN/cover/C++_pri/C++_pri_1.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Frite</div><div class="footer_custom_text">一重山有一重山的错落，一笔峰有一笔峰的着墨</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v6.2.0" title=""><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.3.1" title=""><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="/js/runtime.js"></script><!-- hexo injector body_end end --></body></html>

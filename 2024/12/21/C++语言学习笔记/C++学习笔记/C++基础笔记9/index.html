@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C++基础笔记9 | Frite的个人博客</title><meta name="author" content="Frite"><meta name="copyright" content="Frite"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="结构体学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++基础笔记9">
+<meta property="og:url" content="http://frite30.github.io/2024/12/21/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B09/index.html">
+<meta property="og:site_name" content="Frite的个人博客">
+<meta property="og:description" content="结构体学习">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://frite30.github.io/img/avatar/avatar.jpg">
+<meta property="article:published_time" content="2024-12-21T11:49:59.000Z">
+<meta property="article:modified_time" content="2024-12-22T07:45:26.152Z">
+<meta property="article:author" content="Frite">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://frite30.github.io/img/avatar/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://frite30.github.io/2024/12/21/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B09/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":50},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'C++基础笔记9',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-12-22 15:45:26'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/side profile.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我~</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/background/home_background.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Frite的个人博客"><span class="site-name">Frite的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我~</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">C++基础笔记9</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon fas fa-history"></i><span class="post-meta-label">更新于</span><time datetime="2024-12-22T07:45:26.152Z" title="更新于 2024-12-22 15:45:26">2024-12-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">C++学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="C++基础笔记9"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="纯数据结构体"><a href="#纯数据结构体" class="headerlink" title="纯数据结构体"></a>纯数据结构体</h1><h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p>作用：将多个类型聚合成一个整体成为一个新类型</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span>&#123;</span><br><span class="line">    <span class="type">int</span> score;</span><br><span class="line">    string name;<span class="comment">//成员变量</span></span><br><span class="line">&#125;;</span><br><span class="line">Student stu, stus[<span class="number">100</span>];</span><br><span class="line">Student* pstu = <span class="keyword">new</span> Student;</span><br><span class="line"><span class="comment">//可以像普通类型一样声明定义的变量,单个变量或者数组都可以</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span>&#123;</span><br><span class="line">    <span class="type">int</span> score;</span><br><span class="line">    string name;<span class="comment">//成员变量</span></span><br><span class="line">&#125; stu, stus[<span class="number">10</span>];<span class="comment">//定义也可以直接在结构后面跟上变量名(匿名结构体)</span></span><br><span class="line"><span class="comment">//由于没有起名不可以正常的定义其他变量，但可以通过C++11增加的decltype关键字获取</span></span><br><span class="line"><span class="comment">//例如 decltype(Stu) stu2;</span></span><br></pre></td></tr></table></figure>
+<p>访问成员变量只需要用<code>stu.score</code> <code>stu.name</code></p>
+<p>使用举例eg</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span>&#123;</span><br><span class="line">    <span class="type">int</span> score;</span><br><span class="line">    string name;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> n = <span class="number">8</span>;</span><br><span class="line">Student* stus = <span class="keyword">new</span> Student[<span class="number">8</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; <span class="number">8</span>; ++ i)&#123;</span><br><span class="line">    cin &gt;&gt; stus[i].score &gt;&gt; stus[i].name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">sort</span>(stus, stus + n, [](Student &amp;a, Student &amp;b)&#123;</span><br><span class="line">    <span class="keyword">return</span> a.score &lt; b.score;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="结构体特性"><a href="#结构体特性" class="headerlink" title="结构体特性"></a>结构体特性</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> &#123;&#125;; <span class="comment">//可以定义在全局</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">B</span> &#123;&#125;; <span class="comment">//可以定义在函数内(某个作用域内)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结构体的初始化"><a href="#结构体的初始化" class="headerlink" title="结构体的初始化"></a>结构体的初始化</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span> &#123;</span><br><span class="line">    <span class="type">int</span> score;</span><br><span class="line">    string name;</span><br><span class="line">&#125;;</span><br><span class="line">Student a = &#123;<span class="number">99</span>, <span class="string">&quot;小明&quot;</span>&#125;;</span><br><span class="line">Student a = &#123;<span class="number">99</span>&#125;;</span><br><span class="line">Student a&#123;<span class="number">99</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span> a = Student&#123;<span class="number">99</span>&#125;;</span><br><span class="line">Student a&#123;.name = <span class="string">&quot;小明&quot;</span>&#125;</span><br><span class="line"><span class="comment">//可以直接进行赋值</span></span><br><span class="line">student b = a;</span><br><span class="line">student c;</span><br><span class="line">c = a;</span><br></pre></td></tr></table></figure>
+<h3 id="结构体的大小"><a href="#结构体的大小" class="headerlink" title="结构体的大小"></a>结构体的大小</h3><p>会进行内存对齐而不是单纯相加</p>
+<ul>
+<li>以最大的类型作为宽度构建一个矩阵</li>
+<li>按定义顺序依次摆放</li>
+<li>每个数据只能拜访在其大小的倍数的位置</li>
+<li>一行摆不下就新起一行</li>
+<li>行×列就是实际大小</li>
+</ul>
+<p>可能会有一定的空间浪费,但会加速计算机的访问;如果相避免可以按内存大小定义</p>
+<p>符合结构以成员最大宽度,数组以类型为宽度</p>
+<h3 id="结构化绑定-C-17新增"><a href="#结构化绑定-C-17新增" class="headerlink" title="结构化绑定(C++17新增)"></a>结构化绑定(C++17新增)</h3><p>可以将结构体内的成员变量绑定到新的变量上</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> [score, name] = stu;</span><br><span class="line"><span class="comment">//必须绑定所有成员变量,不可以只绑定一部分,也可以使用&amp;,避免产生数据拷贝</span></span><br><span class="line"><span class="comment">//新的变量名和成员变量不需要同名,只需要顺序对应上就行</span></span><br><span class="line"><span class="keyword">auto</span>&amp; [s, n] = stu;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;[score, name] : arr)&#123;</span><br><span class="line">    cin &gt;&gt; score &gt;&gt; name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//如果只想使用某个变量则可以将不需要的变量这样写</span></span><br><span class="line"><span class="keyword">auto</span>&amp; [s, n] = stu;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;[score, _] : arr)&#123;</span><br><span class="line">    cin &gt;&gt; score;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="C-新增简便方式"><a href="#C-新增简便方式" class="headerlink" title="C++新增简便方式"></a>C++新增简便方式</h2><h3 id="pair"><a href="#pair" class="headerlink" title="pair"></a><code>pair</code></h3><p><code>pair</code> : 可以把两个数据类型进行聚合</p>
+<p><code>pair&lt;int, string&gt; a;</code>由于没有命名,可以使用<code>a.first</code> <code>a.second</code>来访问</p>
+<p>也支持<code>pair&lt;int,string&gt; a&#123;99, &quot;小明&quot;&#125;;</code>和结构化绑定 <code>auto &amp;[f, s] = a;</code></p>
+<p>如果用<code>auto</code>定义需要使用<code>make_pair</code>函数来设置初始值 —&gt;<code>auto b = make_pair(80, &quot;jack&quot;);</code></p>
+<p>只需要两个类型都支持大小比较<code>pair</code>也支持大小比较 <code>a &lt;=&gt; b;</code>(先比较第一个,如果相同再比较第二个)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> n = <span class="number">8</span>;</span><br><span class="line">vector&lt;pair&lt;<span class="type">int</span>, string&gt;&gt; <span class="built_in">stus</span>(n);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span>&amp; [s, f] : stus) &#123;</span><br><span class="line">    cin &gt;&gt; s &gt;&gt; f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">sort</span>(stus.<span class="built_in">begin</span>(), stus.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
+<h3 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a><code>tuple</code></h3><p>如果超过两个元素可以使用C++11提供的tuple</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tuple&lt;<span class="type">int</span>, <span class="type">int</span>, string&gt; a&#123;<span class="number">99</span>, <span class="number">7</span>, <span class="string">&quot;jack&quot;</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span>&amp;[score, id, name] = a;</span><br><span class="line"><span class="keyword">auto</span> b = <span class="built_in">make_tuple</span>(<span class="number">80</span>, <span class="number">8</span>, <span class="string">&quot;mike&quot;</span>);</span><br><span class="line">a &lt;=&gt; b;</span><br><span class="line"><span class="comment">//访问成员变量时很麻烦,需写作 get&lt;0&gt;(a);之类的,因此通常先结构化绑定再操作</span></span><br></pre></td></tr></table></figure>
+<h3 id="tie函数"><a href="#tie函数" class="headerlink" title="tie函数"></a><code>tie</code>函数</h3><p>绑定成员变量到已经定义的变量上,可以根据实际使用场景决定写法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> score, id;</span><br><span class="line">string name;</span><br><span class="line">pair&lt;<span class="type">int</span>, string&gt; pis&#123;<span class="number">99</span>, <span class="string">&quot;jack&quot;</span>&#125;;</span><br><span class="line">tuple&lt;<span class="type">int</span>, <span class="type">int</span>, string&gt; tiis&#123;<span class="number">80</span>, <span class="number">8</span> <span class="string">&quot;mike&quot;</span>&#125;;</span><br><span class="line"><span class="built_in">tie</span>(score, name) = pis;</span><br><span class="line"><span class="built_in">tie</span>(score, id, name) = tiis;</span><br></pre></td></tr></table></figure>
+<h2 id="vector补充"><a href="#vector补充" class="headerlink" title="vector补充"></a><code>vector</code>补充</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;pair&lt;<span class="type">int</span>, string&gt;&gt; vec;</span><br><span class="line">vec.<span class="built_in">push_back</span>(<span class="built_in">make_pair</span>(<span class="number">99</span>, <span class="string">&#x27;jack&#x27;</span>));</span><br><span class="line">vec.<span class="built_in">push_back</span>(&#123;<span class="number">95</span>, <span class="string">&quot;aly&quot;</span>&#125;);</span><br><span class="line">vec.<span class="built_in">emplace_back</span>(<span class="number">80</span>, <span class="string">&quot;mike&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>对于符合类型最好用<code>emplace_back</code>函数</p>
+<p>这个函数用于在容器的末尾就地构造一个新元素，而不是先复制或移动一个已存在的对象。<code>emplace_back</code> 通常用于性能优化，因为它避免了额外的复制或移动操作</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://Frite30.github.io">Frite</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://frite30.github.io/2024/12/21/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B09/">http://frite30.github.io/2024/12/21/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B09/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Frite30.github.io" target="_blank">Frite的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C-C/">C/C++</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/bits/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/bits/wechatpay.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/01/28/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B011/" title="C++基础笔记11"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">C++基础笔记11</div></div></a></div><div class="next-post pull-right"><a href="/2024/11/27/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B08/" title="C++基础笔记8"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C++基础笔记8</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/10/02/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%911/" title="C++游戏开发1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-02</div><div class="title">C++游戏开发1</div></div></a></div><div><a href="/2024/10/08/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/C++%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%912/" title="C++游戏开发2"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-08</div><div class="title">C++游戏开发2</div></div></a></div><div><a href="/2025/02/20/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B010/" title="C++基础笔记10"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-20</div><div class="title">C++基础笔记10</div></div></a></div><div><a href="/2025/01/28/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B012/" title="C++基础笔记12"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-28</div><div class="title">C++基础笔记12</div></div></a></div><div><a href="/2024/10/01/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/" title="C++基础笔记1"><img class="cover" src="https://github.com/Frite30/CDN/raw/main/CDN/cover/C++_pri/C++_pri_1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-01</div><div class="title">C++基础笔记1</div></div></a></div><div><a href="/2025/02/28/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B013/" title="C++基础笔记13"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-28</div><div class="title">C++基础笔记13</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Frite</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" href="https://frite30.github.io/"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://frite30.github.io/" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">努力成为一个很好的人~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.</span> <span class="toc-text">纯数据结构体</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">简单介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.1.</span> <span class="toc-text">基础概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%89%B9%E6%80%A7"><span class="toc-number">1.1.2.</span> <span class="toc-text">结构体特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.1.3.</span> <span class="toc-text">结构体的初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.1.4.</span> <span class="toc-text">结构体的大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A-C-17%E6%96%B0%E5%A2%9E"><span class="toc-number">1.1.5.</span> <span class="toc-text">结构化绑定(C++17新增)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E6%96%B0%E5%A2%9E%E7%AE%80%E4%BE%BF%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">C++新增简便方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pair"><span class="toc-number">1.2.1.</span> <span class="toc-text">pair</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tuple"><span class="toc-number">1.2.2.</span> <span class="toc-text">tuple</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tie%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.3.</span> <span class="toc-text">tie函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vector%E8%A1%A5%E5%85%85"><span class="toc-number">1.3.</span> <span class="toc-text">vector补充</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/3000/01/01/TEST/" title="Click Here!">Click Here!</a><time datetime="2999-12-31T16:00:00.000Z" title="发表于 3000-01-01 00:00:00">3000-01-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/03/Python/Python%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Python%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/" title="无题">无题</a><time datetime="2025-03-03T09:35:28.704Z" title="发表于 2025-03-03 17:35:28">2025-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/28/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B013/" title="C++基础笔记13">C++基础笔记13</a><time datetime="2025-02-28T11:49:59.000Z" title="发表于 2025-02-28 19:49:59">2025-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/28/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B014/" title="C++基础笔记14">C++基础笔记14</a><time datetime="2025-02-28T11:49:59.000Z" title="发表于 2025-02-28 19:49:59">2025-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/20/C++%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C++%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B010/" title="C++基础笔记10">C++基础笔记10</a><time datetime="2025-02-20T11:49:59.000Z" title="发表于 2025-02-20 19:49:59">2025-02-20</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/background/home_background.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Frite</div><div class="footer_custom_text">一重山有一重山的错落，一笔峰有一笔峰的着墨</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v6.2.0" title=""><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.3.1" title=""><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="/js/runtime.js"></script><!-- hexo injector body_end end --></body></html>
