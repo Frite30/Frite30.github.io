@@ -163,8 +163,38 @@
 <h2 id="文件输入输出-c"><a href="#文件输入输出-c" class="headerlink" title="文件输入输出 c++"></a>文件输入输出 c++</h2><p>在头文件 <code>&lt;fstream&gt;</code>中 通过<code>fstream</code>类型来定义文件流</p>
 <p><code>fstream fio(&quot;text.txt&quot;, ios::in | ios::out | ios::app);</code></p>
 <p>其中in代表读入 out代表清空后写入 app是append的缩写，代表追加，多个模式相加使用<code>|</code></p>
+<ul>
+<li><code>ifstream openFileIn(&quot;filename&quot;, ios::in);</code>：打开文件用于读取</li>
+<li><code>ofstream openFileOut(&quot;filename&quot;, ios::out);</code>：打开文件用于写入</li>
+<li><code>fstream openFileInOut(&quot;filename&quot;, ios::in | ios::out);</code>：打开文件用于读写</li>
+</ul>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">fstream <span class="title">fio</span><span class="params">(<span class="string">&quot;text.txt&quot;</span>, ios::in | ios::out | ios::app)</span></span>;</span><br><span class="line">fio &gt;&gt; a &gt;&gt; b;</span><br><span class="line">fio &lt;&lt; a &lt;&lt; b;</span><br><span class="line"><span class="function">ifstream <span class="title">fin</span><span class="params">(<span class="string">&quot;test.txt&quot;</span>, ios::in)</span></span>;</span><br><span class="line"><span class="function">ofstream <span class="title">fout</span><span class="params">(<span class="string">&quot;test.txt&quot;</span>, ios::app)</span></span>;</span><br><span class="line">fin &gt;&gt; a &gt;&gt; b;</span><br><span class="line">fout &lt;&lt; a &lt;&lt; b;</span><br></pre></td></tr></table></figure>
 <p><code>fio.close(), fin.close(), fout.close();</code>进行关闭</p>
+<p><strong>文件读写</strong></p>
+<ul>
+<li><p><code>char ch; fileIn.get(ch);</code>：从文件中读取一个字符</p>
+</li>
+<li><p><code>string str; getline(fileIn, str);</code>：从文件中读取一行字符串</p>
+</li>
+<li><p><code>char ch = &#39;A&#39;; fileOut.put(ch);</code>：向文件写入一个字符</p>
+</li>
+<li><p><code>fout.write(const char* str, streamsize n);</code></p>
+</li>
+<li><p><code>string str = &quot;Hello&quot;; fileOut &lt;&lt; str;</code>：向文件写入一个字符串</p>
+</li>
+</ul>
+<p><strong>移动文件指针</strong></p>
+<ul>
+<li><code>fileIn.seekg(0, ios::beg);</code>：将输入文件指针移动到文件开头</li>
+<li><code>fileOut.seekp(0, ios::beg);</code>：将输出文件指针移动到文件开头</li>
+</ul>
+<p><strong>文件状态检查</strong></p>
+<ul>
+<li><p><code>if (fileIn.eof()) &#123; ... &#125;</code>：检查是否到达文件末尾</p>
+</li>
+<li><p><code>if (!fileIn) &#123; ... &#125;</code>：检查文件是否打开失败或发生错误</p>
+</li>
+</ul>
 <p>在头文件<code>&lt;sstream&gt;</code>中 </p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a, b;</span><br><span class="line">string str = <span class="string">&quot;1 2&quot;</span>;</span><br><span class="line"><span class="function">stringstream <span class="title">ss</span><span class="params">(str)</span></span>;</span><br><span class="line">ss &gt;&gt; a &gt;&gt; b;</span><br></pre></td></tr></table></figure>
 ]]></content>
@@ -390,7 +420,7 @@
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;list&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个空的链表</span></span><br><span class="line">    std::list&lt;<span class="type">int</span>&gt; myList;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在链表头部插入元素</span></span><br><span class="line">    myList.<span class="built_in">push_front</span>(<span class="number">1</span>);</span><br><span class="line">    myList.<span class="built_in">push_front</span>(<span class="number">2</span>);</span><br><span class="line">    myList.<span class="built_in">push_front</span>(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在链表尾部插入元素</span></span><br><span class="line">    myList.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">    myList.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出链表中的元素</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;链表中的元素：&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> value : myList) &#123;</span><br><span class="line">        std::cout &lt;&lt; value &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除链表头部的元素</span></span><br><span class="line">    myList.<span class="built_in">pop_front</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除链表尾部的元素</span></span><br><span class="line">    myList.<span class="built_in">pop_back</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出链表中的元素</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;删除头部和尾部后的元素：&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> value : myList) &#123;</span><br><span class="line">        std::cout &lt;&lt; value &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在链表中间插入元素</span></span><br><span class="line">    <span class="keyword">auto</span> it = myList.<span class="built_in">begin</span>();</span><br><span class="line">    ++it; <span class="comment">// 移动到第二个元素</span></span><br><span class="line">    myList.<span class="built_in">insert</span>(it, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出链表中的元素</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;在链表中间插入元素后的元素：&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> value : myList) &#123;</span><br><span class="line">        std::cout &lt;&lt; value &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除指定位置的元素</span></span><br><span class="line">    myList.<span class="built_in">erase</span>(it);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出链表中的元素</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;删除指定位置的元素后的元素：&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> value : myList) &#123;</span><br><span class="line">        std::cout &lt;&lt; value &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 反转链表</span></span><br><span class="line">    myList.<span class="built_in">reverse</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出链表中的元素</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;反转链表后的元素：&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> value : myList) &#123;</span><br><span class="line">        std::cout &lt;&lt; value &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">链表中的元素：3 2 1 4 5</span><br><span class="line">删除头部和尾部后的元素：2 1 4</span><br><span class="line">在链表中间插入元素后的元素：2 10 1 4</span><br><span class="line">删除指定位置的元素后的元素：2 1 4</span><br><span class="line">反转链表后的元素：4 1 2</span><br></pre></td></tr></table></figure>
 <hr>
-<p><img src="E:\programming\c-resource\关键知识截图\STL usage.png" alt="STL usage"></p>
+<p><img src="E:\资料\programming\c-resource\关键知识截图\STL usage.png" alt="STL usage"></p>
 ]]></content>
       <categories>
         <category>C++学习笔记</category>
