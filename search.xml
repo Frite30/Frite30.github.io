@@ -51,7 +51,24 @@
   <entry>
     <title>Click Here!</title>
     <url>/3000/01/01/TEST/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>1</p>
+<p>健身健美早十</p>
+<p>2</p>
+<p>— 汇编语言与逆向技术  0410</p>
+<p>人工智能导论 别选wyx （0987 0989 0988）</p>
+<p>— 离散数学 rmm 3345（选不到就3344）</p>
+<p>数据结构 0979 0980 0978 别选ww yjf选不了</p>
+<p>计算机硬件基础 1001 1002 1003 别选1000</p>
+<p>— 数据可视化 0999</p>
+<p>— 数字信号处理 0998</p>
+<p>人工智能实践课 3374（有点严貌似）</p>
+<p>python java二选一</p>
+<p>— java 0994</p>
+<p>— python 3355</p>
+<p>3</p>
+<p>大学语文 2325 2326 2324 冯 张 姚</p>
+<p>史纲 jlp lyb rml</p>
+]]></content>
   </entry>
   <entry>
     <title>C++游戏开发2</title>
@@ -1620,6 +1637,99 @@
       </tags>
   </entry>
   <entry>
+    <title>Python基础笔记1</title>
+    <url>/2025/09/01/Python/Python%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/Python%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B01/</url>
+    <content><![CDATA[<h1 id="bilibili速通"><a href="#bilibili速通" class="headerlink" title="bilibili速通"></a><strong>bilibili</strong>速通</h1><p><code>print( &quot;a string&quot; )</code></p>
+<p>和c++不一样，不用加分号，python的缩进很重要，python读一行执行一行</p>
+<p>python中print可以实现字符串拼接<code>print(&quot;hello&quot; + &quot;jack&quot; + &quot;damn\n&quot;)</code></p>
+<p>字符串用单引号还是双引号都可以，效果大部分情况下一样，如果字符串里面有引号，可以用<code>\</code>转义符</p>
+<p>打印跨行内容可以用三引号</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&quot;&quot;hello,</span></span><br><span class="line"><span class="string">how are you?</span></span><br><span class="line"><span class="string">im good.&quot;&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>python变量的定义不需要说明类型，直接写名字并用等号进行赋值操作</p>
+<p><strong>python运算</strong> + - <em> / % , 为幂运算，例如2 *</em> 3 = 8</p>
+<p><code>math</code>库，在文件开头导入<code>import math</code>，在使用时写上<code>math.function name(...)</code></p>
+<p>python中<strong>注释</strong>用<code>#</code>，负责单行；”””  “””三引号包裹，负责多行注释</p>
+<p><strong>字符串：</strong>可以用<code>len</code>函数获取字符串长度；<code>[index]</code>可以提取出该索引位置的字符</p>
+<p><strong>整数：</strong><code>int</code></p>
+<p><strong>浮点数：</strong><code>float</code></p>
+<p><strong>布尔类：</strong><code>True</code> <code>False</code></p>
+<p><strong>空值类：</strong> <code>None</code></p>
+<p><code>type</code>函数可以获取数据类型</p>
+<p><code>input(&quot;里面放字符串作为给用户的提示信息&quot;)，返回值为字符串</code></p>
+<p><code>int(&quot;666&quot;)</code>将字符串转化为整数</p>
+<p><strong>if语句</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [condition]:</span><br><span class="line">    [expression]</span><br><span class="line">    [expression]</span><br><span class="line"><span class="keyword">elif</span> [condition <span class="number">2</span>]:</span><br><span class="line">    [expression]</span><br><span class="line">    <span class="comment"># elif equals else if</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    [expression]</span><br><span class="line"><span class="comment"># 缩进决定了该语句的位置</span></span><br></pre></td></tr></table></figure>
+<p><strong>逻辑判断 <code>and</code> <code>or</code> <code>not</code> </strong> ==not只能对一个操作对象进行运算==</p>
+<p><strong>列表</strong> <code>list = [&quot;item 1&quot;, &quot;item 2&quot;]</code> </p>
+<p><code>list.append(&quot;item 3&quot;)</code>往列表中间加元素</p>
+<p><code>list.remove(&quot;item 3&quot;)</code>删除原列表中的元素</p>
+<p>python的列表可以存放不同类型的数据，列表也可以用<code>len</code>返回列表里面元素的数量，也可以用索引获取对应值，或进行修改</p>
+<p><code>max</code> <code>min</code> <code>sorted</code> </p>
+<p><strong>字典</strong> <code>contacts = &#123;&quot;key1&quot; : &quot;value 1&quot;, &quot;key2&quot; : &quot;value 2&quot; &#125;</code></p>
+<p><code>contacts[&quot;key1&quot;]</code>返回对应的value，注意key必须是不可变数据结构，因此不可以用list</p>
+<p>但可以使用元组<code>tuple</code> <code>tuple = (&quot;name&quot;, 52)</code></p>
+<p><code>contacts[&quot;new item&quot;] = &quot;new value&quot;</code>，字典中会多出一个键值对</p>
+<p><code>del contacts[&quot;key1&quot;]</code>，删除键和对应的值</p>
+<p><code>contacts.keys()</code> 返回所有键</p>
+<p><code>contacts.values()</code> 返回所有值</p>
+<p><code>contacts.items()</code> 返回所有键值对</p>
+<p><strong>for循环</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> 变量名 <span class="keyword">in</span> 可迭代对象:</span><br><span class="line">    对每个变量进行操作</span><br></pre></td></tr></table></figure>
+<p><code>range(start value, end value, step) #不包括结束值，例如range(5, 10)只执行5 6 7 8 9，共5次, 步长表示每次跨几个数字，默认为1</code></p>
+<p><strong>while循环</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> condition A:</span><br><span class="line">    expression B</span><br></pre></td></tr></table></figure>
+<p><strong>格式化字符串</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">message_content = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">my name is &#123;0&#125;,</span></span><br><span class="line"><span class="string">my age is &#123;1&#125;.</span></span><br><span class="line"><span class="string">my friend is &#123;friend_name&#125;.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>.<span class="built_in">format</span>(name, age, friend_name)</span><br><span class="line">message_content = <span class="string">f&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">my name is <span class="subst">&#123;name&#125;</span>,</span></span><br><span class="line"><span class="string">my age is <span class="subst">&#123;age&#125;</span>.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>函数</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">calculate_sector</span>(<span class="params">central_angle, radius</span>):</span><br><span class="line">    sector_area = central_area / <span class="number">360</span> * <span class="number">3.14</span> * radius ** <span class="number">2</span></span><br><span class="line">    <span class="built_in">print</span> (<span class="string">f&quot;the sector area is : <span class="subst">&#123;sector_area&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> sector_area</span><br></pre></td></tr></table></figure>
+<p><strong>类</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NameOfClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_init_</span>(<span class="params">self, name</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getInfo</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;my name is <span class="subst">&#123;self.name&#125;</span>&quot;</span>)</span><br><span class="line"><span class="comment"># 子类的继承        </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Son</span>(<span class="title class_ inherited__">Father</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">whatever</span>(<span class="params">self</span>):</span><br><span class="line">        Expression</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>文件操作</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 读文件</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;./data.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding = <span class="string">&quot;utf-8&quot;</span>) <span class="comment"># &quot;r&quot; 读取模式（只读），&quot;w&quot; 写入模式（只写)，&quot;a&quot; 追加模式，&quot;r+&quot; 读写模式 且是append追加模式</span></span><br><span class="line"><span class="built_in">print</span>(f.read(<span class="number">10</span>)) <span class="comment"># 10表示读10字节</span></span><br><span class="line"><span class="built_in">print</span>(f.readline()) <span class="comment"># 只读一行文件内容</span></span><br><span class="line">line = f.readline()</span><br><span class="line"><span class="keyword">while</span> line != <span class="string">&quot;&quot;</span>:</span><br><span class="line">    <span class="built_in">print</span>(line)</span><br><span class="line">    line = f.readline()</span><br><span class="line"><span class="comment"># f.readlines 返回全部文件内容组成的列表</span></span><br><span class="line">lines = f.readlines()</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">    <span class="built_in">print</span>(line)</span><br><span class="line">f.close() <span class="comment"># 关闭文件 释放资源</span></span><br><span class="line"><span class="comment"># 另一种打开方式</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;./data.txt&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    OPERATION</span><br><span class="line"><span class="comment"># 缩进内为对该文件的操作，缩进外则自动关闭该文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 写文件</span></span><br><span class="line"><span class="comment"># 用w模式时如果原来的文件已经存在，会把原本的文件内容清空</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;./data.txt&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding = <span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(<span class="string">&quot;Hello!\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>异常处理</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    user_input = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;please type in your password&quot;</span>))</span><br><span class="line"><span class="keyword">except</span> ValieError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;your not typing in numbers&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;well done&quot;</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;this code will work in all ways&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>高阶函数</strong></p>
+<p>传入函数参数时可以传入函数作为参数</p>
+<p><strong>匿名函数</strong></p>
+<p><code>calculate_and_print(7, lambda num : num * 5， print_with_vertical_bar)</code></p>
+<p><code>(lambda num1, num2 : num1 + num2)(2, 3)</code></p>
+<p>但注意匿名函数冒号后面只有一个语句，只能用于比较简单的情形</p>
+<hr>
+<h1 id="CS50P"><a href="#CS50P" class="headerlink" title="CS50P"></a>CS50P</h1><h2 id="Functions-Variables"><a href="#Functions-Variables" class="headerlink" title="Functions, Variables"></a>Functions, Variables</h2><h2 id="Conditionals"><a href="#Conditionals" class="headerlink" title="Conditionals"></a>Conditionals</h2><h2 id="Loops"><a href="#Loops" class="headerlink" title="Loops"></a>Loops</h2><h2 id="Exceptions"><a href="#Exceptions" class="headerlink" title="Exceptions"></a>Exceptions</h2><h2 id="Libraries"><a href="#Libraries" class="headerlink" title="Libraries"></a>Libraries</h2><h2 id="Unit-Tests"><a href="#Unit-Tests" class="headerlink" title="Unit Tests"></a>Unit Tests</h2><h2 id="File-I-O"><a href="#File-I-O" class="headerlink" title="File I/O"></a>File I/O</h2><h2 id="Regular-Expressions"><a href="#Regular-Expressions" class="headerlink" title="Regular  Expressions"></a>Regular  Expressions</h2><h2 id="Classes"><a href="#Classes" class="headerlink" title="Classes"></a>Classes</h2>]]></content>
+  </entry>
+  <entry>
+    <title>分治算法</title>
+    <url>/2025/08/14/Algo/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/%E5%88%86%E6%B2%BB/</url>
+    <content><![CDATA[<h2 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h2><ul>
+<li>答案区间 <code>[LOW, HIGH]</code>      </li>
+<li>函数 <code>f(x) -&gt; &#123;F, T&#125;</code>        </li>
+<li>两级分布 <code>F,F,F...F,T,T,T,...T</code></li>
+</ul>
+<p>目标 - &gt; 找到第一个 T</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> M&gt;</span><br><span class="line"><span class="function">T <span class="title">get_first_match</span><span class="params">(T lo, T hi, M match)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (lo &lt;= hi) &#123;</span><br><span class="line">        T mid = lo + (hi - lo) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">match</span>(mid)) hi = mid - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> lo = mid + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>binary_search(vec.begin(), vec.end(), target)</code>检查有序数组中是否包含<code>target</code>，返回值是<code>true or false</code></p>
+<p><code>lower_bound(vec.begin(), vec.end(), target) - vec.begin();</code>计算出目标下标</p>
+<p><code>lower_bound</code> -&gt; 第一个大于等于            <code>upper_bound</code> -&gt; 第一个大于</p>
+<p>二分答案：（直接求解困难）：函数两极性 - -&gt;  判断答案是否满足</p>
+<p>实数二分终止条件：范围小于<code>epsilon(const double eps = 1e-6)</code></p>
+<p>特征：找符合xx条件的最大或者最小值</p>
+<p>例子：<strong>最多将数组分成M组，每组之和不超过X，求X的最小值</strong></p>
+<ul>
+<li>枚举将N个元素最多划分为M组的各个方案</li>
+<li>计算每组的和，取各组的最大值，然后取所有方案的最小值</li>
+</ul>
+<p>转化为 —&gt;</p>
+<ul>
+<li>确定每组的最大值X</li>
+<li>判断在X的限制下，是否可以划分为M组</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> lo = *<span class="built_in">max_element</span>(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>());</span><br><span class="line"><span class="type">int</span> hi = <span class="built_in">accumulate</span>(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>(), <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+  </entry>
+  <entry>
     <title>贪心算法 （greedy algorithm）</title>
     <url>/2025/07/15/Algo/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/%E8%B4%AA%E5%BF%83/</url>
     <content><![CDATA[<p>==证明贪心策略的正确性很重要==</p>
@@ -1890,5 +2000,80 @@
       <categories>
         <category>算法</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Logic Gates</title>
+    <url>/2025/09/10/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/Logic%20Gates/</url>
+    <content><![CDATA[<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Name</th>
+<th style="text-align:center">Graphic symbol</th>
+<th style="text-align:center">Algebraic function</th>
+<th style="text-align:center">Truth table</th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">AND</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">F = x . y</td>
+<td style="text-align:center">全为1输出1，否则输出0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">OR</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">F = x + y</td>
+<td style="text-align:center">有一个1输出1，否则输出0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">INV(invert)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">F = x’</td>
+<td style="text-align:center">取反输出</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Buffer</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">F = x</td>
+<td style="text-align:center">输出本身</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">NAND</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">F = (xy)’</td>
+<td style="text-align:center">非与门，与门再取反</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">NOR</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">F = (x + y)’</td>
+<td style="text-align:center">非或门，或门取反</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
   </entry>
 </search>
